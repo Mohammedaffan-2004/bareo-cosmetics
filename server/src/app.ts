@@ -21,9 +21,28 @@ const app = express()
 
 // Core Middlewares
 app.use(helmet())
+const allowedOrigins = [
+  'https://bareo-cosmetics.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:5000',
+]
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true)
+      if (
+        !process.env.CORS_ORIGIN ||
+        process.env.CORS_ORIGIN === '*' ||
+        process.env.CORS_ORIGIN.split(',').map((s) => s.trim()).includes(origin) ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app')
+      ) {
+        return callback(null, true)
+      }
+      return callback(null, true)
+    },
     credentials: true,
   })
 )

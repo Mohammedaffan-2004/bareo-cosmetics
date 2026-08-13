@@ -1,6 +1,7 @@
 // Central API Client connecting the frontend to the Express + MongoDB Backend
 
-const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || '/api/v1'
+const rawBaseUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || 'https://bareo-cosmetics-api.onrender.com/api/v1'
+const API_BASE_URL = rawBaseUrl.replace(/\/+$/, '')
 
 export interface ApiResponse<T> {
   data: T
