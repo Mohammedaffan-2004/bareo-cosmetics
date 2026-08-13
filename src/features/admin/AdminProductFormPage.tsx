@@ -9,8 +9,6 @@ import {
   Sparkles,
   Wand2,
   Info,
-  Check,
-  Star,
 } from 'lucide-react'
 import { adminService } from '@/services/adminService'
 import { productService } from '@/services/productService'

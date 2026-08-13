@@ -96,7 +96,7 @@ export function CheckoutPage() {
         const a = {
           fullName: def.fullName,
           phone: def.phone.replace(/\D/g, '').slice(-10),
-          email: def.email,
+          email: def.email ?? '',
           line1: def.line1,
           line2: def.line2 ?? '',
           city: def.city,
@@ -208,7 +208,7 @@ export function CheckoutPage() {
                         const a = {
                           fullName: addr.fullName,
                           phone: addr.phone.replace(/\D/g, '').slice(-10),
-                          email: addr.email,
+                          email: addr.email ?? '',
                           line1: addr.line1,
                           line2: addr.line2 ?? '',
                           city: addr.city,

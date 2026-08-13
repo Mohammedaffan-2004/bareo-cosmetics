@@ -61,7 +61,7 @@ export function ShopPage() {
   const queryParams: ProductQuery = useMemo(() => {
     const p: ProductQuery = { page, pageSize: 12, sort }
     if (category) p.category = category
-    if (debouncedSearch) p.q = debouncedSearch
+    if (debouncedSearch) p.search = debouncedSearch
     if (filters.concern.length > 0) p.concern = filters.concern.join(',')
     if (filters.skinType.length > 0) p.skinType = filters.skinType.join(',')
     if (filters.price[0] > 0) p.minPrice = filters.price[0]

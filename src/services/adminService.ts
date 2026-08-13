@@ -1,17 +1,11 @@
 // Admin service — dashboard, product CRUD, order & customer management (Live API + Fallback).
 
-import type { AnalyticsData, DashboardOverviewData, RealAnalyticsPayload, StoreSettingsPayload, Customer, Order, OrderStatus, Product, Coupon, Offer } from '@/types'
-import { ANALYTICS } from '@/mocks/analytics'
-import { MOCK_CUSTOMERS } from '@/mocks/customers'
-import { MOCK_ORDERS } from '@/mocks/orders'
-import { COUPONS as INITIAL_COUPONS, OFFERS as INITIAL_OFFERS } from '@/mocks/static'
-import { uid } from '@/utils'
+import type { DashboardOverviewData, RealAnalyticsPayload, StoreSettingsPayload, Customer, Order, OrderStatus, Product, Coupon, Offer } from '@/types'
+import { OFFERS as INITIAL_OFFERS } from '@/mocks/static'
 import { mockError, mockFetch } from './mockApi'
 import { getCatalog, setCatalog } from './productStore'
 import { apiFetch } from './apiClient'
 
-let orders: Order[] = [...MOCK_ORDERS]
-let couponStore: Coupon[] = [...INITIAL_COUPONS]
 let offerStore: Offer[] = [...INITIAL_OFFERS]
 
 export type ProductFormInput = Partial<Product> & Pick<Product, 'name' | 'categoryId' | 'offerPrice' | 'mrp'>

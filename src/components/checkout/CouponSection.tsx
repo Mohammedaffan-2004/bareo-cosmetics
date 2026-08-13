@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Tag, X, ChevronDown, ChevronUp, Check, Plus } from 'lucide-react'
+import { Tag, X, ChevronDown, ChevronUp } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { applyCoupon } from '@/store/slices/cartSlice'
 import { selectCartTotals } from '@/store/selectors/cartSelectors'

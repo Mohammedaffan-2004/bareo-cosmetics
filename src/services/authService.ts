@@ -1,9 +1,8 @@
 // Authentication service — communicates with live backend / fallback mock layer.
 
 import type { User } from '@/types'
-import { MOCK_CUSTOMERS } from '@/mocks/customers'
 import { mockError, mockFetch } from './mockApi'
-import { apiFetch, setStoredToken } from './apiClient'
+import { apiFetch, setStoredToken, removeStoredToken } from './apiClient'
 
 const DEMO_USER: User = {
   id: 'demo-user',
@@ -16,14 +15,6 @@ const DEMO_USER: User = {
   role: 'USER',
 }
 
-const ADMIN_USER: User = {
-  id: 'admin-user',
-  name: 'Admin System',
-  email: 'admin@bareo.in',
-  phone: '+91 90000 00000',
-  joinedAt: new Date(Date.now() - 400 * 86400000).toISOString(),
-  role: 'ADMIN',
-}
 
 export interface LoginPayload {
   email: string
@@ -121,7 +112,3 @@ export function authService() {
   }
 }
 
-/** Lookup for admin customer list (shares the same data source). */
-export function customerLookup(): typeof MOCK_CUSTOMERS {
-  return MOCK_CUSTOMERS
-}

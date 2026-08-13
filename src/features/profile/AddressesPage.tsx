@@ -87,7 +87,7 @@ export function AddressesPage() {
       city: addr.city,
       state: addr.state,
       pincode: addr.pincode,
-      label: addr.label ?? 'other',
+      label: (addr.label === 'home' || addr.label === 'work' ? addr.label : 'other') as 'home' | 'work' | 'other',
     })
     setOpen(true)
   }

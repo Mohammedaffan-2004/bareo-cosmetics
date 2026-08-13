@@ -1,6 +1,7 @@
 // Order service — order placement, history, invoice and coupon validation.
 
-import type { CartItem, Coupon, Order, OrderStatus, ShippingAddress } from '@/types'
+import type { Address, CartItem, Coupon, Order, OrderStatus } from '@/types'
+import type { ShippingAddress } from './addressService'
 import { MOCK_ORDERS } from '@/mocks/orders'
 import { COUPONS } from '@/mocks/static'
 import { generateOrderId, uid } from '@/utils'
@@ -8,7 +9,7 @@ import { mockError, mockFetch } from './mockApi'
 
 export interface PlaceOrderInput {
   items: CartItem[]
-  address: ShippingAddress
+  address: Address | ShippingAddress
   deliveryId: string
   paymentMethod: string
   couponCode?: string
@@ -151,8 +152,9 @@ export function orderService() {
 
     async applyCoupon(code: string, subtotal: number): Promise<{ coupon: Coupon; discount: number }> {      const coupon = COUPONS.find((c) => c.code.toLowerCase() === code.trim().toLowerCase())
       if (!coupon) mockError('Invalid coupon code', 400)
-      if (subtotal < coupon.minOrder) mockError(`Add items worth ₹${coupon.minOrder} to use this coupon`, 400)
-      let discount = coupon.discountType === 'percent' ? (subtotal * coupon.value) / 100 : coupon.value
+      const minRequired = (coupon as any).minOrderValue ?? (coupon as any).minOrder ?? 0
+      if (subtotal < minRequired) mockError(`Add items worth ₹${minRequired} to use this coupon`, 400)
+      let discount = coupon.discountType === 'percent' || coupon.discountType === 'percentage' ? (subtotal * coupon.value) / 100 : coupon.value
       if (coupon.maxDiscount) discount = Math.min(discount, coupon.maxDiscount)
       return mockFetch({ coupon, discount: Math.round(discount) }).then((r) => r.data)
     },

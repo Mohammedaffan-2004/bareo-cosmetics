@@ -17,6 +17,7 @@ import { logout } from '@/store/slices/authSlice'
 import { useToast } from '@/hooks/useToast'
 import { Toaster } from '@/components/common/Toaster'
 import { cn } from '@/utils'
+import { removeStoredToken } from '@/services/apiClient'
 
 const NAV_GROUPS = [
   {

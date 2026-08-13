@@ -76,7 +76,7 @@ export function HomePage() {
       <TestimonialsSection testimonials={data.testimonials} />
 
       {/* Journal */}
-      <BlogSection posts={data.blogs} />
+      <BlogSection posts={data.blogPosts || data.blogs || []} />
     </div>
   )
 }

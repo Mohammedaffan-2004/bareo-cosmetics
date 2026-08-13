@@ -123,9 +123,9 @@ export function OrdersPage() {
 
   const handleViewInvoice = async (order: Order) => {
     try {
-      toast.loading('Generating invoice...', { id: `inv-${order.orderId}` })
+      toast.info('Generating invoice...', 'Please wait')
       await orderService().generateInvoice(order)
-      toast.success('Invoice generated', { id: `inv-${order.orderId}` })
+      toast.success('Invoice generated', `Invoice for order ${order.orderId}`)
       const win = window.open('', '_blank')
       if (win) {
         win.document.write(`

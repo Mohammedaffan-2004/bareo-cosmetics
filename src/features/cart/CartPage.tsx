@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Trash2, ArrowRight, ShieldCheck, Tag, Sparkles, Gift, Check, Plus, Package } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -6,7 +6,7 @@ import { removeItem, updateQuantity, clearCart, applyCoupon, addItem } from '@/s
 import { selectCartTotals } from '@/store/selectors/cartSelectors'
 import { QuantitySelector } from '@/components/common/QuantitySelector'
 import { EmptyState } from '@/components/common/EmptyState'
-import { AppInput } from '@/components/common/AppInput'
+import { CouponSection } from '@/components/checkout/CouponSection'
 import { Button } from '@/components/ui/button'
 import { formatINR } from '@/utils'
 import { PRODUCTS } from '@/mocks/productCatalog'
@@ -29,8 +29,6 @@ export function CartPage() {
   const navigate = useNavigate()
   const toast = useToast()
   const { items, coupon } = useAppSelector((s) => s.cart)
-  const [couponInput, setCouponInput] = useState('')
-  const [couponLoading, setCouponLoading] = useState(false)
 
   const totals = selectCartTotals(items, coupon)
 
@@ -39,23 +37,6 @@ export function CartPage() {
     const cartProductIds = new Set(items.map((i) => i.product.id))
     return PRODUCTS.filter((p) => !cartProductIds.has(p.id)).slice(0, 3)
   }, [items])
-
-  const handleCoupon = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!couponInput.trim()) return
-    setCouponLoading(true)
-    setTimeout(() => {
-      setCouponLoading(false)
-      if (couponInput.trim().toUpperCase() === 'WELCOME10') {
-        const discount = Math.round(totals.subtotal * 0.1)
-        dispatch(applyCoupon({ code: 'WELCOME10', discountType: 'percent', value: 10, discount }))
-        toast.success('Coupon applied', `WELCOME10 saved you ${formatINR(discount)}`)
-        setCouponInput('')
-      } else {
-        toast.error('Invalid coupon code', 'Use promo code WELCOME10 for 10% OFF')
-      }
-    }, 500)
-  }
 
   const handleAddAddon = (product: typeof PRODUCTS[0]) => {
     dispatch(addItem({ product, quantity: 1 }))

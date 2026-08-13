@@ -39,6 +39,7 @@ export function generateReviews(productId: string, seed: number, count = 3): Rev
     reviews.push({
       id: `${productId}-r${i}`,
       productId,
+      userId: `user-${i}`,
       userName: REVIEWERS[Math.floor(rand() * REVIEWERS.length)],
       rating,
       title: TITLES[Math.floor(rand() * TITLES.length)],

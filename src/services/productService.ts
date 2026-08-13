@@ -1,7 +1,8 @@
 // Product catalogue service — powers the shop listing, detail page
 // and product lookups across the app (Live API + Persistent Fallback).
 
-import type { Product } from '@/types'
+import type { Category, Product } from '@/types'
+import { CATEGORIES } from '@/mocks/productCatalog'
 import { mockError, mockFetch } from './mockApi'
 import { getCatalog, setCatalog } from './productStore'
 import { apiFetch } from './apiClient'
@@ -204,6 +205,16 @@ export function productService() {
       const ai = getCatalog().filter((p) => p.isAiRecommended)
       const fill = getCatalog().filter((p) => !p.isAiRecommended && (p.isBestSeller || p.isTrending))
       return mockFetch([...ai, ...fill].slice(0, 6)).then((res) => res.data)
+    },
+
+    async getCategories(): Promise<Category[]> {
+      try {
+        const res = await apiFetch<Category[]>('/products/categories')
+        if (Array.isArray(res.data) && res.data.length > 0) return res.data
+      } catch {
+        // fallback
+      }
+      return mockFetch(CATEGORIES).then((res) => res.data)
     },
   }
 

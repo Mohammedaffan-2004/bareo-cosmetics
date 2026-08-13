@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { CheckCircle2, Printer, Download, PackageCheck, ChevronRight } from 'lucide-react'
 import { orderService } from '@/services/orderService'
-import { Confetti } from '@/components/common/Confetti'
 import { Timeline } from '@/components/common/Timeline'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -13,7 +12,7 @@ import { formatDate, formatINR } from '@/utils'
 
 export function OrderSuccessPage() {
   const [params] = useSearchParams()
-  const orderId = params.get('order') ?? ''
+  const orderId = params.get('order') || ''
 
   const { data: order, isLoading } = useQuery({
     queryKey: ['order', orderId],
@@ -23,10 +22,9 @@ export function OrderSuccessPage() {
 
   if (isLoading) {
     return (
-      <div className="container-page py-16">
-        <Skeleton className="mx-auto h-24 w-72" />
-        <Skeleton className="mx-auto mt-6 h-4 w-64" />
-        <Skeleton className="mx-auto mt-4 h-96 w-full max-w-3xl rounded-2xl" />
+      <div className="container-page py-16 max-w-2xl mx-auto space-y-4">
+        <Skeleton className="h-8 w-48 mx-auto" />
+        <Skeleton className="h-40 w-full rounded-2xl" />
       </div>
     )
   }
@@ -34,38 +32,40 @@ export function OrderSuccessPage() {
   if (!order) {
     return (
       <div className="container-page py-16">
-        <EmptyState title="Order not found" description="We couldn't locate that order." action={<Button asChild><Link to="/shop">Continue Shopping</Link></Button>} />
+        <EmptyState
+          title="Order not found"
+          description="We couldn't locate this order."
+          action={<Button onClick={() => window.location.href = '/'}>Return Home</Button>}
+        />
       </div>
     )
   }
 
   return (
-    <div className="container-page py-10 sm:py-16">
+    <div className="container-page py-12 max-w-4xl mx-auto">
+      {/* SUCCESS HERO BANNER */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-2xl text-center space-y-4"
+        className="rounded-3xl border border-[#E5E7EB] bg-gradient-to-b from-[#FAF7F2] to-white p-8 text-center space-y-4 shadow-xs"
       >
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 16 }}
-          className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#ECFDF5] border border-[#059669]/20 text-[#059669] shadow-2xs"
-        >
-          <CheckCircle2 className="size-9 stroke-[2]" />
-        </motion.div>
+        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-150 text-emerald-800">
+          <CheckCircle2 className="size-8" />
+        </div>
 
-        <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111]">
-          Order placed successfully!
+        <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-[#111111] tracking-tight">
+          Order Placed Successfully!
         </h1>
 
         <p className="text-xs sm:text-sm text-[#6B7280] font-light max-w-md mx-auto leading-relaxed">
           Thank you for shopping with Bareo. Your order <span className="font-mono font-bold text-[#111111]">{order.orderId}</span> is confirmed and being prepared.
         </p>
 
-        <p className="text-xs text-[#6B7280]">
-          A confirmation receipt has been sent to <span className="font-medium text-[#111111]">{order.address.email}</span>
-        </p>
+        {order.address?.email && (
+          <p className="text-xs text-[#6B7280]">
+            A confirmation receipt has been sent to <span className="font-medium text-[#111111]">{order.address.email}</span>
+          </p>
+        )}
 
         <div className="pt-2 flex flex-wrap justify-center gap-3">
           <Button asChild className="rounded-xl bg-[#111111] text-white text-xs font-semibold px-5 hover:bg-black min-h-[44px]">
@@ -102,9 +102,11 @@ export function OrderSuccessPage() {
         <div className="grid gap-6 sm:grid-cols-2 text-xs">
           <div className="space-y-1">
             <p className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">SHIPPED TO</p>
-            <p className="font-semibold text-[#111111]">{order.address.fullName}</p>
-            <p className="text-[#6B7280]">{order.address.line1}, {order.address.city}, {order.address.state} — {order.address.pincode}</p>
-            <p className="text-[#6B7280]">{order.address.phone}</p>
+            <p className="font-semibold text-[#111111]">{order.address?.fullName || 'Customer'}</p>
+            {order.address && (
+              <p className="text-[#6B7280]">{order.address.line1}, {order.address.city}, {order.address.state} — {order.address.pincode}</p>
+            )}
+            {order.address?.phone && <p className="text-[#6B7280]">{order.address.phone}</p>}
           </div>
           <div className="space-y-1">
             <p className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">PAYMENT &amp; DISPATCH</p>

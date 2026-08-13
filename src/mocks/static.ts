@@ -1,6 +1,6 @@
 // Static marketing mock data: banners, coupons, offers, testimonials, blogs.
 
-import type { BlogPost, Coupon, HomeBanner, Offer, Testimonial } from '@/types'
+import type { Coupon, HomeBanner, Offer, Testimonial } from '@/types'
 import { avatarImage } from '@/utils/images'
 
 const addDays = (n: number) => new Date(Date.now() + n * 86400000).toISOString()
@@ -11,27 +11,33 @@ export const HOME_BANNERS: HomeBanner[] = [
     eyebrow: 'The AI Skin Consult',
     title: 'Your skin, decoded by AI in 90 seconds.',
     subtitle: 'Answer a few questions, upload a selfie and get a dermatologist-grade routine made just for you.',
-    ctaLabel: 'Start Free Skin Analysis',
+    ctaText: 'Start Free Skin Analysis',
     ctaLink: '/skin-analysis',
     image: '/images/products/bareo-cica-serum.png',
+    bgGradient: 'from-slate-900 to-slate-800',
+    tag: 'AI',
   },
   {
     id: 'b2',
     eyebrow: 'Doctor Recommended',
     title: 'Dermatologist-approved actives at honest prices.',
     subtitle: 'Clean, effective, science-backed formulas — no fragrance, no fluff, no 10-step nonsense.',
-    ctaLabel: 'Shop Best Sellers',
+    ctaText: 'Shop Best Sellers',
     ctaLink: '/shop?sort=best',
     image: '/images/products/bareo-barrier-hydrator.png',
+    bgGradient: 'from-stone-900 to-stone-800',
+    tag: 'Bestseller',
   },
   {
     id: 'b3',
     eyebrow: 'Sun Smart Week',
     title: 'Glow that stays. SPF that never fails.',
     subtitle: 'Flat 25% off on our entire sun-protection range. Your future self will thank you.',
-    ctaLabel: 'Shop Sun Care',
+    ctaText: 'Shop Sun Care',
     ctaLink: '/shop?category=sunscreen',
     image: '/images/products/bareo-fluid-sunscreen.png',
+    bgGradient: 'from-amber-900 to-amber-800',
+    tag: 'Sale',
   },
 ]
 
@@ -51,12 +57,12 @@ export const OFFERS: Offer[] = [
 ]
 
 export const TESTIMONIALS: Testimonial[] = [
-  { id: 't1', name: 'Ananya Sharma', skinType: 'Combination', rating: 5, quote: 'The AI analysis was scarily accurate. My routine finally makes sense and my breakouts are gone in 6 weeks.', result: 'Clearer skin in 6 weeks', avatarColor: '#0F172A' },
-  { id: 't2', name: 'Priya Nair', skinType: 'Dry', rating: 5, quote: 'I stopped guessing. The recommended hydrating stack fixed my flakiness that every "hydrating" cream before failed at.', result: 'Hydrated, calm skin', avatarColor: '#FF5A5F' },
-  { id: 't3', name: 'Karan Mehta', skinType: 'Oily', rating: 4, quote: 'Finally a brand that doesn\'t overload my oily skin. The mattifying moisturizer + niacinamide duo is perfect.', result: 'Balanced oil control', avatarColor: '#0F172A' },
-  { id: 't4', name: 'Divya Reddy', skinType: 'Sensitive', rating: 5, quote: 'Zero irritation. The centella toner and barrier cream are the only products my reactive skin has ever accepted.', result: 'No more redness', avatarColor: '#FF5A5F' },
-  { id: 't5', name: 'Sneha Iyer', skinType: 'Pigmentation', rating: 5, quote: 'Vitamin C + SPF from the routine visibly faded my dark spots. I get compliments on my "glass skin" now.', result: 'Even, glowing tone', avatarColor: '#0F172A' },
-  { id: 't6', name: 'Ritika Bose', skinType: 'Anti-Aging', rating: 4, quote: 'The retinal night serum is gentle but effective. Fine lines around my eyes look softer after a month.', result: 'Smoother fine lines', avatarColor: '#FF5A5F' },
+  { id: 't1', name: 'Ananya Sharma', role: 'Verified Customer', avatar: '', rating: 5, comment: 'The AI analysis was scarily accurate. My routine finally makes sense and my breakouts are gone in 6 weeks.', skinConcern: 'Acne', productUsed: 'CICA Repair Serum', verified: true, skinType: 'Combination', quote: 'The AI analysis was scarily accurate.', result: 'Clearer skin in 6 weeks', avatarColor: '#0F172A' },
+  { id: 't2', name: 'Priya Nair', role: 'Verified Customer', avatar: '', rating: 5, comment: 'I stopped guessing. The recommended hydrating stack fixed my flakiness.', skinConcern: 'Dry Skin', productUsed: 'Barrier Hydrator', verified: true, skinType: 'Dry', quote: 'I stopped guessing.', result: 'Hydrated, calm skin', avatarColor: '#FF5A5F' },
+  { id: 't3', name: 'Karan Mehta', role: 'Verified Customer', avatar: '', rating: 4, comment: "Finally a brand that doesn't overload my oily skin.", skinConcern: 'Oily Skin', productUsed: 'Niacinamide 5%', verified: true, skinType: 'Oily', quote: "Finally a brand that doesn't overload my oily skin.", result: 'Balanced oil control', avatarColor: '#0F172A' },
+  { id: 't4', name: 'Divya Reddy', role: 'Verified Customer', avatar: '', rating: 5, comment: 'Zero irritation. The centella toner and barrier cream are the only products my reactive skin has ever accepted.', skinConcern: 'Sensitivity', productUsed: 'Centella Toner', verified: true, skinType: 'Sensitive', quote: 'Zero irritation.', result: 'No more redness', avatarColor: '#FF5A5F' },
+  { id: 't5', name: 'Sneha Iyer', role: 'Verified Customer', avatar: '', rating: 5, comment: 'Vitamin C + SPF from the routine visibly faded my dark spots.', skinConcern: 'Pigmentation', productUsed: 'Vitamin C 10% Serum', verified: true, skinType: 'Combination', quote: 'Vitamin C + SPF faded my dark spots.', result: 'Even, glowing tone', avatarColor: '#0F172A' },
+  { id: 't6', name: 'Ritika Bose', role: 'Verified Customer', avatar: '', rating: 4, comment: 'The retinal night serum is gentle but effective.', skinConcern: 'Anti-Aging', productUsed: 'Retinal Night Serum', verified: true, skinType: 'Normal', quote: 'The retinal night serum is gentle but effective.', result: 'Smoother fine lines', avatarColor: '#FF5A5F' },
 ]
 
 export const BLOGS: any[] = [
@@ -147,4 +153,4 @@ export const BLOGS: any[] = [
   },
 ]
 
-export const STATIC_IMAGES = { testimonialAvatars: TESTIMONIALS.map((t) => avatarImage(9, t.avatarColor)) }
+export const STATIC_IMAGES = { testimonialAvatars: TESTIMONIALS.map((t) => avatarImage(9, t.avatarColor ?? '#0F172A')) }

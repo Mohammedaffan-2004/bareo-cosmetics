@@ -37,6 +37,31 @@ export type Concern =
   | 'body-dryness'
   | 'cradle-cap'
   | 'diaper-rash'
+  | 'dehydration'
+  | 'dullness'
+  | 'blackheads'
+  | 'sun-protection'
+  | 'aging'
+  | 'fine-lines'
+  | 'uneven-texture'
+  | 'scalp-care'
+  | 'damage'
+  | 'breakage'
+  | 'heat-damage'
+  | 'volume'
+  | 'tan-removal'
+  | 'rough-skin'
+  | 'tanning'
+  | 'back-acne'
+  | 'dry-hands'
+  | 'cracked-skin'
+  | 'cracked-heels'
+  | 'calluses'
+  | 'baby-care'
+  | 'drool-rash'
+  | 'dry-cheeks'
+  | 'sweat-folds'
+  | 'chafing'
 
 export interface Ingredient {
   name: string
@@ -55,15 +80,17 @@ export interface Review {
   date: string
   verified: boolean
   helpful: number
+  productId?: string
 }
 
 export interface Faq {
+  id?: string
   question: string
   answer: string
 }
 
 export interface ProductImage {
-  id: string
+  id?: string
   url: string
   alt?: string
 }
@@ -104,6 +131,10 @@ export interface Product {
   soldCount?: number
   status?: 'active' | 'inactive' | 'out-of-stock'
   createdAt?: string
+  price?: number
+  volume?: string
+  badge?: string
+  subtitle?: string
 }
 
 export interface Offer {
@@ -124,9 +155,13 @@ export interface Coupon {
   discountType: 'percentage' | 'flat' | 'percent'
   value: number
   minOrderValue?: number
+  minOrder?: number
   maxDiscount?: number
-  expiresAt: string
-  description: string
+  expiresAt?: string
+  validTill?: string
+  description?: string
+  isActive?: boolean
+  active?: boolean
 }
 
 export interface Category {
@@ -135,7 +170,8 @@ export interface Category {
   slug: string
   image: string
   description: string
-  itemCount: number
+  itemCount?: number
+  icon?: string
 }
 
 export interface CartItem {
@@ -144,16 +180,52 @@ export interface CartItem {
 }
 
 export interface Address {
-  id: string
-  name: string
+  id?: string
+  // Backend canonical fields
+  name?: string
+  address?: string
+  locality?: string
+  type?: 'home' | 'work' | 'other'
+  // Frontend / checkout fields
+  fullName?: string
+  email?: string
+  line1?: string
+  line2?: string
+  landmark?: string
+  label?: string
+  // Shared fields
   phone: string
   pincode: string
-  address: string
-  locality: string
   city: string
   state: string
-  type: 'home' | 'work' | 'other'
+  isDefault?: boolean
+}
+
+export interface ShippingAddress {
+  id: string
+  fullName: string
+  phone: string
+  email?: string
+  line1: string
+  line2?: string
+  landmark?: string
+  city: string
+  state: string
+  pincode: string
   isDefault: boolean
+  label?: string
+}
+
+export interface DeliveryOption {
+  id: string
+  name: string
+  price: number
+  estimatedDays?: string
+  eta?: string
+  freeThreshold?: number
+  description?: string
+  chip?: string
+  arrivalHint?: string
 }
 
 export interface PaymentMethod {
@@ -181,6 +253,7 @@ export type OrderStatus =
   | 'out-for-delivery'
   | 'delivered'
   | 'cancelled'
+  | 'refunded'
 
 export interface OrderTimeline {
   status: OrderStatus
@@ -196,16 +269,23 @@ export interface Order {
   subtotal: number
   discount: number
   shipping: number
-  tax: number
+  tax?: number
+  gst?: number
   total: number
   paymentMethod: string
-  paymentStatus: 'paid' | 'pending' | 'failed'
+  paymentStatus: 'paid' | 'pending' | 'failed' | string
   status: OrderStatus
-  shippingAddress: Address
-  estimatedDelivery: string
+  shippingAddress?: Address | ShippingAddress
+  address?: Address | ShippingAddress
+  estimatedDelivery?: string
+  eta?: string
   timeline: OrderTimeline[]
   trackingNumber?: string
   courier?: string
+  couponCode?: string
+  couponDiscount?: number
+  refunded?: boolean
+  rated?: boolean
 }
 
 export interface CustomerActivity {
@@ -328,6 +408,7 @@ export interface HomeBanner {
   bgGradient: string
   image: string
   tag: string
+  eyebrow?: string
 }
 
 export interface BlogPost {
@@ -342,6 +423,9 @@ export interface BlogPost {
   publishedAt: string
   readTime: string
   tags: string[]
+  isFeatured?: boolean
+  date?: string
+  image?: string
 }
 
 export interface Testimonial {
@@ -354,6 +438,25 @@ export interface Testimonial {
   skinConcern: string
   productUsed: string
   verified: boolean
+  quote?: string
+  skinType?: string
+  result?: string
+  avatarColor?: string
+}
+
+export interface HomeContent {
+  banners: HomeBanner[]
+  categories: Category[]
+  bestSellers: Product[]
+  testimonials: Testimonial[]
+  blogPosts?: BlogPost[]
+  blogs?: BlogPost[]
+  trending?: Product[]
+  featured?: Product[]
+  doctorRecommended?: Product[]
+  ingredients?: { name: string; description: string; image: string }[]
+  concerns?: { value: string; label: string; image: string; description: string }[]
+  offers?: Offer[]
 }
 
 export interface AnalyticsSummary {
@@ -364,6 +467,9 @@ export interface AnalyticsSummary {
   customers: number
   customersGrowth: number
   products: number
+  conversion?: number
+  visitors?: number
+  averageOrderValue?: number
 }
 
 export interface RevenueTrend {
@@ -382,9 +488,14 @@ export interface AnalyticsData {
   revenueTrend: RevenueTrend[]
   orderTrend: OrderTrend[]
   topProducts: Product[]
-  lowStock: Product[]
-  recentOrders: Order[]
-  notifications: { id: string; type: 'order' | 'stock' | 'review' | 'customer'; title: string; message: string; time: string }[]
+  lowStock?: Product[]
+  recentOrders?: Order[]
+  notifications?: { id: string; type: 'order' | 'stock' | 'review' | 'customer'; title: string; message: string; time: string }[]
+  visitorTrend?: unknown[]
+  categorySales?: unknown[]
+  customerGrowth?: unknown[]
+  salesFunnel?: unknown[]
+  topCategories?: unknown[]
 }
 
 export interface DashboardAttention {
@@ -433,6 +544,65 @@ export interface RealAnalyticsSummary {
   orders: number
   averageOrderValue: number
   newCustomers: number
+  rangeRevenue?: number
+  rangeOrders?: number
+  rangeAov?: number
+}
+
+export interface AnalyticsTimePoint {
+  date: string
+  label?: string
+  revenue?: number
+  orders?: number
+  cancelled?: number
+  customers?: number
+}
+
+export interface AnalyticsOrderStatus {
+  status: string
+  count: number
+}
+
+export interface AnalyticsTopProduct {
+  productId: string
+  name: string
+  unitsSold: number
+  revenue: number
+}
+
+export interface AnalyticsPromotionsSummary {
+  couponOrders: number
+  totalDiscount: number
+  topCoupons: { code: string; count: number }[]
+}
+
+export interface RealAnalyticsPayload {
+  range: {
+    key: string
+    label: string
+    start: string
+    end: string
+  }
+  summary: RealAnalyticsSummary
+  revenueTrend: AnalyticsTimePoint[]
+  orderTrend: AnalyticsTimePoint[]
+  orderStatus: AnalyticsOrderStatus[]
+  topProducts: AnalyticsTopProduct[]
+  customerTrend: AnalyticsTimePoint[]
+  promotions: AnalyticsPromotionsSummary
+}
+
+export interface StoreSettingsPayload {
+  id?: string
+  storeName: string
+  supportEmail: string
+  supportPhone: string
+  freeShippingThreshold: number
+  gstRate: number
+  lowStockThreshold: number
+  maintenanceMode: boolean
+  aiAssistantEnabled: boolean
+  updatedAt?: string
 }
 
 export interface AnalyticsTimePoint {

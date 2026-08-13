@@ -4,9 +4,7 @@
 
 import type { AiConsultation, AiConsultationAnswers, AiMetric, AiReport, AiRoutineStep, ChatMessage, Product } from '../types'
 import { PRODUCTS } from '../mocks/productCatalog'
-import { MOCK_CONSULTATIONS } from '../mocks/consultations'
 import { uid } from '../utils'
-import { mockFetch } from './mockApi'
 
 type MetricKey = 'hydration' | 'oilBalance' | 'sensitivity' | 'barrier' | 'pigmentation' | 'elasticity'
 
@@ -136,7 +134,7 @@ export function buildReport(answers: AiConsultationAnswers): AiReport {
   return { skinScore, ...metrics, summary }
 }
 
-export function buildRoutine(answers: AiConsultationAnswers, report: AiReport): AiConsultation['routine'] {
+export function buildRoutine(answers: AiConsultationAnswers, _report: AiReport): AiConsultation['routine'] {
   const cleanser = bestInStep('cleanser', answers)
   const serum = bestInStep('serum', answers)
   const moisturizer = bestInStep('moisturizer', answers)

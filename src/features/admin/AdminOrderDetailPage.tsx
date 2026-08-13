@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, MapPin, CreditCard, User, Truck, AlertCircle, RefreshCw, CheckCircle, Loader2 } from 'lucide-react'
+import { ArrowLeft, MapPin, CreditCard, User, Truck, AlertCircle, RefreshCw, Loader2 } from 'lucide-react'
 import { adminService } from '@/services/adminService'
 import { useToast } from '@/hooks/useToast'
 import { Button } from '@/components/ui/button'

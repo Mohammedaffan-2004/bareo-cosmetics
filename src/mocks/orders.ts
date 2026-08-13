@@ -109,6 +109,7 @@ export const MOCK_ORDERS: Order[] = ORDER_SEEDS.map((seed, i) => {
     paymentStatus: seed.paymentStatus,
     status: seed.status,
     address: ADDRESS,
+    shippingAddress: ADDRESS,
     placedAt,
     timeline: timelineFor(seed.status, placedAt),
     eta: seed.eta ?? 'Delivered',

@@ -6,8 +6,7 @@ import { adminService } from '@/services/adminService'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Pagination } from '@/components/common/Pagination'
-import type { OrderStatus } from '@/types'
-import { formatINR, formatNumber, timeAgo, formatDate, cn } from '@/utils'
+import { formatINR, formatNumber, timeAgo, cn } from '@/utils'
 
 const PAGE_SIZE = 8
 

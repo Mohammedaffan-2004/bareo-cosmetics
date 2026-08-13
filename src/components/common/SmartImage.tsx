@@ -9,7 +9,7 @@ export const BAREO_PLACEHOLDERS = [
   '/images/products/bareo-cica-serum.png', // Local fallback asset
 ]
 
-interface SmartImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface SmartImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src'> {
   src?: string | null
   alt?: string
   fallbackSrc?: string

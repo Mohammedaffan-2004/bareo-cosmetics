@@ -6,7 +6,6 @@ import {
   Edit3,
   Trash2,
   CheckCircle2,
-  XCircle,
   Power,
   Search,
   AlertCircle,
@@ -246,7 +245,7 @@ export function AdminOffersPage() {
     setForm({
       code: c.code,
       description: c.description || '',
-      discountType: c.discountType,
+      discountType: (c.discountType === 'percentage' ? 'percent' : c.discountType) as 'percent' | 'flat',
       value: String(c.value),
       minOrder: String(c.minOrder || 0),
       maxDiscount: c.maxDiscount ? String(c.maxDiscount) : '',

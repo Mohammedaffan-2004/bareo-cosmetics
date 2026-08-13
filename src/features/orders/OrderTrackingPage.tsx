@@ -100,9 +100,11 @@ export function OrderTrackingPage() {
         <div className="space-y-4">
           <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="flex items-center gap-2 text-sm font-bold"><MapPin className="size-4 text-primary" /> Delivery Address</h3>
-            <p className="mt-3 text-sm font-medium">{order.address.fullName}</p>
-            <p className="text-sm text-muted-foreground">{order.address.line1}, {order.address.city}, {order.address.state} — {order.address.pincode}</p>
-            <p className="text-sm text-muted-foreground">{order.address.phone}</p>
+            <p className="mt-3 text-sm font-medium">{order.address?.fullName || 'Customer'}</p>
+            {order.address && (
+              <p className="text-sm text-muted-foreground">{order.address.line1}, {order.address.city}, {order.address.state} — {order.address.pincode}</p>
+            )}
+            {order.address?.phone && <p className="text-sm text-muted-foreground">{order.address.phone}</p>}
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5">

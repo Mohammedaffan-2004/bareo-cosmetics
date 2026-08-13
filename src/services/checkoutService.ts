@@ -1,8 +1,9 @@
 // Checkout & payment service — simulates a payment gateway round-trip.
 
-import type { DeliveryOption } from '@/types'
 import { DELIVERY_OPTIONS } from '@/constants'
 import { mockError, mockFetch } from './mockApi'
+
+export type DeliveryOption = typeof DELIVERY_OPTIONS[number]
 
 export type PaymentOutcome = 'success' | 'failed' | 'cancelled'
 

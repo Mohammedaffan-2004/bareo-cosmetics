@@ -45,7 +45,7 @@ export function CouponCard({ coupon, onApply, applied, className }: CouponCardPr
         <p className="text-sm font-bold tracking-wide">{coupon.code}</p>
         <p className="mt-0.5 text-xs text-muted-foreground">{coupon.description}</p>
         <p className="mt-1 text-[11px] text-muted-foreground">
-          Min. order {formatINR(coupon.minOrder)} · Valid till {formatDate(coupon.validTill)}
+          Min. order {formatINR(coupon.minOrder ?? 0)} {coupon.validTill ? `· Valid till ${formatDate(coupon.validTill)}` : ''}
         </p>
       </div>
       {applied ? (

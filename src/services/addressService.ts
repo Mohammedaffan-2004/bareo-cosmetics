@@ -1,8 +1,22 @@
 // Address book service — shared by checkout and the profile section.
 
-import type { ShippingAddress } from '@/types'
 import { mockError, mockFetch } from './mockApi'
 import { uid } from '@/utils'
+
+export interface ShippingAddress {
+  id: string
+  fullName: string
+  phone: string
+  email?: string
+  line1: string
+  line2?: string
+  landmark?: string
+  city: string
+  state: string
+  pincode: string
+  isDefault: boolean
+  label?: string
+}
 
 let addresses: ShippingAddress[] = [
   {
@@ -38,11 +52,11 @@ export function addressService() {
       return mockFetch(addresses, { delay: 400 }).then((r) => r.data)
     },
 
-    async addAddress(input: Omit<ShippingAddress, 'id'>): Promise<ShippingAddress> {
+    async addAddress(input: Omit<ShippingAddress, 'id' | 'isDefault'> & { isDefault?: boolean }): Promise<ShippingAddress> {
       if (!input.line1 || !input.city || input.pincode.length !== 6) {
         mockError('Please complete all required address fields', 422)
       }
-      const address: ShippingAddress = { ...input, id: uid('addr') }
+      const address: ShippingAddress = { isDefault: false, ...input, id: uid('addr') }
       addresses = [address, ...addresses]
       return mockFetch(address).then((r) => r.data)
     },
