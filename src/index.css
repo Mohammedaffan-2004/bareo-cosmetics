@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* Pure Crisp White #FFFFFF */
+    --foreground: 0 0% 7%; /* Deep Charcoal Black #111111 */
+    --card: 0 0% 100%; /* Pure White #FFFFFF */
+    --card-foreground: 0 0% 7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 0 0% 7%; /* Minimal Deep Black #111111 */
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 0 0% 98%; /* Light Surface #FAFAFA */
+    --secondary: 0 0% 98%;
+    --secondary-foreground: 0 0% 7%;
+    --muted: 0 0% 98%;
+    --muted-foreground: 220 9% 46%; /* Medium Gray #6B7280 */
+    --accent: 0 0% 7%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%; /* Warning Red #EF4444 */
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%; /* Success Green #22C55E */
+    --success-foreground: 0 0% 100%;
+    --border: 220 13% 91%; /* Neutral Border #E5E7EB */
+    --input: 220 13% 91%;
+    --ring: 0 0% 7%;
+    --radius: 0.75rem; /* 12px Standard */
+
+    /* Semantic Bareo Custom Properties */
+    --bareo-color-primary: #111111;
+    --bareo-color-canvas: #FFFFFF;
+    --bareo-color-surface-warm: #FAF7F2;
+    --bareo-color-surface-linen: #F4F1EA;
+    --bareo-color-border: #E5E7EB;
+    --bareo-color-border-warm: #EBE5D8;
+    --bareo-color-sage: #059669;
+    --bareo-color-sage-light: #ECFDF5;
+    --bareo-color-ai: #7C3AED;
+    --bareo-color-ai-surface: #FAF5FF;
+    --bareo-color-ai-border: #DDD6FE;
+    --bareo-color-ai-text: #6D28D9;
+    --bareo-font-display: 'Playfair Display', Georgia, serif;
+    --bareo-font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 7%;
+    --primary-soft: 0 0% 15%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 98%;
+    --accent-foreground: 0 0% 7%;
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 60% 45%;
+    --success-foreground: 0 0% 7%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 98%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  /* Explicitly enforce Inter font family on form elements & standard tags */
+  button, input, select, textarea, table, th, td {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Playfair Display is restricted exclusively to elements explicitly styled with .font-serif or .typo-heading */
+  .font-serif, .font-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    @apply bg-primary/10 text-primary;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl font-semibold tracking-tight text-[#111111] sm:text-4xl leading-[1.2];
+  }
+
+  .bareo-card {
+    @apply bg-white border border-[#E5E7EB] rounded-xl shadow-xs transition-all duration-300 hover:shadow-md hover:border-slate-300;
+  }
+
+  .bareo-nav {
+    @apply bg-white/95 backdrop-blur-md border-b border-[#E5E7EB];
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  /* Global Typography Tokens */
+  .typo-display-xl {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3rem; /* 48px */
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  @media (min-width: 640px) {
+    .typo-display-xl { font-size: 3.75rem; /* 60px */ }
+  }
+  @media (min-width: 1024px) {
+    .typo-display-xl { font-size: 4.5rem; /* 72px */ }
+  }
+
+  .typo-display-l {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.25rem; /* 36px */
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 640px) {
+    .typo-display-l { font-size: 3rem; /* 48px */ }
+  }
+  @media (min-width: 1024px) {
+    .typo-display-l { font-size: 3.75rem; /* 60px */ }
+  }
+
+  .typo-h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.875rem; /* 30px */
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  @media (min-width: 640px) {
+    .typo-h1 { font-size: 2.25rem; /* 36px */ }
+  }
+
+  .typo-h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  @media (min-width: 640px) {
+    .typo-h2 { font-size: 1.75rem; /* 28px */ }
+  }
+
+  .typo-h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  .typo-body-lg {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem; /* 16px */
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .typo-body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .typo-body-sm {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .typo-caption {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.6875rem; /* 11px */
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .typo-button {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+
+  .typo-label {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.2;
+    font-weight: 600;
+  }
+}

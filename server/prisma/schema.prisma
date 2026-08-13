@@ -1,0 +1,272 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  phone     String?
+  avatar    String?
+  gender    String?
+  skinType  String?
+  role      String   @default("USER") // USER | ADMIN
+  joinedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  addresses       Address[]
+  paymentMethods  PaymentMethod[]
+  reviews         Review[]
+  cart            Cart?
+  orders          Order[]
+  consultations   AiConsultation[]
+  chatMessages    ChatMessage[]
+}
+
+model Address {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  fullName  String
+  phone     String
+  email     String
+  line1     String
+  line2     String?
+  city      String
+  state     String
+  pincode   String
+  landmark  String?
+  isDefault Boolean  @default(false)
+  label     String   @default("home") // home | work | other
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PaymentMethod {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @db.ObjectId
+  type      String  // card | upi | wallet | netbanking
+  label     String
+  detail    String
+  isDefault Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String    @unique
+  image       String
+  description String?
+  products    Product[]
+}
+
+model Product {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  sku                 String?  @unique
+  slug                String   @unique
+  name                String
+  brand               String
+  categoryId          String   @db.ObjectId
+  categoryName        String
+  categorySlug        String
+  shortDescription    String
+  description         String
+  mrp                 Float
+  offerPrice          Float
+  discount            Float
+  rating              Float    @default(0)
+  ratingCount         Int      @default(0)
+  stock               Int      @default(100)
+  isBestSeller        Boolean  @default(false)
+  isTrending          Boolean  @default(false)
+  isDoctorRecommended Boolean  @default(false)
+  isNew               Boolean  @default(true)
+  isAiRecommended     Boolean  @default(false)
+  skinTypes           String   // JSON stringified array of SkinType
+  concerns            String   // JSON stringified array of Concern
+  benefits            String   // JSON stringified array
+  usage               String   // JSON stringified array
+  keyFacts            String   // JSON stringified array
+  tags                String   // JSON stringified array
+  soldCount           Int      @default(0)
+  status              String   @default("active") // active | inactive | out-of-stock
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  category    Category       @relation(fields: [categoryId], references: [id])
+  images      ProductImage[]
+  ingredients Ingredient[]
+  reviews     Review[]
+  faqs        FAQ[]
+  cartItems   CartItem[]
+}
+
+model ProductImage {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId String  @db.ObjectId
+  url       String
+  alt       String?
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Ingredient {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId     String  @db.ObjectId
+  name          String
+  description   String
+  concentration String?
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId String   @db.ObjectId
+  userId    String?  @db.ObjectId
+  userName  String
+  rating    Float
+  title     String?
+  comment   String
+  date      String
+  verified  Boolean  @default(true)
+  helpful   Int      @default(0)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model FAQ {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  productId String @db.ObjectId
+  question  String
+  answer    String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Offer {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  subtitle      String
+  code          String?
+  badge         String
+  background    String
+  image         String?
+  discountLabel String
+  type          String  // flash | season | combo | referral
+}
+
+model Coupon {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  code         String   @unique
+  description  String
+  discountType String   // percent | flat
+  value        Float
+  minOrder     Float    @default(0)
+  maxDiscount  Float?
+  validTill    String
+  active       Boolean  @default(true)
+}
+
+model Cart {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String     @unique @db.ObjectId
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
+}
+
+model CartItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  cartId    String  @db.ObjectId
+  productId String  @db.ObjectId
+  quantity  Int     @default(1)
+  variant   String?
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId        String   @unique
+  userId         String   @db.ObjectId
+  subtotal       Float
+  discount       Float
+  shipping       Float
+  gst            Float
+  couponCode     String?
+  couponDiscount Float    @default(0)
+  total          Float
+  paymentMethod  String
+  paymentStatus  String   @default("pending") // paid | failed | pending | refunded
+  status         String   @default("pending") // pending | confirmed | packed | shipped | out-for-delivery | delivered | cancelled | refunded
+  addressJson    String   // Stringified ShippingAddress object
+  placedAt       DateTime @default(now())
+  eta            String
+  rated          Boolean  @default(false)
+
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items    OrderItem[]
+  timeline OrderTimeline[]
+}
+
+model OrderItem {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String @db.ObjectId
+  productId String @db.ObjectId
+  name      String
+  image     String
+  quantity  Int
+  price     Float
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model OrderTimeline {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId String   @db.ObjectId
+  status  String
+  label   String
+  at      DateTime @default(now())
+  note    String?
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model AiConsultation {
+  id                         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                     String   @db.ObjectId
+  date                       DateTime @default(now())
+  answersJson                String   // Stringified answers
+  selfie                     String?
+  reportJson                 String   // Stringified AiReport
+  routineJson                String   // Stringified routine
+  lifestyleTipsJson          String   // Stringified array
+  recommendedProductIdsJson  String   // Stringified array of product IDs
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  role      String   // user | assistant
+  text      String?
+  type      String   @default("text") // text | suggestion | products | analysis
+  timestamp DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
