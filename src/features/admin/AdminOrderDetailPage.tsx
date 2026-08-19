@@ -228,7 +228,7 @@ export function AdminOrderDetailPage() {
                     <div className="flex items-center gap-4 min-w-0 flex-1">
                       <div className="size-16 shrink-0 rounded-xl bg-[#FAFAFA] border border-[#E5E7EB] p-1.5 flex items-center justify-center overflow-hidden">
                         <img
-                          src={itemImg}
+                          src={itemImg || undefined}
                           alt={item.name}
                           className="size-full object-contain"
                           onError={(e) => {

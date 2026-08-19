@@ -62,6 +62,8 @@ export type Concern =
   | 'dry-cheeks'
   | 'sweat-folds'
   | 'chafing'
+  | 'barrier-repair'
+
 
 export interface Ingredient {
   name: string
@@ -92,7 +94,9 @@ export interface Faq {
 export interface ProductImage {
   id?: string
   url: string
+  publicId?: string
   alt?: string
+  type?: 'primary' | 'gallery' | 'lifestyle' | 'detail'
 }
 
 export interface Product {
@@ -605,58 +609,4 @@ export interface StoreSettingsPayload {
   updatedAt?: string
 }
 
-export interface AnalyticsTimePoint {
-  date: string
-  label?: string
-  revenue?: number
-  orders?: number
-  cancelled?: number
-  customers?: number
-}
 
-export interface AnalyticsOrderStatus {
-  status: string
-  count: number
-}
-
-export interface AnalyticsTopProduct {
-  productId: string
-  name: string
-  unitsSold: number
-  revenue: number
-}
-
-export interface AnalyticsPromotionsSummary {
-  couponOrders: number
-  totalDiscount: number
-  topCoupons: { code: string; count: number }[]
-}
-
-export interface RealAnalyticsPayload {
-  range: {
-    key: string
-    label: string
-    start: string
-    end: string
-  }
-  summary: RealAnalyticsSummary
-  revenueTrend: AnalyticsTimePoint[]
-  orderTrend: AnalyticsTimePoint[]
-  orderStatus: AnalyticsOrderStatus[]
-  topProducts: AnalyticsTopProduct[]
-  customerTrend: AnalyticsTimePoint[]
-  promotions: AnalyticsPromotionsSummary
-}
-
-export interface StoreSettingsPayload {
-  id?: string
-  storeName: string
-  supportEmail: string
-  supportPhone: string
-  freeShippingThreshold: number
-  gstRate: number
-  lowStockThreshold: number
-  maintenanceMode: boolean
-  aiAssistantEnabled: boolean
-  updatedAt?: string
-}

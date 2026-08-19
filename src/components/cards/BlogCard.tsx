@@ -17,76 +17,79 @@ export function BlogCard({ post, className }: BlogCardProps) {
   const pubDate = post.publishedAt || post.date || new Date().toISOString()
 
   return (
-    <Link
-      to={`/blog`}
+    <article
       className={cn(
-        'group flex flex-col overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-2xs transition-all duration-300 hover:shadow-md hover:border-[#111111]/30 h-full',
+        'group flex flex-col overflow-hidden rounded-2xl border border-[#E1E8EA] bg-white shadow-2xs transition-all duration-300 hover:shadow-xs hover:border-[#0F8F83]/30 h-full',
         className
       )}
     >
-      {/* Article Cover Image */}
-      <div className="relative aspect-16/10 overflow-hidden bg-[#FAF7F2] w-full shrink-0">
-        <SmartImage
-          src={imageUrl}
-          alt={post.title}
-          category={post.category}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-102"
-        />
-        <div className="absolute left-3.5 top-3.5 z-10 flex items-center gap-2">
-          <span className="rounded-full bg-white/95 backdrop-blur-sm border border-[#E5E7EB] px-3 py-1 font-semibold text-[#111111] text-[10px] uppercase tracking-wider shadow-2xs">
-            {post.category}
-          </span>
-        </div>
-      </div>
-
-      {/* Article Body */}
-      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-        <div className="space-y-2.5">
-          {/* Read time & Date */}
-          <div className="flex items-center gap-3 text-[11px] text-[#6B7280] font-normal">
-            <span className="flex items-center gap-1">
-              <Clock className="size-3 text-[#6B7280]" />
-              <span>{post.readTime || '5 min read'}</span>
-            </span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <Calendar className="size-3 text-[#6B7280]" />
-              <span>{formatDate(pubDate)}</span>
+      <Link to="/blog" className="flex flex-col h-full">
+        {/* Article Cover Image (16:10 Standardized Ratio) */}
+        <div className="relative aspect-16/10 overflow-hidden bg-[#F3F8FA] w-full shrink-0">
+          <SmartImage
+            src={imageUrl}
+            alt={post.title}
+            category={post.category}
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-102"
+          />
+          <div className="absolute left-3.5 top-3.5 z-10 flex items-center gap-2">
+            <span className="rounded-full bg-white/95 backdrop-blur-xs border border-[#E1E8EA] px-3 py-1 font-semibold text-[#111111] text-[10px] uppercase tracking-widest shadow-2xs">
+              {post.category}
             </span>
           </div>
-
-          {/* Title */}
-          <h3 className="font-serif text-lg font-normal leading-snug text-[#111111] group-hover:text-black group-hover:translate-x-0.5 transition-all">
-            {post.title}
-          </h3>
-
-          {/* Excerpt */}
-          <p className="line-clamp-2 text-xs text-[#6B7280] font-light leading-relaxed">
-            {post.excerpt}
-          </p>
         </div>
 
-        {/* Card Footer: Author & Read CTA */}
-        <div className="pt-4 border-t border-[#E5E7EB] flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            {authorAvatar ? (
-              <SmartImage src={authorAvatar} alt={authorName} className="size-7 rounded-full object-cover border border-[#E5E7EB]" />
-            ) : (
-              <div className="flex size-7 items-center justify-center rounded-full bg-[#111111] text-white text-[10px] font-semibold">
-                {authorName.charAt(0)}
-              </div>
-            )}
-            <div>
-              <p className="text-xs font-semibold text-[#111111]">{authorName}</p>
-              {authorRole && <p className="text-[10px] text-[#9CA3AF] font-light">{authorRole}</p>}
+        {/* Article Body */}
+        <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div className="space-y-2.5">
+            {/* Read time & Date */}
+            <div className="flex items-center gap-3 text-[11px] text-[#7B8790] font-medium">
+              <span className="flex items-center gap-1">
+                <Clock className="size-3 text-[#0F8F83]" />
+                <span>{post.readTime || '5 min read'}</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <Calendar className="size-3 text-[#7B8790]" />
+                <span>{formatDate(pubDate)}</span>
+              </span>
             </div>
+
+            {/* Title */}
+            <h3 className="font-serif text-lg sm:text-[19px] font-normal leading-snug text-[#111111] group-hover:text-[#0F8F83] transition-colors">
+              {post.title}
+            </h3>
+
+            {/* Excerpt */}
+            <p className="line-clamp-2 text-xs text-[#52616A] font-normal leading-relaxed">
+              {post.excerpt}
+            </p>
           </div>
 
-          <span className="flex items-center gap-1 text-xs font-medium text-[#111111] group-hover:translate-x-1 transition-transform">
-            Read <ArrowRight className="size-3.5" />
-          </span>
+          {/* Card Footer: Author & Read CTA */}
+          <div className="pt-4 border-t border-[#E1E8EA] flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              {authorAvatar ? (
+                <SmartImage src={authorAvatar} alt={authorName} className="size-7 rounded-full object-cover border border-[#E1E8EA]" />
+              ) : (
+                <div className="flex size-7 items-center justify-center rounded-full bg-[#111111] text-white text-[10px] font-semibold">
+                  {authorName.charAt(0)}
+                </div>
+              )}
+              <div>
+                <p className="text-xs font-semibold text-[#111111]">{authorName}</p>
+                {authorRole && <p className="text-[10px] text-[#7B8790] font-normal">{authorRole}</p>}
+              </div>
+            </div>
+
+            <span className="flex items-center gap-1 text-xs font-semibold text-[#111111] group-hover:text-[#0F8F83] group-hover:translate-x-1 transition-all">
+              Read <ArrowRight className="size-3.5" />
+            </span>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </article>
   )
 }
+
+

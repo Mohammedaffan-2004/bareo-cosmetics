@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CheckCircle2, XCircle, Info, AlertTriangle, X } from 'lucide-react'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
@@ -62,6 +63,14 @@ export function Toaster() {
 
 function AutoDismiss({ id }: { id: string }) {
   const dispatch = useAppDispatch()
-  setTimeout(() => dispatch(dismissToast(id)), 3500)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch(dismissToast(id))
+    }, 3500)
+
+    return () => clearTimeout(timer)
+  }, [id, dispatch])
+
   return null
 }

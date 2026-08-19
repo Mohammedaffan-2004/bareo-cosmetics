@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Sparkles, ShieldCheck, Leaf, FlaskConical } from 'lucide-react'
+import { ArrowRight, Sparkles, Check } from 'lucide-react'
 import type { HomeBanner } from '@/types'
 import { Button } from '@/components/ui/button'
 
@@ -9,6 +9,14 @@ interface HeroProps {
   banner?: HomeBanner
 }
 
+/**
+ * Bareo Immersive Homepage Hero Stage — Premium Clinical D2C Art-Directed Canvas
+ * - Continuous Pale Icy-Blue Stage (#F0F6F9)
+ * - Hero Desktop Height Target: 520px – 560px (Dense, spacious, luxury proportions)
+ * - 100% Seamless Integration: Zero vertical split lines, zero cards, zero box borders
+ * - Absolute Visual Positioning + Double Gradient Masking for flawless left-edge melt
+ * - Real React Typography (62px Editorial Serif Heading), 46px Pill CTAs & Integrated Benefits
+ */
 export function Hero({ banner: _banner }: HeroProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
@@ -21,101 +29,105 @@ export function Hero({ banner: _banner }: HeroProps) {
   }, [])
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF7F2] py-10 lg:py-16 border-b border-[#E5E7EB]" aria-label="Hero Stage">
-      <div className="container-page grid items-center gap-12 lg:grid-cols-12">
-        {/* Left Typography Column */}
+    <section
+      className="relative overflow-hidden bg-[#F0F6F9] border-b border-slate-200/70 min-h-[500px] sm:min-h-[530px] lg:min-h-[560px] flex items-center py-6 sm:py-8 lg:py-0"
+      aria-label="Hero Stage"
+    >
+      {/* Right Product Scene — Positioned absolutely on desktop to eliminate grid splits */}
+      <div className="absolute inset-y-0 right-0 w-full sm:w-[58%] lg:w-[62%] pointer-events-none overflow-hidden hidden sm:block">
+        <picture className="contents">
+          <source srcSet="/editorial/home/bareo-home-hero.webp" type="image/webp" />
+          <img
+            src="/editorial/home/bareo-home-hero-v2.png"
+            alt="Bareo Skincare Actives Collection"
+            loading="eager"
+            // @ts-expect-error - fetchPriority attribute support
+            fetchpriority="high"
+            decoding="async"
+            className="h-full w-full object-cover object-center lg:object-right transition-transform duration-700 ease-out lg:scale-108"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent 0%, black 28%, black 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 28%, black 100%)'
+            }}
+          />
+        </picture>
+        {/* Soft edge blend overlay so lighting flows naturally into left canvas */}
+        <div className="absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-[#F0F6F9] via-[#F0F6F9]/70 to-transparent pointer-events-none" />
+      </div>
+
+      <div className="container-page relative z-10 grid items-center lg:grid-cols-12 w-full py-4 lg:py-0">
+        {/* Left Column: Content Area Layered over left canvas */}
         <motion.div
           initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-6 lg:col-span-7"
+          className="space-y-5 lg:col-span-6 xl:col-span-5 max-w-[500px] z-10"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#E5E7EB] bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-[#111111] shadow-xs">
-            <Sparkles className="size-3.5 text-[#7C3AED]" /> Dermatologist Formulated • From ₹199
+          {/* Subtle Eyebrow Pill */}
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/90 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#111111] shadow-2xs backdrop-blur-xs">
+            <span className="text-[#7C3AED]">✦</span> DERMATOLOGIST FORMULATED
           </div>
 
-          <h1 className="font-serif text-4xl font-normal leading-[1.12] tracking-tight text-[#111111] sm:text-5xl lg:text-6xl">
-            Science for <br className="hidden sm:inline" />
+          {/* Large Editorial Heading */}
+          <h1 className="font-serif text-4xl font-normal leading-[1.00] tracking-tight text-[#111111] sm:text-5xl lg:text-[62px]">
+            Science for <br />
             <span className="italic font-serif">Everyday Skin.</span>
           </h1>
 
-          <p className="max-w-xl text-base text-[#4B5563] leading-relaxed font-normal sm:text-lg">
-            Clean, high-performance actives formulated by dermatologists for everyday skin. Proven clinical results at honest, affordable prices starting from ₹199.
+          {/* Supporting Copy */}
+          <p className="text-base text-[#334155] leading-relaxed font-normal sm:text-[17px] max-w-[450px]">
+            Clean, high-performance actives designed by dermatologists for real, everyday results.
           </p>
 
-          {/* Dual CTAs: Commerce Solid Obsidian (#111111) + AI Solid Mineral Lavender (#7C3AED) */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          {/* Action Pill Buttons (46px height) */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
             <Link to="/shop" className="w-full sm:w-auto">
-              <Button size="lg" variant="primary" className="h-12 w-full sm:w-auto rounded-xl px-7 text-sm font-semibold shadow-xs min-h-[44px]">
-                Shop Bareo Actives <ArrowRight className="size-4 ml-1" />
+              <Button
+                size="lg"
+                variant="primary"
+                className="h-11.5 w-full sm:w-auto rounded-full px-7 text-sm font-semibold shadow-2xs min-h-[46px] bg-[#111111] text-white hover:bg-black transition-all hover:scale-[1.02] active:scale-[0.99]"
+              >
+                Shop Bareo Actives <ArrowRight className="size-4 ml-2" />
               </Button>
             </Link>
             <Link to="/skin-analysis" className="w-full sm:w-auto">
-              <Button size="lg" variant="ai" className="h-12 w-full sm:w-auto rounded-xl px-7 text-sm font-semibold shadow-xs min-h-[44px]">
-                <Sparkles className="size-4 mr-1" /> Start AI Assessment
+              <Button
+                size="lg"
+                variant="ai"
+                className="h-11.5 w-full sm:w-auto rounded-full px-7 text-sm font-semibold shadow-2xs min-h-[46px] bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition-all hover:scale-[1.02] active:scale-[0.99]"
+              >
+                Start AI Assessment <Sparkles className="size-4 ml-1.5 text-white/90" />
               </Button>
             </Link>
           </div>
 
-          {/* Minimal Trust Badges Strip */}
-          <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[#E5E7EB] text-xs font-medium text-[#111111]">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="size-4 text-[#059669]" />
-              <span>Derm Approved</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Leaf className="size-4 text-[#059669]" />
-              <span>100% Clean Actives</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FlaskConical className="size-4 text-[#059669]" />
-              <span>Fragrance Free</span>
+          {/* Integrated Benefits Strip with Divider */}
+          <div className="pt-4 border-t border-slate-300/50">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs font-semibold text-[#111111]">
+              <div className="flex items-center gap-1.5">
+                <Check className="size-3.5 text-[#059669]" />
+                <span>Derm Approved</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Check className="size-3.5 text-[#059669]" />
+                <span>100% Clean Actives</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Check className="size-3.5 text-[#059669]" />
+                <span>Fragrance Free</span>
+              </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Right Hero Product Stage with Floating Motion */}
-        <motion.div
-          initial={prefersReducedMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none"
-        >
-          <div className="relative overflow-hidden rounded-2xl bg-white border border-[#E5E7EB] aspect-square p-6 flex items-center justify-center shadow-xs">
-            <motion.img
-              src="/images/products/bareo-cica-serum.png"
-              alt="Bareo Cica & Niacinamide Calming Serum"
-              animate={prefersReducedMotion ? {} : { y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="h-full w-full object-contain"
-            />
-
-            {/* Soft Floating Active Ingredient Pills */}
-            <motion.div
-              animate={prefersReducedMotion ? {} : { y: [0, -5, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-6 left-6 rounded-xl bg-white/95 px-3 py-2 text-xs font-semibold text-[#111111] shadow-xs border border-[#E5E7EB] backdrop-blur-md"
-            >
-              10% Niacinamide
-            </motion.div>
-
-            <motion.div
-              animate={prefersReducedMotion ? {} : { y: [0, 5, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute bottom-6 right-6 rounded-xl bg-white/95 px-3 py-2 text-xs font-semibold text-[#111111] shadow-xs border border-[#E5E7EB] backdrop-blur-md"
-            >
-              5% Centella Cica
-            </motion.div>
-
-            <motion.div
-              animate={prefersReducedMotion ? {} : { y: [0, -4, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-              className="absolute bottom-6 left-6 rounded-xl bg-white/95 px-3 py-2 text-xs font-semibold text-[#111111] shadow-xs border border-[#E5E7EB] backdrop-blur-md"
-            >
-              pH 5.5 Balanced
-            </motion.div>
-          </div>
-        </motion.div>
+        {/* Mobile Product Visual Scene (Rendered under content on mobile screens < 640px) */}
+        <div className="sm:hidden relative w-full h-[320px] mt-6 overflow-hidden rounded-2xl">
+          <img
+            src="/editorial/home/bareo-home-hero-v2.png"
+            alt="Bareo Skincare Actives Collection"
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
       </div>
     </section>
   )

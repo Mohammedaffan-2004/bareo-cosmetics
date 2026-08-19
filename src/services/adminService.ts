@@ -4,7 +4,7 @@ import type { DashboardOverviewData, RealAnalyticsPayload, StoreSettingsPayload,
 import { OFFERS as INITIAL_OFFERS } from '@/mocks/static'
 import { mockError, mockFetch } from './mockApi'
 import { getCatalog, setCatalog } from './productStore'
-import { apiFetch } from './apiClient'
+import { apiFetch, apiUpload } from './apiClient'
 
 let offerStore: Offer[] = [...INITIAL_OFFERS]
 
@@ -12,6 +12,24 @@ export type ProductFormInput = Partial<Product> & Pick<Product, 'name' | 'catego
 
 export function adminService() {
   return {
+    async uploadProductImage(file: File): Promise<{ url: string; publicId: string }> {
+      const formData = new FormData()
+      formData.append('image', file)
+
+      const res = await apiUpload<{ url: string; publicId: string }>('/admin/products/upload-image', formData)
+      if (res.data) {
+        return res.data
+      }
+      throw new Error(res.message || 'Failed to upload product image')
+    },
+
+    async deleteProductImage(publicId: string): Promise<boolean> {
+      const res = await apiFetch<{ success: boolean }>('/admin/products/delete-image', {
+        method: 'POST',
+        body: JSON.stringify({ publicId }),
+      })
+      return Boolean(res.data?.success)
+    },
     async getDashboard(): Promise<DashboardOverviewData> {
       const res = await apiFetch<DashboardOverviewData>('/admin/analytics')
       if (res.data) {

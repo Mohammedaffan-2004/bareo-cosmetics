@@ -359,6 +359,15 @@ export function AiConsultationReport({ consultation, compact }: { consultation: 
           )}
         </div>
       )}
+
+      {/* 5. CLINICAL COSMETIC ADVISORY DISCLAIMER */}
+      <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAFAFA] p-4 sm:p-5 flex items-start sm:items-center gap-3 text-[#6B7280]">
+        <ShieldCheck className="size-4 text-[#0F8F83] shrink-0 mt-0.5 sm:mt-0" />
+        <p className="text-[11px] sm:text-xs leading-relaxed font-light">
+          <strong className="font-semibold text-[#111111]">Advisory: </strong>
+          BAREO Skin Diagnostic is an AI-powered cosmetic analysis tool designed to recommend daily skincare regimens. It does not provide medical diagnosis or replace professional dermatological advice.
+        </p>
+      </div>
     </div>
   )
 }

@@ -510,7 +510,7 @@ export function CheckoutPage() {
                   const itemPrice = item.product?.offerPrice ?? item.product?.price ?? 0
                   return (
                     <div key={item.product.id} className="flex items-center gap-3">
-                      <img src={item.product.images?.[0]?.url || getProductImage(item.product)} alt="" className="size-14 rounded-xl object-cover bg-[#FAFAFA] border border-[#E5E7EB]" />
+                      <img src={getProductImage(item.product) || undefined} alt="" className="size-14 rounded-xl object-cover bg-[#FAFAFA] border border-[#E5E7EB]" />
                       <div className="min-w-0 flex-1">
                         <p className="line-clamp-1 text-sm font-semibold text-[#111111]">{item.product.name}</p>
                         <p className="text-xs text-[#6B7280]">Qty {item.quantity} × {formatINR(itemPrice)}</p>

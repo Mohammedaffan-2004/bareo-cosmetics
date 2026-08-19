@@ -22,6 +22,7 @@ import { useRecentlyViewed } from '@/hooks/useRecentlyViewed'
 import { useProductCompatibility } from '@/hooks/useRecommendations'
 import { useToast } from '@/hooks/useToast'
 import { getProductImage } from '@/utils/productImages'
+import { ProductVisualStage } from '@/components/common/ProductVisualStage'
 import { RatingStars } from '@/components/common/RatingStars'
 import { PriceTag } from '@/components/common/PriceTag'
 import { QuantitySelector } from '@/components/common/QuantitySelector'
@@ -59,7 +60,11 @@ export function ProductDetailPage() {
     } else {
       document.title = 'Bareo Cosmetics — Science for Everyday Skin'
     }
-  }, [product?.name])
+    if (product?.images && product.images.length > 0) {
+      const primaryIdx = product.images.findIndex((img) => img.type === 'primary')
+      setActiveImage(primaryIdx >= 0 ? primaryIdx : 0)
+    }
+  }, [product])
 
   const { data: compatibility } = useProductCompatibility(product?.id || slug)
 
@@ -177,27 +182,21 @@ export function ProductDetailPage() {
       <div className="container-page grid gap-10 pb-16 lg:grid-cols-12">
         {/* Left Column: Product Gallery & Wishlist (6 Cols) */}
         <div className="lg:col-span-6 space-y-4">
-          <div
-            ref={imageBoxRef}
+          <ProductVisualStage
+            product={product}
+            imageUrl={product.images?.[activeImage]?.url || getProductImage(product)}
+            alt={product.name}
+            variant="detail"
+            priority
+            containerRef={imageBoxRef}
             onMouseMove={handleZoom}
             onMouseLeave={() => setZoom(null)}
-            className="relative aspect-square overflow-hidden rounded-3xl border border-[#E5E7EB] bg-[#FAF7F2] flex items-center justify-center p-6 sm:p-8"
+            imageClassName={cn(
+              'h-full w-full object-contain transition-transform duration-300 ease-out',
+              zoom ? 'scale-[1.8]' : 'scale-100'
+            )}
+            imageStyle={zoom ? { transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined}
           >
-            {(() => {
-              const displayUrl = getProductImage(product)
-              return (
-                <img
-                  src={displayUrl}
-                  alt={product.name}
-                  className={cn(
-                    'h-full w-full object-contain transition-transform duration-300 ease-out',
-                    zoom ? 'scale-[1.8]' : 'scale-100'
-                  )}
-                  style={zoom ? { transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined}
-                />
-              )
-            })()}
-
             {/* Primary Badge */}
             {primaryBadge && (
               <div className="absolute left-4 top-4 z-10">
@@ -228,7 +227,7 @@ export function ProductDetailPage() {
             >
               <Heart className={cn('size-4 transition-transform', inWishlist && 'fill-[#EF4444] text-[#EF4444] scale-110')} />
             </button>
-          </div>
+          </ProductVisualStage>
 
           {/* Gallery Thumbnails (Only render if available) */}
           {product.images && product.images.length > 1 && (

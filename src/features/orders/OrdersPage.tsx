@@ -328,7 +328,7 @@ export function OrdersPage() {
                     <div className="flex gap-4 min-w-0 flex-1">
                       <div className="size-20 sm:size-24 shrink-0 rounded-2xl bg-[#FAFAFA] border border-[#E5E7EB] p-2 flex items-center justify-center overflow-hidden">
                         <img
-                          src={leadItemImageUrl}
+                          src={leadItemImageUrl || undefined}
                           alt={leadItem?.name || 'Bareo Product'}
                           className="size-full object-contain"
                           onError={(e) => {
@@ -397,7 +397,7 @@ export function OrdersPage() {
                           return (
                             <div key={idx} className="size-12 rounded-xl bg-[#FAFAFA] border border-[#E5E7EB] p-1 flex items-center justify-center overflow-hidden">
                               <img
-                                src={subImg}
+                                src={subImg || undefined}
                                 alt={it.name}
                                 className="size-full object-contain"
                                 title={it.name}

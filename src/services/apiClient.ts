@@ -120,3 +120,48 @@ export async function apiFetch<T>(
     }
   }
 }
+
+/**
+  Uploads FormData files to the backend server with Bearer auth token attached.
+ */
+export async function apiUpload<T>(
+  endpoint: string,
+  formData: FormData
+): Promise<ApiResponse<T>> {
+  const token = getStoredToken()
+
+  const headers: Record<string, string> = {}
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
+  }
+
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`
+  const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${cleanEndpoint}`
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: formData,
+  })
+
+  const text = await response.text()
+  let result: any = null
+  if (text && text.trim()) {
+    try {
+      result = JSON.parse(text)
+    } catch {
+      result = null
+    }
+  }
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      removeStoredToken()
+    }
+    const errorMessage = result?.message || `Upload failed (HTTP ${response.status})`
+    throw { message: errorMessage, status: response.status }
+  }
+
+  return result
+}
+

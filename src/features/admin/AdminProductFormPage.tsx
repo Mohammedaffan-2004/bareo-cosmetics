@@ -9,6 +9,9 @@ import {
   Sparkles,
   Wand2,
   Info,
+  Upload,
+  Loader2,
+  CheckCircle2,
 } from 'lucide-react'
 import { adminService } from '@/services/adminService'
 import { productService } from '@/services/productService'
@@ -79,6 +82,66 @@ export function AdminProductFormPage() {
   const [isDirty, setIsDirty] = useState(false)
   const [showDiscardModal, setShowDiscardModal] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [uploadingIdx, setUploadingIdx] = useState<number | null>(null)
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, targetIdx: number) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const validMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', 'image/avif']
+    if (!validMimeTypes.includes(file.type.toLowerCase())) {
+      toast.error('Invalid image file', 'Please select a valid image (JPG, PNG, WebP, GIF, AVIF).')
+      return
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('File size exceeds limit', 'Image must be smaller than 5 MB.')
+      return
+    }
+
+    try {
+      setUploadingIdx(targetIdx)
+      const result = await adminService().uploadProductImage(file)
+      toast.success('Image uploaded', 'File uploaded to Cloudinary successfully.')
+
+      const updated = [...form.images]
+      if (updated[targetIdx]) {
+        updated[targetIdx] = {
+          ...updated[targetIdx],
+          url: result.url,
+          publicId: result.publicId,
+          alt: form.name,
+        }
+      } else {
+        updated[targetIdx] = {
+          url: result.url,
+          publicId: result.publicId,
+          alt: form.name,
+        }
+      }
+      setIsDirty(true)
+      setForm((prev) => ({ ...prev, images: updated }))
+    } catch (error: any) {
+      toast.error('Upload failed', error?.message || 'Could not upload image to Cloudinary.')
+    } finally {
+      setUploadingIdx(null)
+      e.target.value = ''
+    }
+  }
+
+  const handleRemoveImage = async (idx: number) => {
+    const imgToRemove = form.images[idx]
+    if (imgToRemove?.publicId) {
+      try {
+        await adminService().deleteProductImage(imgToRemove.publicId)
+        toast.info('Cloudinary asset deleted', 'Image removed from Cloudinary storage.')
+      } catch {
+        // Ignore background deletion error
+      }
+    }
+    setIsDirty(true)
+    setForm((prev) => ({ ...prev, images: prev.images.filter((_, i) => i !== idx) }))
+  }
 
   // Form State Architecture
   const [form, setForm] = useState(() => ({
@@ -104,7 +167,7 @@ export function AdminProductFormPage() {
     tags: [] as string[],
     skinTypes: ['combination', 'sensitive', 'dry'] as string[],
     concerns: ['redness', 'dehydration', 'barrier-damage'] as string[],
-    images: [{ url: '/images/products/bareo-cica-serum.png', alt: '' }] as { url: string; alt?: string }[],
+    images: [{ url: '/images/products/bareo-cica-serum.webp', alt: '' }] as { url: string; alt?: string; publicId?: string }[],
     isBestSeller: false,
     isTrending: false,
     isDoctorRecommended: true,
@@ -788,19 +851,47 @@ export function AdminProductFormPage() {
                 <div className="rounded-xl border border-[#E5E7EB] bg-[#FAFAFA]/50 p-4 space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">PRIMARY IMAGE</span>
-                    <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                      Storefront Cover
-                    </span>
+                    {form.images[0]?.publicId ? (
+                      <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                        <CheckCircle2 className="size-3" /> Cloudinary Managed
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                        Storefront Cover
+                      </span>
+                    )}
                   </div>
 
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <SmartImage
-                      src={form.images[0]?.url || '/images/products/bareo-cica-serum.png'}
+                      src={form.images[0]?.url || '/images/products/bareo-cica-serum.webp'}
                       alt="Primary Cover"
                       className="size-16 rounded-xl object-contain bg-white border border-[#E5E7EB] p-1.5 shrink-0"
                     />
-                    <div className="flex-1 space-y-1">
-                      <Label className="text-[11px] font-semibold text-[#6B7280]">Image URL</Label>
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label className="text-[11px] font-semibold text-[#6B7280]">Image Source</Label>
+                        <label className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg border border-[#E5E7EB] bg-white px-3 py-1 text-xs font-semibold text-[#111111] hover:bg-[#FAFAFA] transition-colors shadow-2xs">
+                          {uploadingIdx === 0 ? (
+                            <>
+                              <Loader2 className="size-3.5 animate-spin text-[#7C3AED]" />
+                              <span>Uploading...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Upload className="size-3.5 text-[#7C3AED]" />
+                              <span>Upload to Cloudinary</span>
+                            </>
+                          )}
+                          <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                            className="hidden"
+                            onChange={(e) => handleFileUpload(e, 0)}
+                            disabled={uploadingIdx === 0}
+                          />
+                        </label>
+                      </div>
                       <input
                         type="text"
                         value={form.images[0]?.url || ''}
@@ -810,7 +901,7 @@ export function AdminProductFormPage() {
                           else updated[0] = { url: e.target.value, alt: form.name }
                           set({ images: updated })
                         }}
-                        placeholder="https://... or /images/products/bareo-cica-serum.png"
+                        placeholder="https://res.cloudinary.com/... or /images/products/..."
                         className="h-9 w-full rounded-lg border border-[#E5E7EB] bg-white px-3 text-xs text-[#111111]"
                       />
                     </div>
@@ -821,55 +912,90 @@ export function AdminProductFormPage() {
                 <div className="space-y-3 pt-2">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF]">SECONDARY IMAGES</h3>
-                    <button
-                      type="button"
-                      onClick={() => set({ images: [...form.images, { url: '/images/products/bareo-cica-serum.png', alt: form.name }] })}
-                      className="text-xs font-semibold text-[#111111] hover:underline inline-flex items-center gap-1"
-                    >
-                      <Plus className="size-3.5" /> Add image
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <label className="cursor-pointer inline-flex items-center gap-1 text-xs font-semibold text-[#7C3AED] hover:underline">
+                        <Upload className="size-3.5" /> Upload Cloudinary Image
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                          className="hidden"
+                          onChange={(e) => handleFileUpload(e, form.images.length)}
+                          disabled={uploadingIdx !== null}
+                        />
+                      </label>
+                      <span className="text-[#9CA3AF]">·</span>
+                      <button
+                        type="button"
+                        onClick={() => set({ images: [...form.images, { url: '/images/products/bareo-cica-serum.webp', alt: form.name }] })}
+                        className="text-xs font-semibold text-[#111111] hover:underline inline-flex items-center gap-1"
+                      >
+                        <Plus className="size-3.5" /> Add URL
+                      </button>
+                    </div>
                   </div>
 
                   <div className="space-y-2">
                     {form.images.slice(1).map((img, idx) => {
                       const realIdx = idx + 1
                       return (
-                        <div key={realIdx} className="flex items-center gap-3 rounded-xl border border-[#E5E7EB] bg-white p-3">
+                        <div key={realIdx} className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-[#E5E7EB] bg-white p-3">
                           <SmartImage
                             src={img.url}
                             alt={`Secondary #${realIdx}`}
                             className="size-10 rounded-lg object-contain bg-[#FAFAFA] border border-[#E5E7EB] p-1 shrink-0"
                           />
-                          <input
-                            type="text"
-                            value={img.url}
-                            onChange={(e) => {
-                              const updated = [...form.images]
-                              updated[realIdx].url = e.target.value
-                              set({ images: updated })
-                            }}
-                            placeholder="Image URL"
-                            className="h-9 flex-1 rounded-lg border border-[#E5E7EB] bg-white px-3 text-xs text-[#111111]"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const updated = [...form.images]
-                              const [moved] = updated.splice(realIdx, 1)
-                              updated.unshift(moved)
-                              set({ images: updated })
-                            }}
-                            className="text-[11px] font-semibold text-[#7C3AED] hover:underline shrink-0"
-                          >
-                            Set primary
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => set({ images: form.images.filter((_, i) => i !== realIdx) })}
-                            className="flex size-8 items-center justify-center rounded-lg text-[#9CA3AF] hover:text-rose-600 transition-colors shrink-0"
-                          >
-                            <Trash2 className="size-4" />
-                          </button>
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] font-semibold text-[#9CA3AF]">Image #{realIdx}</span>
+                              {img.publicId && (
+                                <span className="text-[9px] font-semibold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded">
+                                  Cloudinary
+                                </span>
+                              )}
+                            </div>
+                            <input
+                              type="text"
+                              value={img.url}
+                              onChange={(e) => {
+                                const updated = [...form.images]
+                                updated[realIdx].url = e.target.value
+                                set({ images: updated })
+                              }}
+                              placeholder="Image URL"
+                              className="h-9 w-full rounded-lg border border-[#E5E7EB] bg-white px-3 text-xs text-[#111111]"
+                            />
+                          </div>
+                          <div className="flex items-center gap-2 shrink-0">
+                            <label className="cursor-pointer text-[11px] font-semibold text-[#7C3AED] hover:underline">
+                              {uploadingIdx === realIdx ? 'Uploading...' : 'Replace'}
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                                className="hidden"
+                                onChange={(e) => handleFileUpload(e, realIdx)}
+                                disabled={uploadingIdx === realIdx}
+                              />
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...form.images]
+                                const [moved] = updated.splice(realIdx, 1)
+                                updated.unshift(moved)
+                                set({ images: updated })
+                              }}
+                              className="text-[11px] font-semibold text-[#111111] hover:underline"
+                            >
+                              Set primary
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImage(realIdx)}
+                              className="flex size-8 items-center justify-center rounded-lg text-[#9CA3AF] hover:text-rose-600 transition-colors"
+                            >
+                              <Trash2 className="size-4" />
+                            </button>
+                          </div>
                         </div>
                       )
                     })}

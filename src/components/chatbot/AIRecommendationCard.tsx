@@ -5,6 +5,8 @@ import { addItem } from '@/store/slices/cartSlice'
 import { useToast } from '@/hooks/useToast'
 import { RatingStars } from '@/components/common/RatingStars'
 import { Badge } from '@/components/ui/badge'
+import { SmartImage } from '@/components/common/SmartImage'
+import { getProductImage } from '@/utils/productImages'
 import { cn, formatINR } from '@/utils'
 
 interface AIRecommendationCardProps {
@@ -21,7 +23,7 @@ export function AIRecommendationCard({ product, className, compact }: AIRecommen
   return (
     <div className={cn('overflow-hidden rounded-2xl border border-accent/40 bg-card shadow-card', className)}>
       <div className="flex gap-3 p-3">
-        <img src={product.images[0].url} alt={product.name} className={cn('shrink-0 rounded-xl object-cover', compact ? 'size-14' : 'size-16')} />
+        <SmartImage src={getProductImage(product)} alt={product.name} className={cn('shrink-0 rounded-xl object-contain bg-[#FAF7F2] p-1', compact ? 'size-14' : 'size-16')} />
         <div className="min-w-0 flex-1">
           <Badge variant="accent" className="gap-1 px-1.5 py-0 text-[10px]">
             <Sparkles className="size-2.5" /> AI Recommended

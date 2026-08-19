@@ -9,7 +9,7 @@ import { toggleWishlist } from '@/store/slices/wishlistSlice'
 import { useToast } from '@/hooks/useToast'
 import { cn, formatINR, formatNumber } from '@/utils'
 import { getProductImage } from '@/utils/productImages'
-import { SmartImage } from '@/components/common/SmartImage'
+import { ProductVisualStage } from '@/components/common/ProductVisualStage'
 
 interface ProductCardProps {
   product: Product
@@ -153,8 +153,8 @@ export function ProductCard({
     product.skinTypes && product.skinTypes.length > 0
       ? product.skinTypes.map((st) => st.charAt(0).toUpperCase() + st.slice(1)).slice(0, 2).join(' · ')
       : product.concerns && product.concerns.length > 0
-      ? `Best for ${product.concerns[0]}`
-      : 'All Skin Types'
+        ? `Best for ${product.concerns[0]}`
+        : 'All Skin Types'
 
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -184,15 +184,13 @@ export function ProductCard({
       )}
     >
       <Link to={`/product/${product.slug}`} className="flex flex-1 flex-col outline-none">
-        {/* 1. Predictable Square Product Image Stage */}
-        <div className="relative aspect-square overflow-hidden rounded-t-2xl bg-[#FAF7F2] border-b border-[#E5E7EB] flex items-center justify-center p-4">
-          <SmartImage
-            src={imageUrl}
-            alt={product.name}
-            fallbackSrc="/images/products/bareo-cica-serum.png"
-            className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-103"
-          />
-
+        {/* 1. Standardized Bareo Product Visual Stage */}
+        <ProductVisualStage
+          product={product}
+          imageUrl={imageUrl}
+          alt={product.name}
+          variant="card"
+        >
           {/* Primary Badge Tier */}
           {primaryBadge && (
             <div className="absolute left-3 top-3 z-10 flex flex-col gap-1 items-start">
@@ -231,7 +229,7 @@ export function ProductCard({
               </span>
             </div>
           )}
-        </div>
+        </ProductVisualStage>
 
         {/* 2. Product Details Stage */}
         <div className="flex flex-1 flex-col justify-between p-4 space-y-2.5">

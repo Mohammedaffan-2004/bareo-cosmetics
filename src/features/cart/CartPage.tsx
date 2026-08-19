@@ -172,7 +172,7 @@ export function CartPage() {
                   return (
                     <div key={addon.id} className="rounded-xl border border-[#E5E7EB] bg-[#FAFAFA]/50 p-3 space-y-2 flex flex-col justify-between">
                       <div className="space-y-1.5">
-                        <img src={imgUrl} alt={addon.name} className="h-16 w-full object-contain mx-auto" />
+                        <img src={imgUrl || undefined} alt={addon.name} className="h-16 w-full object-contain mx-auto" />
                         <p className="line-clamp-1 font-serif text-xs font-semibold text-[#111111]">{addon.name}</p>
                         <p className="text-[11px] font-bold text-[#111111]">{formatINR(addon.offerPrice)}</p>
                       </div>

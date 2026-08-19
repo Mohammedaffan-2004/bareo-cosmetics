@@ -3,7 +3,9 @@ import mongoose, { Schema, Document } from 'mongoose'
 export interface IProductImage {
   id?: string
   url: string
+  publicId?: string
   alt?: string
+  type?: 'primary' | 'gallery' | 'lifestyle' | 'detail'
 }
 
 export interface IIngredient {
@@ -81,7 +83,9 @@ const ProductSchema = new Schema<IProduct>(
     images: [
       {
         url: { type: String, required: true },
+        publicId: { type: String },
         alt: { type: String },
+        type: { type: String, default: 'primary' },
       },
     ],
     mrp: { type: Number, required: true },

@@ -93,14 +93,16 @@ export function AdminLoginPage() {
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative z-10 overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+              className="relative z-10 overflow-hidden rounded-3xl border border-white/10 shadow-2xl h-64 w-full max-w-md bg-gradient-to-br from-neutral-800 via-neutral-900 to-black p-8 flex flex-col justify-between xl:h-72"
             >
-              <img
-                src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=85"
-                alt="Luxury Skincare Studio Setup"
-                className="h-64 w-full max-w-md object-cover brightness-[0.92] contrast-[1.05] xl:h-72"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-300">Bareo Formulations</span>
+                <span className="text-xs font-serif italic text-slate-300">Edition 2026</span>
+              </div>
+              <div className="space-y-1 text-left">
+                <p className="font-serif text-xl font-normal text-white">Dermatological Precision</p>
+                <p className="text-xs text-slate-400 font-light">Bioactive actives formulated at therapeutic percentages.</p>
+              </div>
             </motion.div>
 
             <motion.div

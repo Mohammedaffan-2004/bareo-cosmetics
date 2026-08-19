@@ -1,116 +1,39 @@
 import type { Category, Product } from '@/types'
 
 /**
- * Maps any product (from client mock or MongoDB backend) to its corresponding
- * high-definition product image asset in public/images/products/.
+ * Maps any product (from client mock or MongoDB backend) to its primary
+ * Cloudinary product image URL. Returns `null` if no valid primary image exists.
  */
-export function getProductImage(product?: Partial<Product> | null): string {
-  if (!product) return '/images/products/bareo-cica-serum.png'
+export function getProductImage(product?: Partial<Product> | null): string | null {
+  if (!product) return null
 
-  const rawUrl = product.images?.[0]?.url
-  const validFiles = [
-    'babybodywash.png',
-    'babyMoisturizer.png',
-    'bareo-cica-serum.png',
-    'bodywash.png',
-    'conditioner.png',
-    'facewash.png',
-    'Moisturizer.png',
-    'serum.png',
-    'shampoo.png',
-    'sunscreen.png',
-    'vitaminc.png',
-    'bareo-hero-ad.png',
-  ]
+  // 1. Prefer explicit type === 'primary' image, falling back to images[0]
+  const primaryObj = product.images?.find((img) => img.type === 'primary')
+  const rawUrl = primaryObj?.url || product.images?.[0]?.url
 
-  if (rawUrl && !rawUrl.includes('unsplash.com') && !rawUrl.includes('placeholder')) {
-    const filename = rawUrl.split('/').pop() || ''
-    if (validFiles.includes(filename)) {
-      return `/images/products/${filename}`
-    }
+  // If rawUrl is a valid URL or local product image, return it
+  if (rawUrl && (rawUrl.startsWith('http://') || rawUrl.startsWith('https://') || rawUrl.startsWith('/new-img/'))) {
+    return rawUrl
   }
 
-  const name = (product.name || '').toLowerCase()
-  const catSlug = (product.categorySlug || '').toLowerCase()
-  const catName = (product.categoryName || '').toLowerCase()
-  const tags = (product.tags || []).join(' ').toLowerCase()
-  const combined = `${name} ${catSlug} ${catName} ${tags}`
-
-  // Direct match for Cica & Niacinamide Serum
-  if (combined.includes('cica') || combined.includes('calming serum')) {
-    return '/images/products/bareo-cica-serum.png'
-  }
-
-  // 1. Baby Care
-  if (catSlug.includes('baby') || catName.includes('baby') || combined.includes('baby')) {
-    if (combined.includes('wash') || combined.includes('shampoo') || combined.includes('cleanser')) {
-      return '/images/products/babybodywash.png'
-    }
-    return '/images/products/babyMoisturizer.png'
-  }
-
-  // 2. Hair Care
-  if (catSlug.includes('hair') || catName.includes('hair') || combined.includes('hair') || combined.includes('scalp')) {
-    if (combined.includes('conditioner') || combined.includes('mask') || combined.includes('oil')) {
-      return '/images/products/conditioner.png'
-    }
-    return '/images/products/shampoo.png'
-  }
-
-  // 3. Body Care
-  if (catSlug.includes('body') || catName.includes('body') || combined.includes('body') || combined.includes('hand') || combined.includes('cuticle') || combined.includes('scrub') || combined.includes('heel')) {
-    return '/images/products/bodywash.png'
-  }
-
-  // 4. Skincare Specifics
-  if (combined.includes('vitamin c') || combined.includes('radiance') || combined.includes('vit-c')) {
-    return '/images/products/vitaminc.png'
-  }
-  if (combined.includes('sunscreen') || combined.includes('spf') || combined.includes('sun')) {
-    return '/images/products/sunscreen.png'
-  }
-  if (combined.includes('wash') || combined.includes('cleanser') || combined.includes('facewash')) {
-    return '/images/products/facewash.png'
-  }
-  if (combined.includes('moisturizer') || combined.includes('hydrator') || combined.includes('cream') || combined.includes('balm')) {
-    return '/images/products/Moisturizer.png'
-  }
-
-  return '/images/products/bareo-cica-serum.png'
+  return rawUrl || null
 }
 
 /**
- * Maps category objects to existing clean PNG image assets.
+ * Maps category objects to existing clean image assets.
  */
 export function getCategoryImage(category?: Partial<Category> | null): string {
-  if (!category) return '/images/products/bareo-cica-serum.png'
+  if (!category) return '/editorial/category/bareo-category-skincare.jpg'
 
   const rawUrl = category.image
-  const validFiles = [
-    'babybodywash.png',
-    'babyMoisturizer.png',
-    'bareo-cica-serum.png',
-    'bodywash.png',
-    'conditioner.png',
-    'facewash.png',
-    'Moisturizer.png',
-    'serum.png',
-    'shampoo.png',
-    'sunscreen.png',
-    'vitaminc.png',
-  ]
-
-  if (rawUrl && !rawUrl.includes('unsplash.com')) {
-    const filename = rawUrl.split('/').pop() || ''
-    if (validFiles.includes(filename)) {
-      return `/images/products/${filename}`
-    }
+  if (rawUrl && (rawUrl.startsWith('http://') || rawUrl.startsWith('https://') || rawUrl.startsWith('/editorial/'))) {
+    return rawUrl
   }
 
   const slug = (category.slug || category.name || '').toLowerCase()
-  if (slug.includes('hair')) return '/images/products/shampoo.png'
-  if (slug.includes('body')) return '/images/products/bodywash.png'
-  if (slug.includes('baby')) return '/images/products/babyMoisturizer.png'
+  if (slug.includes('hair')) return '/editorial/category/bareo-category-haircare.jpg'
+  if (slug.includes('body')) return '/editorial/category/bareo-category-bodycare.jpg'
+  if (slug.includes('baby')) return '/editorial/category/bareo-category-babycare.jpg'
 
-  return '/images/products/bareo-cica-serum.png'
+  return '/editorial/category/bareo-category-skincare.jpg'
 }

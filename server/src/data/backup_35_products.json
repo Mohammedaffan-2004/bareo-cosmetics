@@ -1,0 +1,2295 @@
+[
+  {
+    "_id": "6a82eb05619b807ee5fb5852",
+    "sku": "BAR-SK-001",
+    "slug": "bareo-cica-niacinamide-calming-serum",
+    "name": "Bareo Cica & Niacinamide Calming Serum",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Soothing barrier serum with 10% Niacinamide & 5% Centella",
+    "description": "Bareo Cica & Niacinamide Calming Serum repairs damaged skin barriers, reduces redness, and balances oil production with pure botanical actives.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965642/bareo/products/niacinamide-serum.png",
+        "publicId": "bareo/products/niacinamide-serum",
+        "alt": "Bareo Cica & Niacinamide Calming Serum",
+        "_id": "6a82ee8b704aa082682f1d55"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968439/bareo/products/cica-niacinamide-calming-serum-cica-face-wash.png",
+        "publicId": "bareo/products/cica-niacinamide-calming-serum-cica-face-wash",
+        "alt": "Bareo Cica & Niacinamide Calming Serum Gallery View (cica-face-wash.png)",
+        "type": "gallery",
+        "_id": "6a82f977d9c00710dafea724"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968451/bareo/products/cica-niacinamide-calming-serum-centella-moisturizer.png",
+        "publicId": "bareo/products/cica-niacinamide-calming-serum-centella-moisturizer",
+        "alt": "Bareo Cica & Niacinamide Calming Serum Gallery View (centella-moisturizer.png)",
+        "type": "gallery",
+        "_id": "6a82f985d9c00710dafea729"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968464/bareo/products/cica-niacinamide-calming-serum-niacinamide-face-wash.png",
+        "publicId": "bareo/products/cica-niacinamide-calming-serum-niacinamide-face-wash",
+        "alt": "Bareo Cica & Niacinamide Calming Serum Gallery View (niacinamide-face-wash.png)",
+        "type": "gallery",
+        "_id": "6a82f991d9c00710dafea72f"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968484/bareo/products/cica-niacinamide-calming-serum-niacinamide-moisturizer.png",
+        "publicId": "bareo/products/cica-niacinamide-calming-serum-niacinamide-moisturizer",
+        "alt": "Bareo Cica & Niacinamide Calming Serum Gallery View (niacinamide-moisturizer.png)",
+        "type": "gallery",
+        "_id": "6a82f9a5d9c00710dafea736"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.9,
+    "ratingCount": 184,
+    "stock": 95,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "sensitive",
+      "oily",
+      "combination",
+      "dry",
+      "normal"
+    ],
+    "concerns": [
+      "redness",
+      "acne",
+      "sensitivity"
+    ],
+    "benefits": [
+      "Calms redness and inflammation instantly",
+      "Strengthens moisture barrier",
+      "Tightens enlarged pores"
+    ],
+    "usage": [
+      "Apply 3-4 drops onto clean face.",
+      "Gently pat until absorbed."
+    ],
+    "keyFacts": [
+      "Dermatologically Tested",
+      "Fragrance-Free",
+      "100% Vegan"
+    ],
+    "tags": [
+      "niacinamide",
+      "cica",
+      "barrier-repair"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 5,
+    "createdAt": "2026-08-17T11:05:41.230Z",
+    "updatedAt": "2026-08-17T12:58:40.734Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5854",
+    "sku": "BAR-SK-002",
+    "slug": "bareo-dewy-barrier-hyaluronic-hydrator",
+    "name": "Bareo Dewy Barrier Hyaluronic Hydrator",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Multi-molecular hydration gel cream with Squalane & Ceramides",
+    "description": "Quench thirsty skin with Bareo Dewy Barrier Hydrator. Infused with 5 molecular weights of Hyaluronic Acid and Plant Squalane for 72-hour moisture retention.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965655/bareo/products/hyaluronic-moisturizer.png",
+        "publicId": "bareo/products/hyaluronic-moisturizer",
+        "alt": "Bareo Dewy Barrier Hyaluronic Hydrator",
+        "_id": "6a82ee98704aa082682f1d59"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968498/bareo/products/dewy-barrier-hyaluronic-hydrator-hyaluronic-face-wash.png",
+        "publicId": "bareo/products/dewy-barrier-hyaluronic-hydrator-hyaluronic-face-wash",
+        "alt": "Bareo Dewy Barrier Hyaluronic Hydrator Gallery View (hyaluronic-face-wash.png)",
+        "type": "gallery",
+        "_id": "6a82f9b3d9c00710dafea73a"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 156,
+    "stock": 110,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "dry",
+      "normal",
+      "sensitive",
+      "combination"
+    ],
+    "concerns": [
+      "dryness",
+      "dehydration"
+    ],
+    "benefits": [
+      "Delivers 72 hours of uninterrupted hydration",
+      "Locks moisture with Squalane"
+    ],
+    "usage": [
+      "Take a pea-sized amount.",
+      "Smooth evenly over face."
+    ],
+    "keyFacts": [
+      "Oil-Free Gel",
+      "Non-Comedogenic"
+    ],
+    "tags": [
+      "hyaluronic-acid",
+      "squalane",
+      "moisturizer"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 2,
+    "createdAt": "2026-08-17T11:05:41.230Z",
+    "updatedAt": "2026-08-17T12:58:40.777Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5856",
+    "sku": "BAR-SK-003",
+    "slug": "bareo-rice-water-alpha-arbutin-essence",
+    "name": "Bareo Rice Water & Alpha Arbutin Essence",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Illuminating toner essence with 70% Fermented Rice Water & 2% Alpha Arbutin",
+    "description": "Bareo Brightening Essence combines traditional Asian rice ferment technology with modern Alpha Arbutin to fade sun spots and restore natural radiance.",
+    "images": [],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 112,
+    "stock": 80,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "normal",
+      "combination",
+      "dry"
+    ],
+    "concerns": [
+      "pigmentation",
+      "dullness"
+    ],
+    "benefits": [
+      "Fades dark marks and hyperpigmentation",
+      "Refines skin texture"
+    ],
+    "usage": [
+      "Press gently onto face using palms."
+    ],
+    "keyFacts": [
+      "Alcohol-Free",
+      "Bio-Fermented"
+    ],
+    "tags": [
+      "rice-water",
+      "alpha-arbutin"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.231Z",
+    "updatedAt": "2026-08-17T12:43:28.546Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5858",
+    "sku": "BAR-SK-004",
+    "slug": "bareo-salicylic-acid-tea-tree-cleanser",
+    "name": "Bareo Salicylic Acid & Tea Tree Cleanser",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Deep pore clarifying wash with 2% BHA & Australian Tea Tree",
+    "description": "Dissolve stubborn blackheads, unclog pores, and calm active acne with Bareo Salicylic Acid Cleanser. Sulphate-free pH 5.5 formula.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965668/bareo/products/salicylic-face-wash.png",
+        "publicId": "bareo/products/salicylic-face-wash",
+        "alt": "Bareo Salicylic Acid & Tea Tree Cleanser",
+        "_id": "6a82eea4704aa082682f1d5d"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968513/bareo/products/salicylic-acid-tea-tree-cleanser-salicylic-serum.png",
+        "publicId": "bareo/products/salicylic-acid-tea-tree-cleanser-salicylic-serum",
+        "alt": "Bareo Salicylic Acid & Tea Tree Cleanser Gallery View (salicylic-serum.png)",
+        "type": "gallery",
+        "_id": "6a82f9c1d9c00710dafea73e"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 229,
+    "discount": 23,
+    "rating": 4.8,
+    "ratingCount": 230,
+    "stock": 140,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "oily",
+      "combination"
+    ],
+    "concerns": [
+      "acne",
+      "oiliness",
+      "blackheads"
+    ],
+    "benefits": [
+      "Unclogs pores",
+      "Controls excess sebum"
+    ],
+    "usage": [
+      "Massage 1 pump on wet skin for 60s."
+    ],
+    "keyFacts": [
+      "Sulphate-Free",
+      "pH 5.5"
+    ],
+    "tags": [
+      "salicylic-acid",
+      "cleanser"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 2,
+    "createdAt": "2026-08-17T11:05:41.231Z",
+    "updatedAt": "2026-08-17T12:58:40.819Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb585a",
+    "sku": "BAR-SK-005",
+    "slug": "bareo-invisible-shield-fluid-sunscreen-spf50",
+    "name": "Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Ultra-lightweight fluid sunscreen with Zero White Cast",
+    "description": "Bareo Invisible Shield SPF 50 provides high-performance UVA/UVB protection with an airy, invisible matte finish. Infused with Vitamin E and Ceramides.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965698/bareo/products/sunscreen-spf50.png",
+        "publicId": "bareo/products/sunscreen-spf50",
+        "alt": "Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++",
+        "_id": "6a82eec2704aa082682f1d61"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968535/bareo/products/invisible-shield-fluid-sunscreen-spf50-comfort-cream.png",
+        "publicId": "bareo/products/invisible-shield-fluid-sunscreen-spf50-comfort-cream",
+        "alt": "Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++ Gallery View (comfort-cream-sunscreen-spf50.png)",
+        "type": "gallery",
+        "_id": "6a82f9d8d9c00710dafea742"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968562/bareo/products/invisible-shield-fluid-sunscreen-spf50-gel-cream.png",
+        "publicId": "bareo/products/invisible-shield-fluid-sunscreen-spf50-gel-cream",
+        "alt": "Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++ Gallery View (gel-cream-sunscreen-spf50.png)",
+        "type": "gallery",
+        "_id": "6a82f9f2d9c00710dafea747"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968588/bareo/products/invisible-shield-fluid-sunscreen-spf50-watery-gel.png",
+        "publicId": "bareo/products/invisible-shield-fluid-sunscreen-spf50-watery-gel",
+        "alt": "Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++ Gallery View (watery-gel-sunscreen-spf50.png)",
+        "type": "gallery",
+        "_id": "6a82fa0dd9c00710dafea74d"
+      }
+    ],
+    "mrp": 429,
+    "offerPrice": 329,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 310,
+    "stock": 150,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "oily",
+      "combination",
+      "dry",
+      "normal",
+      "sensitive"
+    ],
+    "concerns": [
+      "sun-protection",
+      "aging"
+    ],
+    "benefits": [
+      "Broad-spectrum SPF 50 PA++++",
+      "Zero white cast"
+    ],
+    "usage": [
+      "Apply 2 fingers length on face before sun exposure."
+    ],
+    "keyFacts": [
+      "Reef-Safe",
+      "Non-Greasy"
+    ],
+    "tags": [
+      "sunscreen",
+      "spf50"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 4,
+    "createdAt": "2026-08-17T11:05:41.231Z",
+    "updatedAt": "2026-08-17T12:58:40.861Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb585c",
+    "sku": "BAR-SK-006",
+    "slug": "bareo-peptide-repair-night-cream",
+    "name": "Bareo Peptide Repair & Renewal Night Cream",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Nightly collagen boost cream with 5-Peptide Complex & Squalane",
+    "description": "Awaken to plump, firm skin with Bareo Peptide Repair Cream. Works overnight to stimulate natural collagen, rebuild skin density, and smooth fine lines.",
+    "images": [],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 88,
+    "stock": 65,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "dry",
+      "normal",
+      "combination"
+    ],
+    "concerns": [
+      "aging",
+      "fine-lines"
+    ],
+    "benefits": [
+      "Boosts skin elasticity",
+      "Smooths fine lines"
+    ],
+    "usage": [
+      "Smooth generous layer nightly."
+    ],
+    "keyFacts": [
+      "Clinical Peptides",
+      "Cruelty Free"
+    ],
+    "tags": [
+      "night-cream",
+      "peptides"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.231Z",
+    "updatedAt": "2026-08-17T12:43:28.628Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb585e",
+    "sku": "BAR-SK-007",
+    "slug": "bareo-clarifying-aha-bha-exfoliating-peel",
+    "name": "Bareo Clarifying AHA + BHA Exfoliating Peel",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "10-minute rinse-off peeling wash with 10% Glycolic Acid & 2% Salicylic Acid",
+    "description": "Transform rough, dull skin in 10 minutes with Bareo Exfoliating Peel. Removes dead surface cells and clears congested pores for instant baby-smooth skin.",
+    "images": [],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.7,
+    "ratingCount": 94,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "oily",
+      "combination",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "uneven-texture"
+    ],
+    "benefits": [
+      "Smooths rough skin texture",
+      "Fades surface dullness"
+    ],
+    "usage": [
+      "Leave on clean face for 10 mins maximum then rinse."
+    ],
+    "keyFacts": [
+      "Rinse-Off Peel",
+      "Weekly Treatment"
+    ],
+    "tags": [
+      "exfoliant",
+      "aha-bha"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.231Z",
+    "updatedAt": "2026-08-17T12:43:28.711Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5860",
+    "sku": "BAR-SK-008",
+    "slug": "bareo-squalane-vitamin-c-glow-face-oil",
+    "name": "Bareo Squalane & Vitamin C Glow Face Oil",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Non-comedogenic radiance oil with 15% Vitamin C & Plant Squalane",
+    "description": "Bareo Glow Face Oil locks in hydration while delivering a concentrated dose of stable 15% Vitamin C for an instant golden-hour radiance.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968624/bareo/products/squalane-vitamin-c-glow-face-oil-vitamin-c-serum.png",
+        "publicId": "bareo/products/squalane-vitamin-c-glow-face-oil-vitamin-c-serum",
+        "alt": "Bareo Squalane & Vitamin C Glow Face Oil Primary Image",
+        "type": "primary",
+        "_id": "6a8301f04862e0f79dca548d"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968605/bareo/products/squalane-vitamin-c-glow-face-oil-vitamin-c-face-wash.png",
+        "publicId": "bareo/products/squalane-vitamin-c-glow-face-oil-vitamin-c-face-wash",
+        "alt": "Bareo Squalane & Vitamin C Glow Face Oil Face Wash View",
+        "type": "gallery",
+        "_id": "6a8301f04862e0f79dca548e"
+      }
+    ],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.9,
+    "ratingCount": 140,
+    "stock": 60,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "dry",
+      "normal",
+      "combination"
+    ],
+    "concerns": [
+      "dullness",
+      "dryness"
+    ],
+    "benefits": [
+      "Instant luminous skin glow",
+      "Non-comedogenic oil"
+    ],
+    "usage": [
+      "Warm 2 drops on palms and press into skin."
+    ],
+    "keyFacts": [
+      "Sugarcane Squalane",
+      "Pore-Safe"
+    ],
+    "tags": [
+      "face-oil",
+      "vitamin-c"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 3,
+    "createdAt": "2026-08-17T11:05:41.232Z",
+    "updatedAt": "2026-08-17T12:43:28.043Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5862",
+    "sku": "BAR-HC-001",
+    "slug": "bareo-rosemary-biotin-scalp-shampoo",
+    "name": "Bareo Rosemary & Biotin Scalp Revitalizing Shampoo",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Sulphate-free scalp stimulating shampoo with Rosemary Oil & Biotin",
+    "description": "Strengthen hair follicles and reduce hair fall with Bareo Rosemary & Biotin Shampoo. Gently cleanses scalp buildup while stimulating micro-circulation.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968371/bareo/products/rosemary-shampoo.png",
+        "publicId": "bareo/products/rosemary-shampoo",
+        "alt": "Bareo Rosemary & Biotin Scalp Revitalizing Shampoo Primary Image",
+        "type": "primary",
+        "_id": "6a82f934d9c00710dafea6f4"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 279,
+    "discount": 30,
+    "rating": 4.8,
+    "ratingCount": 260,
+    "stock": 120,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "hair-fall",
+      "scalp-care"
+    ],
+    "benefits": [
+      "Reduces hair fall",
+      "Stimulates new root growth"
+    ],
+    "usage": [
+      "Massage onto wet scalp for 2 minutes and rinse."
+    ],
+    "keyFacts": [
+      "Sulphate-Free",
+      "Color-Safe"
+    ],
+    "tags": [
+      "shampoo",
+      "rosemary"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.232Z",
+    "updatedAt": "2026-08-17T12:06:12.170Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5864",
+    "sku": "BAR-HC-002",
+    "slug": "bareo-argan-silk-peptide-conditioner",
+    "name": "Bareo Argan Oil & Silk Peptide Hydrating Conditioner",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Deep moisturizing conditioner with Pure Moroccan Argan Oil",
+    "description": "Bareo Argan Oil Conditioner smooths dry frizz, detangles knots, and restores silky shine to damaged hair strands.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965759/bareo/products/argan-conditioner.png",
+        "publicId": "bareo/products/argan-conditioner",
+        "alt": "Bareo Argan Oil & Silk Peptide Hydrating Conditioner",
+        "_id": "6a82ef00704aa082682f1d65"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968653/bareo/products/argan-oil-silk-peptide-hydrating-conditioner-daily-soft.png",
+        "publicId": "bareo/products/argan-oil-silk-peptide-hydrating-conditioner-daily-soft",
+        "alt": "Bareo Argan Oil & Silk Peptide Hydrating Conditioner Gallery View (daily-soft-conditioner.png)",
+        "type": "gallery",
+        "_id": "6a82fa4ed9c00710dafea75a"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968699/bareo/products/argan-oil-silk-peptide-hydrating-conditioner-deep-repair.png",
+        "publicId": "bareo/products/argan-oil-silk-peptide-hydrating-conditioner-deep-repair",
+        "alt": "Bareo Argan Oil & Silk Peptide Hydrating Conditioner Gallery View (deep-repair-conditioner.png)",
+        "type": "gallery",
+        "_id": "6a82fa7cd9c00710dafea75f"
+      }
+    ],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 175,
+    "stock": 100,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "frizz",
+      "dryness"
+    ],
+    "benefits": [
+      "Detangles knots instantly",
+      "Restores silky shine"
+    ],
+    "usage": [
+      "Apply to hair lengths for 3 minutes then rinse."
+    ],
+    "keyFacts": [
+      "Silicone-Free",
+      "Argan Oil Infused"
+    ],
+    "tags": [
+      "conditioner",
+      "argan-oil"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 3,
+    "createdAt": "2026-08-17T11:05:41.232Z",
+    "updatedAt": "2026-08-17T12:58:40.556Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5866",
+    "sku": "BAR-HC-003",
+    "slug": "bareo-rosemary-root-nourishing-hair-oil",
+    "name": "Bareo Rosemary Root Nourishing Hair Oil",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Cold-pressed scalp oil with Rosemary, Bhringraj & Amla",
+    "description": "Bareo Rosemary Root Oil is a traditional Ayurvedic blend enhanced with cold-pressed Rosemary to nourish hair follicles and boost density.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968414/bareo/products/rosemary-hair-growth-serum.png",
+        "publicId": "bareo/products/rosemary-hair-growth-serum",
+        "alt": "Bareo Rosemary Root Nourishing Hair Oil Primary Image",
+        "type": "primary",
+        "_id": "6a82f95fd9c00710dafea6fa"
+      }
+    ],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.9,
+    "ratingCount": 290,
+    "stock": 130,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "hair-fall",
+      "thinning"
+    ],
+    "benefits": [
+      "Promotes hair density",
+      "Nourishes dry scalp roots"
+    ],
+    "usage": [
+      "Apply on scalp 1 hour before hair wash."
+    ],
+    "keyFacts": [
+      "100% Cold Pressed",
+      "No Mineral Oil"
+    ],
+    "tags": [
+      "hair-oil",
+      "rosemary"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.232Z",
+    "updatedAt": "2026-08-17T12:06:55.562Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5868",
+    "sku": "BAR-HC-004",
+    "slug": "bareo-scalp-balance-exfoliating-scrub",
+    "name": "Bareo Scalp Balance Exfoliating Scrub",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clarifying sea salt scrub for scalp detox & dandruff control",
+    "description": "Bareo Scalp Balance Scrub gently buffs away dead skin flakes, product buildup, and excess oil for a squeaky clean, refreshed scalp environment.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968425/bareo/products/scalp-balance-serum.png",
+        "publicId": "bareo/products/scalp-balance-serum",
+        "alt": "Bareo Scalp Balance Exfoliating Scrub Primary Image",
+        "type": "primary",
+        "_id": "6a82f96ad9c00710dafea6fe"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 229,
+    "discount": 23,
+    "rating": 4.7,
+    "ratingCount": 82,
+    "stock": 70,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": true,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "dandruff",
+      "scalp-care"
+    ],
+    "benefits": [
+      "Clears scalp product buildup",
+      "Soothes itchiness"
+    ],
+    "usage": [
+      "Massage onto wet scalp before shampooing."
+    ],
+    "keyFacts": [
+      "Sea Salt Crystals",
+      "Tea Tree Infused"
+    ],
+    "tags": [
+      "scalp-scrub",
+      "dandruff"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.232Z",
+    "updatedAt": "2026-08-17T12:07:06.311Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb586a",
+    "sku": "BAR-HC-005",
+    "slug": "bareo-keratin-intense-repair-mask",
+    "name": "Bareo Keratin Intense Repair Hair Mask",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Deep conditioning treatment mask with Plant Keratin & Macadamia",
+    "description": "Restore strength to over-processed, heat-damaged hair with Bareo Keratin Repair Mask. Rebuilds protein bonds and stops breakage.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965820/bareo/products/keratin-hair-mask.png",
+        "publicId": "bareo/products/keratin-hair-mask",
+        "alt": "Bareo Keratin Intense Repair Hair Mask",
+        "_id": "6a82ef3d704aa082682f1d69"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968742/bareo/products/keratin-intense-repair-hair-mask-shea-hair-mask.png",
+        "publicId": "bareo/products/keratin-intense-repair-hair-mask-shea-hair-mask",
+        "alt": "Bareo Keratin Intense Repair Hair Mask Gallery View (shea-hair-mask.png)",
+        "type": "gallery",
+        "_id": "6a82faa7d9c00710dafea763"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 279,
+    "discount": 30,
+    "rating": 4.8,
+    "ratingCount": 104,
+    "stock": 60,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "damage",
+      "breakage"
+    ],
+    "benefits": [
+      "Reduces hair breakage",
+      "Deep protein treatment"
+    ],
+    "usage": [
+      "Leave on damp hair for 10-15 minutes then rinse."
+    ],
+    "keyFacts": [
+      "Plant Keratin",
+      "Heat Repair"
+    ],
+    "tags": [
+      "hair-mask",
+      "keratin"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 2,
+    "createdAt": "2026-08-17T11:05:41.233Z",
+    "updatedAt": "2026-08-17T12:58:40.604Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb586c",
+    "sku": "BAR-HC-006",
+    "slug": "bareo-anti-frizz-gloss-leave-in-serum",
+    "name": "Bareo Anti-Frizz Gloss Leave-In Hair Serum",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Lightweight heat protectant & gloss serum with Jojoba Oil",
+    "description": "Bareo Leave-In Serum tame flyaways and protects hair against heat styling up to 230°C while adding high-shine glass reflection.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965890/bareo/products/anti-frizz-hair-serum.png",
+        "publicId": "bareo/products/anti-frizz-hair-serum",
+        "alt": "Bareo Anti-Frizz Gloss Leave-In Hair Serum",
+        "_id": "6a82ef83704aa082682f1d6d"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968789/bareo/products/anti-frizz-gloss-leave-in-hair-serum-frizz-control-shampoo.png",
+        "publicId": "bareo/products/anti-frizz-gloss-leave-in-hair-serum-frizz-control-shampoo",
+        "alt": "Bareo Anti-Frizz Gloss Leave-In Hair Serum Gallery View (frizz-control-shampoo.png)",
+        "type": "gallery",
+        "_id": "6a82fad6d9c00710dafea767"
+      }
+    ],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 140,
+    "stock": 90,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "frizz",
+      "heat-damage"
+    ],
+    "benefits": [
+      "Protects against heat up to 230°C",
+      "Instant flyaway taming"
+    ],
+    "usage": [
+      "Spread 1 pump on towel dried hair before blow drying."
+    ],
+    "keyFacts": [
+      "Heat Protection",
+      "Gloss Finish"
+    ],
+    "tags": [
+      "hair-serum",
+      "anti-frizz"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 2,
+    "createdAt": "2026-08-17T11:05:41.233Z",
+    "updatedAt": "2026-08-17T12:58:40.647Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb586e",
+    "sku": "BAR-HC-007",
+    "slug": "bareo-rice-protein-thickening-scalp-serum",
+    "name": "Bareo Rice Protein Thickening Scalp Serum",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Leave-on root booster with Rice Protein & Caffeine",
+    "description": "Bareo Thickening Scalp Serum plumps individual hair strands at the root for immediate volume and long-term hair density boost.",
+    "images": [],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 96,
+    "stock": 65,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "thinning",
+      "volume"
+    ],
+    "benefits": [
+      "Plumps root hair volume",
+      "Non-greasy serum"
+    ],
+    "usage": [
+      "Apply 1 pipette on scalp daily."
+    ],
+    "keyFacts": [
+      "Water-Based",
+      "Root Booster"
+    ],
+    "tags": [
+      "scalp-serum",
+      "volume"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.233Z",
+    "updatedAt": "2026-08-17T12:43:28.811Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5870",
+    "sku": "BAR-BC-001",
+    "slug": "bareo-oat-ceramide-nourishing-body-wash",
+    "name": "Bareo Oat & Ceramide Nourishing Body Wash",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Creamy soap-free shower wash with Colloidal Oat & Ceramides",
+    "description": "Cleanse dry, sensitive body skin without tightness. Bareo Oat Body Wash restores moisture and leaves skin velvety smooth.",
+    "images": [],
+    "mrp": 329,
+    "offerPrice": 239,
+    "discount": 27,
+    "rating": 4.9,
+    "ratingCount": 210,
+    "stock": 140,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "dry",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dryness",
+      "sensitivity"
+    ],
+    "benefits": [
+      "Soap-free gentle wash",
+      "Calms dry skin tightness"
+    ],
+    "usage": [
+      "Lather onto wet body during shower."
+    ],
+    "keyFacts": [
+      "Soap-Free",
+      "pH 5.5"
+    ],
+    "tags": [
+      "body-wash",
+      "oatmeal"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 5,
+    "createdAt": "2026-08-17T11:05:41.233Z",
+    "updatedAt": "2026-08-17T12:43:28.134Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5872",
+    "sku": "BAR-BC-002",
+    "slug": "bareo-niacinamide-shea-butter-body-milk",
+    "name": "Bareo Niacinamide & Shea Butter Body Milk Lotion",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Brightening body lotion with 5% Niacinamide & Raw Shea Butter",
+    "description": "Bareo Body Milk hydrates skin for 48 hours while fading sun tan and dark spots on arms, knees, and elbows with 5% Niacinamide.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965899/bareo/products/shea-body-lotion.png",
+        "publicId": "bareo/products/shea-body-lotion",
+        "alt": "Bareo Niacinamide & Shea Butter Body Milk Lotion",
+        "_id": "6a82ef8c704aa082682f1d71"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968873/bareo/products/niacinamide-shea-butter-body-milk-lotion-daily-silk.png",
+        "publicId": "bareo/products/niacinamide-shea-butter-body-milk-lotion-daily-silk",
+        "alt": "Bareo Niacinamide & Shea Butter Body Milk Lotion Gallery View (daily-silk-body-lotion.png)",
+        "type": "gallery",
+        "_id": "6a82fb2ad9c00710dafea781"
+      }
+    ],
+    "mrp": 349,
+    "offerPrice": 269,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 190,
+    "stock": 115,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "dry",
+      "normal",
+      "combination"
+    ],
+    "concerns": [
+      "dryness",
+      "tan-removal"
+    ],
+    "benefits": [
+      "Fades body sun tan",
+      "48-hour moisture lock"
+    ],
+    "usage": [
+      "Apply all over body after bathing."
+    ],
+    "keyFacts": [
+      "5% Niacinamide",
+      "Raw Shea Butter"
+    ],
+    "tags": [
+      "body-lotion",
+      "niacinamide"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 2,
+    "createdAt": "2026-08-17T11:05:41.233Z",
+    "updatedAt": "2026-08-17T12:58:40.427Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5874",
+    "sku": "BAR-BC-003",
+    "slug": "bareo-coffee-cocoa-body-exfoliating-scrub",
+    "name": "Bareo Coffee & Cocoa Body Exfoliating Scrub",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Smoothing polish scrub with Arabica Coffee & Cocoa Butter",
+    "description": "Buff away dead skin cells and smooth strawberry skin bumps with Bareo Coffee Body Scrub. Smells like fresh espresso.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965915/bareo/products/coffee-body-scrub.png",
+        "publicId": "bareo/products/coffee-body-scrub",
+        "alt": "Bareo Coffee & Cocoa Body Exfoliating Scrub",
+        "_id": "6a82ef9b704aa082682f1d75"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968884/bareo/products/coffee-cocoa-body-exfoliating-scrub-lactic-acid.png",
+        "publicId": "bareo/products/coffee-cocoa-body-exfoliating-scrub-lactic-acid",
+        "alt": "Bareo Coffee & Cocoa Body Exfoliating Scrub Gallery View (lactic-acid-body-scrub.png)",
+        "type": "gallery",
+        "_id": "6a82fb35d9c00710dafea785"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 229,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 165,
+    "stock": 95,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "rough-skin",
+      "tanning"
+    ],
+    "benefits": [
+      "Smooths strawberry legs",
+      "Removes dead skin tan"
+    ],
+    "usage": [
+      "Scrub gently on wet body twice weekly."
+    ],
+    "keyFacts": [
+      "Arabica Grounds",
+      "Rich Cocoa Butter"
+    ],
+    "tags": [
+      "body-scrub",
+      "coffee"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 2,
+    "createdAt": "2026-08-17T11:05:41.233Z",
+    "updatedAt": "2026-08-17T12:58:40.469Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5876",
+    "sku": "BAR-BC-004",
+    "slug": "bareo-brightening-aha-body-wash",
+    "name": "Bareo Brightening AHA Exfoliating Body Wash",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Daily exfoliating wash with 5% Lactic Acid & Vitamin C",
+    "description": "Smooth bumpy back acne (bacne) and rough arms with Bareo AHA Body Wash. Gently dissolves rough Keratosis Pilaris bumps.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968822/bareo/products/oat-ceramide-nourishing-body-wash-fig-sandal.png",
+        "publicId": "bareo/products/oat-ceramide-nourishing-body-wash-fig-sandal",
+        "alt": "Bareo Brightening AHA Exfoliating Body Wash Primary Packshot",
+        "type": "primary",
+        "_id": "6a8301f04862e0f79dca5499"
+      }
+    ],
+    "mrp": 329,
+    "offerPrice": 239,
+    "discount": 27,
+    "rating": 4.8,
+    "ratingCount": 110,
+    "stock": 85,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "oily",
+      "normal",
+      "combination"
+    ],
+    "concerns": [
+      "back-acne",
+      "rough-skin"
+    ],
+    "benefits": [
+      "Clears back acne breakouts",
+      "Smooths rough KP bumps"
+    ],
+    "usage": [
+      "Lather over body during shower."
+    ],
+    "keyFacts": [
+      "5% Lactic Acid",
+      "KP Treatment"
+    ],
+    "tags": [
+      "aha-body-wash",
+      "bacne"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.235Z",
+    "updatedAt": "2026-08-17T12:43:28.217Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5878",
+    "sku": "BAR-BC-005",
+    "slug": "bareo-hydrating-coconut-squalane-body-oil",
+    "name": "Bareo Hydrating Coconut & Squalane Body Oil",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Fast-absorbing glowing body oil with Coconut & Squalane",
+    "description": "Bareo Body Oil leaves skin with a glossy summer sheen while nourishing deep epidermal layers. Dry oil texture absorbs quickly.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968807/bareo/products/oat-ceramide-nourishing-body-wash-cedar-moss.png",
+        "publicId": "bareo/products/oat-ceramide-nourishing-body-wash-cedar-moss",
+        "alt": "Bareo Hydrating Coconut & Squalane Body Oil Primary Packshot",
+        "type": "primary",
+        "_id": "6a8301f04862e0f79dca549d"
+      }
+    ],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 95,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "dry",
+      "normal"
+    ],
+    "concerns": [
+      "dryness",
+      "dullness"
+    ],
+    "benefits": [
+      "Gives radiant body sheen",
+      "Fast absorbing dry-oil texture"
+    ],
+    "usage": [
+      "Smooth onto damp body after bath."
+    ],
+    "keyFacts": [
+      "Dry Oil",
+      "Squalane Infused"
+    ],
+    "tags": [
+      "body-oil",
+      "squalane"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.235Z",
+    "updatedAt": "2026-08-17T12:43:28.299Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb587a",
+    "sku": "BAR-BC-006",
+    "slug": "bareo-ultra-healing-hand-cream",
+    "name": "Bareo Ultra-Healing Hand & Cuticle Cream",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Nourishing hand salve with Almond Oil & Beeswax",
+    "description": "Repair overworked, dry hands and cracked cuticles with Bareo Hand Cream. Forms an invisible protective glove against frequent handwashing dryness.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968861/bareo/products/oat-ceramide-nourishing-body-wash-rose-water.png",
+        "publicId": "bareo/products/oat-ceramide-nourishing-body-wash-rose-water",
+        "alt": "Bareo Ultra-Healing Hand & Cuticle Cream Primary Packshot",
+        "type": "primary",
+        "_id": "6a8301f04862e0f79dca54a1"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.9,
+    "ratingCount": 135,
+    "stock": 120,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "dry",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dry-hands",
+      "cracked-skin"
+    ],
+    "benefits": [
+      "Repairs cracked dry hands",
+      "Protects cuticles"
+    ],
+    "usage": [
+      "Apply generously to hands as needed."
+    ],
+    "keyFacts": [
+      "Barrier Defense",
+      "Almond Oil"
+    ],
+    "tags": [
+      "hand-cream",
+      "cuticles"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.235Z",
+    "updatedAt": "2026-08-17T12:43:28.380Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb587c",
+    "sku": "BAR-BC-007",
+    "slug": "bareo-smoothing-heel-repair-balm",
+    "name": "Bareo Smoothing Heel Repair Balm",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Intense crack repair balm with 10% Urea & Salicylic Acid",
+    "description": "Visibly heal cracked heels in 3 days with Bareo Heel Repair Balm. 10% Urea dissolves thick calluses while Kokum Butter softens cracks.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968841/bareo/products/oat-ceramide-nourishing-body-wash-neroli.png",
+        "publicId": "bareo/products/oat-ceramide-nourishing-body-wash-neroli",
+        "alt": "Bareo Smoothing Heel Repair Balm Primary Packshot",
+        "type": "primary",
+        "_id": "6a8301f04862e0f79dca54a5"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 160,
+    "stock": 100,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "cracked-heels",
+      "calluses"
+    ],
+    "benefits": [
+      "Heals cracked heels in 3 days",
+      "Softens tough calluses"
+    ],
+    "usage": [
+      "Apply on clean feet before bed."
+    ],
+    "keyFacts": [
+      "10% Urea",
+      "Fast Action"
+    ],
+    "tags": [
+      "heel-balm",
+      "urea"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.235Z",
+    "updatedAt": "2026-08-17T12:43:28.464Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb587e",
+    "sku": "BAR-BB-001",
+    "slug": "bareo-gentle-tear-free-baby-wash",
+    "name": "Bareo Gentle Tear-Free Baby Head-to-Toe Wash",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Pediatrician certified tear-free wash with Chamomile & Calendula",
+    "description": "Ultra-mild, tear-free cleansing for baby delicate hair and skin. Formulated with organic Chamomile and Aloe Vera to prevent dryness.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965930/bareo/products/baby-wash.png",
+        "publicId": "bareo/products/baby-wash",
+        "alt": "Bareo Gentle Tear-Free Baby Head-to-Toe Wash",
+        "_id": "6a82efab704aa082682f1d79"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 219,
+    "discount": 27,
+    "rating": 4.9,
+    "ratingCount": 180,
+    "stock": 130,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "baby-care",
+      "sensitivity"
+    ],
+    "benefits": [
+      "100% Tear-Free certified",
+      "Hypoallergenic pH neutral"
+    ],
+    "usage": [
+      "Wash baby hair and body gently."
+    ],
+    "keyFacts": [
+      "Pediatrician Approved",
+      "Tear-Free"
+    ],
+    "tags": [
+      "baby-wash",
+      "chamomile"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.236Z",
+    "updatedAt": "2026-08-17T12:58:40.025Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5880",
+    "sku": "BAR-BB-002",
+    "slug": "bareo-oat-chamomile-calming-baby-lotion",
+    "name": "Bareo Oat & Chamomile Ultra-Calming Baby Lotion",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Nourishing daily lotion with Colloidal Oat & Sweet Almond Oil",
+    "description": "Keep baby skin soft, hydrated, and protected against dryness. Bareo Baby Lotion absorbs quickly without sticky residue.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965941/bareo/products/baby-lotion.png",
+        "publicId": "bareo/products/baby-lotion",
+        "alt": "Bareo Oat & Chamomile Ultra-Calming Baby Lotion",
+        "_id": "6a82efb6704aa082682f1d7d"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 229,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 145,
+    "stock": 110,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "baby-care",
+      "dryness"
+    ],
+    "benefits": [
+      "24-hour baby skin moisture",
+      "Soothes dry patches"
+    ],
+    "usage": [
+      "Massage gently over baby body after bath."
+    ],
+    "keyFacts": [
+      "Hypoallergenic",
+      "Dermatologist Tested"
+    ],
+    "tags": [
+      "baby-lotion",
+      "oatmeal"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.236Z",
+    "updatedAt": "2026-08-17T12:58:40.078Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5882",
+    "sku": "BAR-BB-003",
+    "slug": "bareo-zinc-oxide-diaper-rash-cream",
+    "name": "Bareo Zinc Oxide Protective Diaper Rash Cream",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Rapid relief rash barrier cream with 15% Zinc Oxide & Shea Butter",
+    "description": "Form a breathable waterproof shield against wetness and diaper friction. Bareo Diaper Cream calms redness and heals rashes fast.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965958/bareo/products/diaper-rash-cream.png",
+        "publicId": "bareo/products/diaper-rash-cream",
+        "alt": "Bareo Zinc Oxide Protective Diaper Rash Cream",
+        "_id": "6a82efc7704aa082682f1d81"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.9,
+    "ratingCount": 220,
+    "stock": 125,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "diaper-rash",
+      "redness"
+    ],
+    "benefits": [
+      "Relieves diaper rash instantly",
+      "Forms waterproof shield"
+    ],
+    "usage": [
+      "Apply thick layer at every diaper change."
+    ],
+    "keyFacts": [
+      "15% Zinc Oxide",
+      "Pediatrician Recommended"
+    ],
+    "tags": [
+      "rash-cream",
+      "zinc-oxide"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.236Z",
+    "updatedAt": "2026-08-17T12:58:40.121Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5884",
+    "sku": "BAR-BB-004",
+    "slug": "bareo-sweet-almond-baby-massage-oil",
+    "name": "Bareo Cold-Pressed Sweet Almond Baby Massage Oil",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "100% pure cold-pressed almond oil for daily baby massage",
+    "description": "Strengthen baby bones and nourish skin with Bareo Cold-Pressed Almond Oil. Unrefined, light, and 100% edible-grade pure oil.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965970/bareo/products/baby-massage-oil.png",
+        "publicId": "bareo/products/baby-massage-oil",
+        "alt": "Bareo Cold-Pressed Sweet Almond Baby Massage Oil",
+        "_id": "6a82efd3704aa082682f1d85"
+      }
+    ],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 160,
+    "stock": 90,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "baby-care",
+      "dryness"
+    ],
+    "benefits": [
+      "Nourishes baby bones and skin",
+      "100% pure cold pressed"
+    ],
+    "usage": [
+      "Warm small amount on palms and massage baby."
+    ],
+    "keyFacts": [
+      "100% Pure Almond",
+      "No Mineral Oil"
+    ],
+    "tags": [
+      "massage-oil",
+      "almond-oil"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.236Z",
+    "updatedAt": "2026-08-17T12:58:40.167Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5886",
+    "sku": "BAR-BB-005",
+    "slug": "bareo-hydrating-baby-face-body-butter",
+    "name": "Bareo Hydrating Baby Face & Body Butter",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Ultra-nourishing face balm with Mango Butter & Aloe Vera",
+    "description": "Protect baby cheeks against cold wind drying and drool rash with Bareo Baby Face Butter. Rich soothing balm texture.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965986/bareo/products/baby-moisturizing-cream.png",
+        "publicId": "bareo/products/baby-moisturizing-cream",
+        "alt": "Bareo Hydrating Baby Face & Body Butter",
+        "_id": "6a82efe3704aa082682f1d89"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 229,
+    "discount": 23,
+    "rating": 4.7,
+    "ratingCount": 90,
+    "stock": 80,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": true,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "drool-rash",
+      "dry-cheeks"
+    ],
+    "benefits": [
+      "Protects cheeks from drool rash",
+      "Soothing rich balm"
+    ],
+    "usage": [
+      "Dab gently onto baby cheeks and chin."
+    ],
+    "keyFacts": [
+      "Pediatrician Tested",
+      "Mango Butter"
+    ],
+    "tags": [
+      "baby-butter",
+      "drool-rash"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.236Z",
+    "updatedAt": "2026-08-17T12:58:40.210Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5888",
+    "sku": "BAR-BB-006",
+    "slug": "bareo-talc-free-botanical-baby-powder",
+    "name": "Bareo Soothing Botanical Baby Powder (Talc-Free)",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "100% Talc-Free dusting powder with Arrowroot & Lavender",
+    "description": "Keep baby skin folds fresh and dry naturally. 100% Talc-Free cornstarch and arrowroot powder absorbs excess dampness without clogging pores.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786965999/bareo/products/baby-powder.png",
+        "publicId": "bareo/products/baby-powder",
+        "alt": "Bareo Soothing Botanical Baby Powder (Talc-Free)",
+        "_id": "6a82eff0704aa082682f1d8d"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 229,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 170,
+    "stock": 110,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "sweat-folds",
+      "chafing"
+    ],
+    "benefits": [
+      "100% Talc-Free safe formula",
+      "Absorbs moisture in skin folds"
+    ],
+    "usage": [
+      "Dust onto hands then pat gently on baby skin folds."
+    ],
+    "keyFacts": [
+      "100% Talc-Free",
+      "Cornstarch & Arrowroot"
+    ],
+    "tags": [
+      "baby-powder",
+      "talc-free"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.236Z",
+    "updatedAt": "2026-08-17T12:58:40.253Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb588a",
+    "sku": "BAR-SK-009",
+    "slug": "bareo-renew-retinol-bakuchiol-serum",
+    "name": "Bareo Renew Retinol & Bakuchiol Serum 0.3%",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Nightly cell renewal serum with 0.3% Encapsulated Retinol & Bakuchiol",
+    "description": "Bareo Renew Retinol Serum smooths fine lines, improves skin elasticity, and refines texture with gentle 0.3% Retinol and Bakuchiol.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786966016/bareo/products/retinol-serum.png",
+        "publicId": "bareo/products/retinol-serum",
+        "alt": "Bareo Renew Retinol & Bakuchiol Serum 0.3%",
+        "_id": "6a82f001704aa082682f1d91"
+      }
+    ],
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.9,
+    "ratingCount": 142,
+    "stock": 85,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "normal",
+      "combination",
+      "dry"
+    ],
+    "concerns": [
+      "fine-lines",
+      "aging",
+      "texture"
+    ],
+    "benefits": [
+      "Smooths fine lines and wrinkles",
+      "Refines skin texture",
+      "Boosts collagen production"
+    ],
+    "usage": [
+      "Apply 2-3 drops nightly onto clean skin before cream."
+    ],
+    "keyFacts": [
+      "0.3% Encapsulated Retinol",
+      "Bakuchiol Enriched"
+    ],
+    "tags": [
+      "retinol",
+      "bakuchiol",
+      "serum"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.236Z",
+    "updatedAt": "2026-08-17T12:58:40.904Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb588c",
+    "sku": "BAR-SK-010",
+    "slug": "bareo-hydrate-hyaluronic-acid-serum",
+    "name": "Bareo Hydrate Hyaluronic Acid Serum 2%",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584d",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Multi-depth hydration serum with 2% Hyaluronic Acid & Ceramides",
+    "description": "Instantly plump dehydrated skin and restore barrier moisture balance with Bareo 2% Hyaluronic Acid Serum.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786966034/bareo/products/hyaluronic-serum.png",
+        "publicId": "bareo/products/hyaluronic-serum",
+        "alt": "Bareo Hydrate Hyaluronic Acid Serum 2%",
+        "_id": "6a82f012704aa082682f1d95"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 175,
+    "stock": 110,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "dry",
+      "sensitive",
+      "normal",
+      "combination",
+      "oily"
+    ],
+    "concerns": [
+      "dryness",
+      "dehydration"
+    ],
+    "benefits": [
+      "Instant deep hydration",
+      "Plumps skin texture",
+      "Locks in moisture barrier"
+    ],
+    "usage": [
+      "Apply 3 drops to damp skin morning and night."
+    ],
+    "keyFacts": [
+      "2% Hyaluronic Acid",
+      "Ceramides Fortified"
+    ],
+    "tags": [
+      "hyaluronic-acid",
+      "ceramides",
+      "serum"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.237Z",
+    "updatedAt": "2026-08-17T12:58:40.948Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb588e",
+    "sku": "BAR-HC-008",
+    "slug": "bareo-scalp-reset-anti-dandruff-shampoo",
+    "name": "Bareo Scalp Reset Anti-Dandruff Shampoo",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584e",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Targeted anti-flake scalp shampoo with Salicylic Acid & Zinc PCA",
+    "description": "Bareo Anti-Dandruff Shampoo clears persistent scalp flakes, controls excess sebum, and calms scalp itchiness without stripping moisture.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786966070/bareo/products/anti-dandruff-shampoo.png",
+        "publicId": "bareo/products/anti-dandruff-shampoo",
+        "alt": "Bareo Scalp Reset Anti-Dandruff Shampoo",
+        "_id": "6a82f037704aa082682f1d99"
+      }
+    ],
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 198,
+    "stock": 95,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "dandruff",
+      "scalp-care"
+    ],
+    "benefits": [
+      "Clears scalp flakes",
+      "Reduces itchiness",
+      "Balances scalp oil"
+    ],
+    "usage": [
+      "Lather into wet scalp for 2-3 minutes and rinse thoroughly."
+    ],
+    "keyFacts": [
+      "Salicylic Acid",
+      "Zinc PCA Flake Control"
+    ],
+    "tags": [
+      "anti-dandruff",
+      "shampoo",
+      "scalp-reset"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.237Z",
+    "updatedAt": "2026-08-17T12:58:40.690Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5890",
+    "sku": "BAR-BC-008",
+    "slug": "bareo-mist-veil-hydrating-body-mist",
+    "name": "Bareo Mist Veil Hydrating Body Mist",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb584f",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Refreshing hydrating body spray with Rose Water, Aloe & White Musk",
+    "description": "Bareo Mist Veil refreshes and hydrates body skin with a delicate veil of Rose Water and Aloe Vera while leaving a subtle scent.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786966119/bareo/products/body-mist.png",
+        "publicId": "bareo/products/body-mist",
+        "alt": "Bareo Mist Veil Hydrating Body Mist",
+        "_id": "6a82f068704aa082682f1d9d"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968896/bareo/products/mist-veil-hydrating-body-mist-fig-sandal.png",
+        "publicId": "bareo/products/mist-veil-hydrating-body-mist-fig-sandal",
+        "alt": "Bareo Mist Veil Hydrating Body Mist Gallery View (fig-sandal-body-mist.png)",
+        "type": "gallery",
+        "_id": "6a82fb40d9c00710dafea789"
+      },
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786968913/bareo/products/mist-veil-hydrating-body-mist-neroli.png",
+        "publicId": "bareo/products/mist-veil-hydrating-body-mist-neroli",
+        "alt": "Bareo Mist Veil Hydrating Body Mist Gallery View (neroli-body-mist.png)",
+        "type": "gallery",
+        "_id": "6a82fb52d9c00710dafea78e"
+      }
+    ],
+    "mrp": 349,
+    "offerPrice": 269,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 110,
+    "stock": 80,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": true,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "all"
+    ],
+    "concerns": [
+      "dryness",
+      "refreshment"
+    ],
+    "benefits": [
+      "Instant skin refreshment",
+      "Lightweight hydration mist"
+    ],
+    "usage": [
+      "Mist all over body after shower or whenever needed."
+    ],
+    "keyFacts": [
+      "Organic Rose Water",
+      "Aloe Vera Infused"
+    ],
+    "tags": [
+      "body-mist",
+      "rose-water"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 3,
+    "createdAt": "2026-08-17T11:05:41.237Z",
+    "updatedAt": "2026-08-17T12:58:40.514Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5892",
+    "sku": "BAR-BB-007",
+    "slug": "bareo-gentle-tear-free-baby-shampoo",
+    "name": "Bareo Gentle Tear-Free Baby Shampoo",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Ultra-gentle tear-free scalp wash with Oat Extract & Aloe Vera",
+    "description": "Bareo Baby Shampoo cleanses delicate baby hair and scalp without eye sting or dryness. Pediatrician approved.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786966130/bareo/products/baby-shampoo.png",
+        "publicId": "bareo/products/baby-shampoo",
+        "alt": "Bareo Gentle Tear-Free Baby Shampoo",
+        "_id": "6a82f073704aa082682f1da1"
+      }
+    ],
+    "mrp": 299,
+    "offerPrice": 229,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 160,
+    "stock": 120,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "baby-care",
+      "scalp-care"
+    ],
+    "benefits": [
+      "100% Tear-Free certified",
+      "Protects delicate baby scalp"
+    ],
+    "usage": [
+      "Apply small amount on wet baby hair, lather gently and rinse."
+    ],
+    "keyFacts": [
+      "Pediatrician Approved",
+      "Tear-Free"
+    ],
+    "tags": [
+      "baby-shampoo",
+      "tear-free"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.237Z",
+    "updatedAt": "2026-08-17T12:58:40.295Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5894",
+    "sku": "BAR-BB-008",
+    "slug": "bareo-gentle-baby-cleansing-wipes",
+    "name": "Bareo Gentle Baby Cleansing Wipes (72 Wipes)",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Fragrance-free cleansing wipes with Aloe Vera & Chamomile",
+    "description": "Bareo Baby Wipes gently clean baby hands, face, and diaper area. Made with pure water, Aloe Vera, and Chamomile.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786966140/bareo/products/baby-wipes.png",
+        "publicId": "bareo/products/baby-wipes",
+        "alt": "Bareo Gentle Baby Cleansing Wipes (72 Wipes)",
+        "_id": "6a82f07d704aa082682f1da5"
+      }
+    ],
+    "mrp": 199,
+    "offerPrice": 149,
+    "discount": 25,
+    "rating": 4.9,
+    "ratingCount": 240,
+    "stock": 200,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "baby-care",
+      "cleansing"
+    ],
+    "benefits": [
+      "Ultra-soft plant fibers",
+      "Fragrance-free pH balanced"
+    ],
+    "usage": [
+      "Use to gently wipe baby face, hands, or bottom."
+    ],
+    "keyFacts": [
+      "Fragrance-Free",
+      "Aloe & Chamomile"
+    ],
+    "tags": [
+      "baby-wipes",
+      "cleansing-wipes"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.237Z",
+    "updatedAt": "2026-08-17T12:58:40.337Z"
+  },
+  {
+    "_id": "6a82eb05619b807ee5fb5896",
+    "sku": "BAR-BB-009",
+    "slug": "bareo-nourishing-baby-lip-balm",
+    "name": "Bareo Nourishing Baby Lip Balm",
+    "brand": "Bareo",
+    "categoryId": "6a82eb05619b807ee5fb5850",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Soothing protective balm with Organic Shea Butter & Vitamin E",
+    "description": "Bareo Baby Lip Balm protects baby lips and dry cheeks against chapping and drool rash with pure Shea Butter and Vitamin E.",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1786966152/bareo/products/baby-lip-balm.png",
+        "publicId": "bareo/products/baby-lip-balm",
+        "alt": "Bareo Nourishing Baby Lip Balm",
+        "_id": "6a82f089704aa082682f1da9"
+      }
+    ],
+    "mrp": 199,
+    "offerPrice": 149,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 95,
+    "stock": 100,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": false,
+    "skinTypes": [
+      "sensitive",
+      "baby"
+    ],
+    "concerns": [
+      "dry-lips",
+      "chafing"
+    ],
+    "benefits": [
+      "Protects baby lips from chapping",
+      "Food-grade safe balm"
+    ],
+    "usage": [
+      "Apply gently on baby lips and dry cheeks."
+    ],
+    "keyFacts": [
+      "Shea Butter & Vitamin E",
+      "Pediatrician Tested"
+    ],
+    "tags": [
+      "baby-balm",
+      "lip-balm"
+    ],
+    "soldCount": 0,
+    "status": "active",
+    "ingredients": [],
+    "faqs": [],
+    "reviews": [],
+    "__v": 1,
+    "createdAt": "2026-08-17T11:05:41.237Z",
+    "updatedAt": "2026-08-17T12:58:40.378Z"
+  }
+]

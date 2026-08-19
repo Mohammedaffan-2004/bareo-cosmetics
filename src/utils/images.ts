@@ -16,7 +16,7 @@ const BAREO_PRODUCT_IMAGES: Record<string, string[]> = {
     '/images/products/bareo-shea-body-lotion.png',
   ],
   'baby-care': [
-    '/images/products/bareo-cica-serum.png',
+    '/images/products/bareo-baby-wash.png',
   ],
   serum: ['/images/products/bareo-cica-serum.png'],
   moisturizer: ['/images/products/bareo-barrier-hydrator.png'],

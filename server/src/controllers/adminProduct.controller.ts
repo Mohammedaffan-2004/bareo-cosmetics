@@ -1,6 +1,7 @@
 import { Response } from 'express'
 import { AuthenticatedRequest } from '../middlewares/auth.middleware.js'
 import { productService } from '../services/product/product.service.js'
+import { cloudinaryService } from '../services/cloudinary.service.js'
 
 export const getAdminProducts = async (req: AuthenticatedRequest, res: Response) => {
   const result = await productService.getProductsAdmin(req.query)
@@ -83,3 +84,44 @@ export const deleteAdminProduct = async (req: AuthenticatedRequest, res: Respons
     res.status(statusCode).json({ data: null, message: error.message, status: statusCode })
   }
 }
+
+export const uploadProductImageAdmin = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ data: null, message: 'No image file uploaded', status: 400 })
+    }
+
+    const uploaded = await cloudinaryService.uploadImage(req.file.buffer, req.file.originalname)
+    res.status(200).json({
+      data: {
+        url: uploaded.url,
+        publicId: uploaded.publicId,
+      },
+      message: 'Product image uploaded successfully',
+      status: 200,
+    })
+  } catch (error: any) {
+    const statusCode = error.statusCode || 500
+    res.status(statusCode).json({ data: null, message: error.message || 'Image upload failed', status: statusCode })
+  }
+}
+
+export const deleteProductImageAdmin = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { publicId } = req.body
+    if (!publicId) {
+      return res.status(400).json({ data: null, message: 'Image publicId is required', status: 400 })
+    }
+
+    const deleted = await cloudinaryService.deleteImage(publicId)
+    res.status(200).json({
+      data: { success: deleted, publicId },
+      message: 'Product image deleted successfully',
+      status: 200,
+    })
+  } catch (error: any) {
+    const statusCode = error.statusCode || 500
+    res.status(statusCode).json({ data: null, message: error.message || 'Image deletion failed', status: statusCode })
+  }
+}
+

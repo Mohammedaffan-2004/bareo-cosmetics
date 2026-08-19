@@ -1,0 +1,3266 @@
+[
+  {
+    "id": "p1",
+    "sku": "BAR-HC-001",
+    "slug": "bareo-scalp-reset-anti-dandruff-shampoo",
+    "name": "Bareo Scalp Reset Anti-Dandruff Shampoo",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Scalp Reset Anti-Dandruff Shampoo. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.8,
+    "ratingCount": 81,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p1-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049566/bareo/products/bareo-scalp-reset-anti-dandruff-shampoo.png",
+        "publicId": "bareo/products/bareo-scalp-reset-anti-dandruff-shampoo",
+        "alt": "Bareo Scalp Reset Anti-Dandruff Shampoo Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p2",
+    "sku": "BAR-HC-002",
+    "slug": "bareo-anti-frizz-gloss-leave-in-hair-serum",
+    "name": "Bareo Anti-Frizz Gloss Leave-In Hair Serum",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Anti-Frizz Gloss Leave-In Hair Serum. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 549,
+    "offerPrice": 449,
+    "discount": 18,
+    "rating": 4.9,
+    "ratingCount": 87,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p2-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049572/bareo/products/bareo-anti-frizz-gloss-leave-in-hair-serum.png",
+        "publicId": "bareo/products/bareo-anti-frizz-gloss-leave-in-hair-serum",
+        "alt": "Bareo Anti-Frizz Gloss Leave-In Hair Serum Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p3",
+    "sku": "BAR-HC-003",
+    "slug": "bareo-argan-oil-silk-peptide-hydrating-conditioner",
+    "name": "Bareo Argan Oil & Silk Peptide Hydrating Conditioner",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Argan Oil & Silk Peptide Hydrating Conditioner. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 97,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p3-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049572/bareo/products/bareo-argan-oil-silk-peptide-hydrating-conditioner.png",
+        "publicId": "bareo/products/bareo-argan-oil-silk-peptide-hydrating-conditioner",
+        "alt": "Bareo Argan Oil & Silk Peptide Hydrating Conditioner Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p4",
+    "sku": "BAR-BB-004",
+    "slug": "bareo-nourishing-baby-lip-balm",
+    "name": "Bareo Nourishing Baby Lip Balm",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Nourishing Baby Lip Balm. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 249,
+    "offerPrice": 199,
+    "discount": 20,
+    "rating": 4.9,
+    "ratingCount": 89,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p4-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049567/bareo/products/bareo-nourishing-baby-lip-balm.png",
+        "publicId": "bareo/products/bareo-nourishing-baby-lip-balm",
+        "alt": "Bareo Nourishing Baby Lip Balm Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p5",
+    "sku": "BAR-BB-005",
+    "slug": "bareo-oat-chamomile-ultra-calming-baby-lotion",
+    "name": "Bareo Oat & Chamomile Ultra-Calming Baby Lotion",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Oat & Chamomile Ultra-Calming Baby Lotion. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 120,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p5-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049568/bareo/products/bareo-oat-chamomile-ultra-calming-baby-lotion.png",
+        "publicId": "bareo/products/bareo-oat-chamomile-ultra-calming-baby-lotion",
+        "alt": "Bareo Oat & Chamomile Ultra-Calming Baby Lotion Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p6",
+    "sku": "BAR-BB-006",
+    "slug": "bareo-cold-pressed-sweet-almond-baby-massage-oil",
+    "name": "Bareo Cold-Pressed Sweet Almond Baby Massage Oil",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Cold-Pressed Sweet Almond Baby Massage Oil. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.9,
+    "ratingCount": 87,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p6-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049593/bareo/products/bareo-cold-pressed-sweet-almond-baby-massage-oil.png",
+        "publicId": "bareo/products/bareo-cold-pressed-sweet-almond-baby-massage-oil",
+        "alt": "Bareo Cold-Pressed Sweet Almond Baby Massage Oil Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p7",
+    "sku": "BAR-BB-007",
+    "slug": "bareo-hydrating-baby-face-body-butter",
+    "name": "Bareo Hydrating Baby Face & Body Butter",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Hydrating Baby Face & Body Butter. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.8,
+    "ratingCount": 81,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p7-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049591/bareo/products/bareo-hydrating-baby-face-body-butter.png",
+        "publicId": "bareo/products/bareo-hydrating-baby-face-body-butter",
+        "alt": "Bareo Hydrating Baby Face & Body Butter Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p8",
+    "sku": "BAR-BB-008",
+    "slug": "bareo-soothing-botanical-baby-powder-talc-free",
+    "name": "Bareo Soothing Botanical Baby Powder (Talc-Free)",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Soothing Botanical Baby Powder (Talc-Free). Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 299,
+    "offerPrice": 249,
+    "discount": 17,
+    "rating": 4.7,
+    "ratingCount": 141,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p8-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049588/bareo/products/bareo-soothing-botanical-baby-powder-talc-free.png",
+        "publicId": "bareo/products/bareo-soothing-botanical-baby-powder-talc-free",
+        "alt": "Bareo Soothing Botanical Baby Powder (Talc-Free) Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p9",
+    "sku": "BAR-BB-009",
+    "slug": "bareo-gentle-tear-free-baby-shampoo",
+    "name": "Bareo Gentle Tear-Free Baby Shampoo",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Gentle Tear-Free Baby Shampoo. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 349,
+    "offerPrice": 279,
+    "discount": 20,
+    "rating": 4.8,
+    "ratingCount": 143,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p9-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049586/bareo/products/bareo-gentle-tear-free-baby-shampoo.png",
+        "publicId": "bareo/products/bareo-gentle-tear-free-baby-shampoo",
+        "alt": "Bareo Gentle Tear-Free Baby Shampoo Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p10",
+    "sku": "BAR-BB-010",
+    "slug": "bareo-gentle-tear-free-baby-head-to-toe-wash",
+    "name": "Bareo Gentle Tear-Free Baby Head-to-Toe Wash",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Gentle Tear-Free Baby Head-to-Toe Wash. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.9,
+    "ratingCount": 141,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p10-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049592/bareo/products/bareo-gentle-tear-free-baby-head-to-toe-wash.png",
+        "publicId": "bareo/products/bareo-gentle-tear-free-baby-head-to-toe-wash",
+        "alt": "Bareo Gentle Tear-Free Baby Head-to-Toe Wash Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p11",
+    "sku": "BAR-BB-011",
+    "slug": "bareo-gentle-baby-cleansing-wipes-72-wipes",
+    "name": "Bareo Gentle Baby Cleansing Wipes (72 Wipes)",
+    "brand": "Bareo",
+    "categoryId": "c4",
+    "categoryName": "Baby Care",
+    "categorySlug": "baby-care",
+    "shortDescription": "Clinical Baby Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Gentle Baby Cleansing Wipes (72 Wipes). Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 199,
+    "offerPrice": 149,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 148,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "baby-care"
+    ],
+    "images": [
+      {
+        "id": "p11-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049611/bareo/products/bareo-gentle-baby-cleansing-wipes-72-wipes.png",
+        "publicId": "bareo/products/bareo-gentle-baby-cleansing-wipes-72-wipes",
+        "alt": "Bareo Gentle Baby Cleansing Wipes (72 Wipes) Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p12",
+    "sku": "BAR-BC-012",
+    "slug": "bareo-mist-veil-hydrating-body-mist",
+    "name": "Bareo Mist Veil Hydrating Body Mist",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Mist Veil Hydrating Body Mist. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.6,
+    "ratingCount": 121,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p12-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049619/bareo/products/bareo-mist-veil-hydrating-body-mist.png",
+        "publicId": "bareo/products/bareo-mist-veil-hydrating-body-mist",
+        "alt": "Bareo Mist Veil Hydrating Body Mist Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p13",
+    "sku": "BAR-BC-013",
+    "slug": "bareo-cedarwood-moss-refreshing-body-wash",
+    "name": "Bareo Cedarwood & Moss Refreshing Body Wash",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Cedarwood & Moss Refreshing Body Wash. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 142,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p13-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049608/bareo/products/bareo-cedarwood-moss-refreshing-body-wash.png",
+        "publicId": "bareo/products/bareo-cedarwood-moss-refreshing-body-wash",
+        "alt": "Bareo Cedarwood & Moss Refreshing Body Wash Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p14",
+    "sku": "BAR-SK-014",
+    "slug": "bareo-centella-cica-soothing-gel-moisturizer",
+    "name": "Bareo Centella & Cica Soothing Gel Moisturizer",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Centella & Cica Soothing Gel Moisturizer. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 549,
+    "offerPrice": 429,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 145,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p14-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049607/bareo/products/bareo-centella-cica-soothing-gel-moisturizer.png",
+        "publicId": "bareo/products/bareo-centella-cica-soothing-gel-moisturizer",
+        "alt": "Bareo Centella & Cica Soothing Gel Moisturizer Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p15",
+    "sku": "BAR-SK-015",
+    "slug": "bareo-cica-niacinamide-calming-cleanser",
+    "name": "Bareo Cica & Niacinamide Calming Cleanser",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Cica & Niacinamide Calming Cleanser. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.7,
+    "ratingCount": 93,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p15-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049607/bareo/products/bareo-cica-niacinamide-calming-cleanser.png",
+        "publicId": "bareo/products/bareo-cica-niacinamide-calming-cleanser",
+        "alt": "Bareo Cica & Niacinamide Calming Cleanser Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p16",
+    "sku": "BAR-BC-016",
+    "slug": "bareo-coffee-cocoa-body-exfoliating-scrub",
+    "name": "Bareo Coffee & Cocoa Body Exfoliating Scrub",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Coffee & Cocoa Body Exfoliating Scrub. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.9,
+    "ratingCount": 82,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p16-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049639/bareo/products/bareo-coffee-cocoa-body-exfoliating-scrub.png",
+        "publicId": "bareo/products/bareo-coffee-cocoa-body-exfoliating-scrub",
+        "alt": "Bareo Coffee & Cocoa Body Exfoliating Scrub Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p17",
+    "sku": "BAR-SK-017",
+    "slug": "bareo-comfort-cream-mineral-sunscreen-spf-50-pa",
+    "name": "Bareo Comfort Cream Mineral Sunscreen SPF 50 PA++++",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Comfort Cream Mineral Sunscreen SPF 50 PA++++. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 499,
+    "discount": 17,
+    "rating": 4.8,
+    "ratingCount": 129,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p17-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049637/bareo/products/bareo-comfort-cream-mineral-sunscreen-spf-50-pa.png",
+        "publicId": "bareo/products/bareo-comfort-cream-mineral-sunscreen-spf-50-pa",
+        "alt": "Bareo Comfort Cream Mineral Sunscreen SPF 50 PA++++ Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p18",
+    "sku": "BAR-BC-018",
+    "slug": "bareo-daily-silk-niacinamide-body-milk-lotion",
+    "name": "Bareo Daily Silk Niacinamide Body Milk Lotion",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Daily Silk Niacinamide Body Milk Lotion. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 137,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p18-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049630/bareo/products/bareo-daily-silk-niacinamide-body-milk-lotion.png",
+        "publicId": "bareo/products/bareo-daily-silk-niacinamide-body-milk-lotion",
+        "alt": "Bareo Daily Silk Niacinamide Body Milk Lotion Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p19",
+    "sku": "BAR-HC-019",
+    "slug": "bareo-daily-soft-hydrating-conditioner",
+    "name": "Bareo Daily Soft Hydrating Conditioner",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Daily Soft Hydrating Conditioner. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.6,
+    "ratingCount": 114,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p19-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049631/bareo/products/bareo-daily-soft-hydrating-conditioner.png",
+        "publicId": "bareo/products/bareo-daily-soft-hydrating-conditioner",
+        "alt": "Bareo Daily Soft Hydrating Conditioner Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p20",
+    "sku": "BAR-HC-020",
+    "slug": "bareo-deep-repair-keratin-conditioner",
+    "name": "Bareo Deep Repair Keratin Conditioner",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Deep Repair Keratin Conditioner. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.8,
+    "ratingCount": 104,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p20-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049636/bareo/products/bareo-deep-repair-keratin-conditioner.png",
+        "publicId": "bareo/products/bareo-deep-repair-keratin-conditioner",
+        "alt": "Bareo Deep Repair Keratin Conditioner Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p21",
+    "sku": "BAR-SK-021",
+    "slug": "bareo-zinc-oxide-protective-diaper-rash-cream",
+    "name": "Bareo Zinc Oxide Protective Diaper Rash Cream",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Zinc Oxide Protective Diaper Rash Cream. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 349,
+    "offerPrice": 279,
+    "discount": 20,
+    "rating": 4.9,
+    "ratingCount": 106,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p21-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049652/bareo/products/bareo-zinc-oxide-protective-diaper-rash-cream.png",
+        "publicId": "bareo/products/bareo-zinc-oxide-protective-diaper-rash-cream",
+        "alt": "Bareo Zinc Oxide Protective Diaper Rash Cream Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p22",
+    "sku": "BAR-BC-022",
+    "slug": "bareo-fig-sandalwood-refreshing-body-mist",
+    "name": "Bareo Fig & Sandalwood Refreshing Body Mist",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Fig & Sandalwood Refreshing Body Mist. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.7,
+    "ratingCount": 93,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p22-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049651/bareo/products/bareo-fig-sandalwood-refreshing-body-mist.png",
+        "publicId": "bareo/products/bareo-fig-sandalwood-refreshing-body-mist",
+        "alt": "Bareo Fig & Sandalwood Refreshing Body Mist Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p23",
+    "sku": "BAR-BC-023",
+    "slug": "bareo-fig-sandalwood-nourishing-body-wash",
+    "name": "Bareo Fig & Sandalwood Nourishing Body Wash",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Fig & Sandalwood Nourishing Body Wash. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 92,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p23-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049660/bareo/products/bareo-fig-sandalwood-nourishing-body-wash.png",
+        "publicId": "bareo/products/bareo-fig-sandalwood-nourishing-body-wash",
+        "alt": "Bareo Fig & Sandalwood Nourishing Body Wash Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p24",
+    "sku": "BAR-HC-024",
+    "slug": "bareo-frizz-control-smooth-hair-shampoo",
+    "name": "Bareo Frizz Control Smooth Hair Shampoo",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Frizz Control Smooth Hair Shampoo. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.7,
+    "ratingCount": 99,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p24-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049656/bareo/products/bareo-frizz-control-smooth-hair-shampoo.png",
+        "publicId": "bareo/products/bareo-frizz-control-smooth-hair-shampoo",
+        "alt": "Bareo Frizz Control Smooth Hair Shampoo Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p25",
+    "sku": "BAR-SK-025",
+    "slug": "bareo-gel-cream-ultra-light-sunscreen-spf-50-pa",
+    "name": "Bareo Gel Cream Ultra-Light Sunscreen SPF 50 PA++++",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Gel Cream Ultra-Light Sunscreen SPF 50 PA++++. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 499,
+    "discount": 17,
+    "rating": 4.9,
+    "ratingCount": 87,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p25-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049657/bareo/products/bareo-gel-cream-ultra-light-sunscreen-spf-50-pa.png",
+        "publicId": "bareo/products/bareo-gel-cream-ultra-light-sunscreen-spf-50-pa",
+        "alt": "Bareo Gel Cream Ultra-Light Sunscreen SPF 50 PA++++ Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p26",
+    "sku": "BAR-SK-026",
+    "slug": "bareo-dewy-barrier-hyaluronic-hydrating-cleanser",
+    "name": "Bareo Dewy Barrier Hyaluronic Hydrating Cleanser",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Dewy Barrier Hyaluronic Hydrating Cleanser. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.7,
+    "ratingCount": 80,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p26-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049680/bareo/products/bareo-dewy-barrier-hyaluronic-hydrating-cleanser.png",
+        "publicId": "bareo/products/bareo-dewy-barrier-hyaluronic-hydrating-cleanser",
+        "alt": "Bareo Dewy Barrier Hyaluronic Hydrating Cleanser Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p27",
+    "sku": "BAR-SK-027",
+    "slug": "bareo-dewy-barrier-hyaluronic-hydrator-cream",
+    "name": "Bareo Dewy Barrier Hyaluronic Hydrator Cream",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Dewy Barrier Hyaluronic Hydrator Cream. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 469,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 142,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p27-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049674/bareo/products/bareo-dewy-barrier-hyaluronic-hydrator-cream.png",
+        "publicId": "bareo/products/bareo-dewy-barrier-hyaluronic-hydrator-cream",
+        "alt": "Bareo Dewy Barrier Hyaluronic Hydrator Cream Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p28",
+    "sku": "BAR-SK-028",
+    "slug": "bareo-hydrate-hyaluronic-acid-serum-2",
+    "name": "Bareo Hydrate Hyaluronic Acid Serum 2%",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Hydrate Hyaluronic Acid Serum 2%. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 649,
+    "offerPrice": 499,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 139,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p28-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049673/bareo/products/bareo-hydrate-hyaluronic-acid-serum-2.png",
+        "publicId": "bareo/products/bareo-hydrate-hyaluronic-acid-serum-2",
+        "alt": "Bareo Hydrate Hyaluronic Acid Serum 2% Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p29",
+    "sku": "BAR-HC-029",
+    "slug": "bareo-keratin-intense-repair-hair-mask",
+    "name": "Bareo Keratin Intense Repair Hair Mask",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Keratin Intense Repair Hair Mask. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 469,
+    "discount": 22,
+    "rating": 4.9,
+    "ratingCount": 74,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p29-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049681/bareo/products/bareo-keratin-intense-repair-hair-mask.png",
+        "publicId": "bareo/products/bareo-keratin-intense-repair-hair-mask",
+        "alt": "Bareo Keratin Intense Repair Hair Mask Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p30",
+    "sku": "BAR-BC-030",
+    "slug": "bareo-lactic-acid-exfoliating-smooth-body-scrub",
+    "name": "Bareo Lactic Acid Exfoliating Smooth Body Scrub",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Lactic Acid Exfoliating Smooth Body Scrub. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.8,
+    "ratingCount": 76,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p30-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049680/bareo/products/bareo-lactic-acid-exfoliating-smooth-body-scrub.png",
+        "publicId": "bareo/products/bareo-lactic-acid-exfoliating-smooth-body-scrub",
+        "alt": "Bareo Lactic Acid Exfoliating Smooth Body Scrub Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p31",
+    "sku": "BAR-BC-031",
+    "slug": "bareo-neroli-citrus-refreshing-body-mist",
+    "name": "Bareo Neroli & Citrus Refreshing Body Mist",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Neroli & Citrus Refreshing Body Mist. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.7,
+    "ratingCount": 104,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p31-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049702/bareo/products/bareo-neroli-citrus-refreshing-body-mist.png",
+        "publicId": "bareo/products/bareo-neroli-citrus-refreshing-body-mist",
+        "alt": "Bareo Neroli & Citrus Refreshing Body Mist Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p32",
+    "sku": "BAR-BC-032",
+    "slug": "bareo-neroli-citrus-revitalizing-body-wash",
+    "name": "Bareo Neroli & Citrus Revitalizing Body Wash",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Neroli & Citrus Revitalizing Body Wash. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 101,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p32-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049703/bareo/products/bareo-neroli-citrus-revitalizing-body-wash.png",
+        "publicId": "bareo/products/bareo-neroli-citrus-revitalizing-body-wash",
+        "alt": "Bareo Neroli & Citrus Revitalizing Body Wash Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p33",
+    "sku": "BAR-SK-033",
+    "slug": "bareo-niacinamide-clarifying-face-wash",
+    "name": "Bareo Niacinamide Clarifying Face Wash",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Niacinamide Clarifying Face Wash. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.7,
+    "ratingCount": 71,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p33-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049705/bareo/products/bareo-niacinamide-clarifying-face-wash.png",
+        "publicId": "bareo/products/bareo-niacinamide-clarifying-face-wash",
+        "alt": "Bareo Niacinamide Clarifying Face Wash Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p34",
+    "sku": "BAR-SK-034",
+    "slug": "bareo-niacinamide-barrier-gel-moisturizer",
+    "name": "Bareo Niacinamide Barrier Gel Moisturizer",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Niacinamide Barrier Gel Moisturizer. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 549,
+    "offerPrice": 429,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 142,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p34-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049697/bareo/products/bareo-niacinamide-barrier-gel-moisturizer.png",
+        "publicId": "bareo/products/bareo-niacinamide-barrier-gel-moisturizer",
+        "alt": "Bareo Niacinamide Barrier Gel Moisturizer Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p35",
+    "sku": "BAR-SK-035",
+    "slug": "bareo-cica-niacinamide-calming-serum-10",
+    "name": "Bareo Cica & Niacinamide Calming Serum 10%",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Cica & Niacinamide Calming Serum 10%. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 649,
+    "offerPrice": 499,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 70,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p35-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049699/bareo/products/bareo-cica-niacinamide-calming-serum-10.png",
+        "publicId": "bareo/products/bareo-cica-niacinamide-calming-serum-10",
+        "alt": "Bareo Cica & Niacinamide Calming Serum 10% Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p36",
+    "sku": "BAR-SK-036",
+    "slug": "bareo-renew-retinol-bakuchiol-night-serum-0-3",
+    "name": "Bareo Renew Retinol & Bakuchiol Night Serum 0.3%",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Renew Retinol & Bakuchiol Night Serum 0.3%. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 699,
+    "offerPrice": 549,
+    "discount": 21,
+    "rating": 4.9,
+    "ratingCount": 116,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p36-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049724/bareo/products/bareo-renew-retinol-bakuchiol-night-serum-0-3.png",
+        "publicId": "bareo/products/bareo-renew-retinol-bakuchiol-night-serum-0-3",
+        "alt": "Bareo Renew Retinol & Bakuchiol Night Serum 0.3% Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p37",
+    "sku": "BAR-BC-037",
+    "slug": "bareo-rose-water-honey-soothing-body-wash",
+    "name": "Bareo Rose Water & Honey Soothing Body Wash",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Rose Water & Honey Soothing Body Wash. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 82,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p37-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049735/bareo/products/bareo-rose-water-honey-soothing-body-wash.png",
+        "publicId": "bareo/products/bareo-rose-water-honey-soothing-body-wash",
+        "alt": "Bareo Rose Water & Honey Soothing Body Wash Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p38",
+    "sku": "BAR-HC-038",
+    "slug": "bareo-rosemary-hair-growth-scalp-serum",
+    "name": "Bareo Rosemary Hair Growth Scalp Serum",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Rosemary Hair Growth Scalp Serum. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 649,
+    "offerPrice": 499,
+    "discount": 23,
+    "rating": 4.9,
+    "ratingCount": 130,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p38-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049721/bareo/products/bareo-rosemary-hair-growth-scalp-serum.png",
+        "publicId": "bareo/products/bareo-rosemary-hair-growth-scalp-serum",
+        "alt": "Bareo Rosemary Hair Growth Scalp Serum Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p39",
+    "sku": "BAR-HC-039",
+    "slug": "bareo-rosemary-biotin-hair-growth-shampoo",
+    "name": "Bareo Rosemary & Biotin Hair Growth Shampoo",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Rosemary & Biotin Hair Growth Shampoo. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 449,
+    "offerPrice": 349,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 94,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p39-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049723/bareo/products/bareo-rosemary-biotin-hair-growth-shampoo.png",
+        "publicId": "bareo/products/bareo-rosemary-biotin-hair-growth-shampoo",
+        "alt": "Bareo Rosemary & Biotin Hair Growth Shampoo Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p40",
+    "sku": "BAR-SK-040",
+    "slug": "bareo-salicylic-acid-tea-tree-cleanser",
+    "name": "Bareo Salicylic Acid & Tea Tree Cleanser",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Salicylic Acid & Tea Tree Cleanser. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 84,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p40-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049721/bareo/products/bareo-salicylic-acid-tea-tree-cleanser.png",
+        "publicId": "bareo/products/bareo-salicylic-acid-tea-tree-cleanser",
+        "alt": "Bareo Salicylic Acid & Tea Tree Cleanser Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p41",
+    "sku": "BAR-SK-041",
+    "slug": "bareo-salicylic-acid-2-pore-refining-serum",
+    "name": "Bareo Salicylic Acid 2% Pore Refining Serum",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Salicylic Acid 2% Pore Refining Serum. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 449,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 71,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": true,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p41-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049748/bareo/products/bareo-salicylic-acid-2-pore-refining-serum.png",
+        "publicId": "bareo/products/bareo-salicylic-acid-2-pore-refining-serum",
+        "alt": "Bareo Salicylic Acid 2% Pore Refining Serum Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p42",
+    "sku": "BAR-HC-042",
+    "slug": "bareo-scalp-balance-hydration-serum",
+    "name": "Bareo Scalp Balance & Hydration Serum",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Scalp Balance & Hydration Serum. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 449,
+    "discount": 25,
+    "rating": 4.8,
+    "ratingCount": 98,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p42-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049747/bareo/products/bareo-scalp-balance-hydration-serum.png",
+        "publicId": "bareo/products/bareo-scalp-balance-hydration-serum",
+        "alt": "Bareo Scalp Balance & Hydration Serum Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p43",
+    "sku": "BAR-BC-043",
+    "slug": "bareo-niacinamide-shea-butter-body-milk-lotion",
+    "name": "Bareo Niacinamide & Shea Butter Body Milk Lotion",
+    "brand": "Bareo",
+    "categoryId": "c3",
+    "categoryName": "Body Care",
+    "categorySlug": "body-care",
+    "shortDescription": "Clinical Body Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Niacinamide & Shea Butter Body Milk Lotion. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 499,
+    "offerPrice": 399,
+    "discount": 20,
+    "rating": 4.8,
+    "ratingCount": 125,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": true,
+    "isNewProduct": true,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "body-care"
+    ],
+    "images": [
+      {
+        "id": "p43-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049745/bareo/products/bareo-niacinamide-shea-butter-body-milk-lotion.png",
+        "publicId": "bareo/products/bareo-niacinamide-shea-butter-body-milk-lotion",
+        "alt": "Bareo Niacinamide & Shea Butter Body Milk Lotion Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p44",
+    "sku": "BAR-HC-044",
+    "slug": "bareo-nourishing-shea-butter-hair-mask",
+    "name": "Bareo Nourishing Shea Butter Hair Mask",
+    "brand": "Bareo",
+    "categoryId": "c2",
+    "categoryName": "Hair Care",
+    "categorySlug": "hair-care",
+    "shortDescription": "Clinical Hair Care formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Nourishing Shea Butter Hair Mask. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 549,
+    "offerPrice": 429,
+    "discount": 22,
+    "rating": 4.8,
+    "ratingCount": 84,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "hair-care"
+    ],
+    "images": [
+      {
+        "id": "p44-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049751/bareo/products/bareo-nourishing-shea-butter-hair-mask.png",
+        "publicId": "bareo/products/bareo-nourishing-shea-butter-hair-mask",
+        "alt": "Bareo Nourishing Shea Butter Hair Mask Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p45",
+    "sku": "BAR-SK-045",
+    "slug": "bareo-invisible-shield-fluid-sunscreen-spf-50-pa",
+    "name": "Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 479,
+    "discount": 20,
+    "rating": 4.9,
+    "ratingCount": 139,
+    "stock": 75,
+    "isBestSeller": true,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p45-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049753/bareo/products/bareo-invisible-shield-fluid-sunscreen-spf-50-pa.png",
+        "publicId": "bareo/products/bareo-invisible-shield-fluid-sunscreen-spf-50-pa",
+        "alt": "Bareo Invisible Shield Fluid Sunscreen SPF 50 PA++++ Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p46",
+    "sku": "BAR-SK-046",
+    "slug": "bareo-squalane-vitamin-c-glow-cleanser",
+    "name": "Bareo Squalane & Vitamin C Glow Cleanser",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Squalane & Vitamin C Glow Cleanser. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 399,
+    "offerPrice": 299,
+    "discount": 25,
+    "rating": 4.7,
+    "ratingCount": 71,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": true,
+    "isDoctorRecommended": true,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p46-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049769/bareo/products/bareo-squalane-vitamin-c-glow-cleanser.png",
+        "publicId": "bareo/products/bareo-squalane-vitamin-c-glow-cleanser",
+        "alt": "Bareo Squalane & Vitamin C Glow Cleanser Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p47",
+    "sku": "BAR-SK-047",
+    "slug": "bareo-squalane-vitamin-c-glow-face-oil-15",
+    "name": "Bareo Squalane & Vitamin C Glow Face Oil 15%",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Squalane & Vitamin C Glow Face Oil 15%. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 699,
+    "offerPrice": 549,
+    "discount": 21,
+    "rating": 4.9,
+    "ratingCount": 91,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p47-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049769/bareo/products/bareo-squalane-vitamin-c-glow-face-oil-15.png",
+        "publicId": "bareo/products/bareo-squalane-vitamin-c-glow-face-oil-15",
+        "alt": "Bareo Squalane & Vitamin C Glow Face Oil 15% Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  },
+  {
+    "id": "p48",
+    "sku": "BAR-SK-048",
+    "slug": "bareo-watery-gel-cooling-sunscreen-spf-50-pa",
+    "name": "Bareo Watery Gel Cooling Sunscreen SPF 50 PA++++",
+    "brand": "Bareo",
+    "categoryId": "c1",
+    "categoryName": "Skincare",
+    "categorySlug": "skincare",
+    "shortDescription": "Clinical Skincare formulation with active ingredients for everyday health.",
+    "description": "Experience dermatologically formulated skincare with Bareo Watery Gel Cooling Sunscreen SPF 50 PA++++. Engineered with clean, high-performance actives for optimal skin barrier repair and radiance.",
+    "mrp": 599,
+    "offerPrice": 499,
+    "discount": 17,
+    "rating": 4.8,
+    "ratingCount": 107,
+    "stock": 75,
+    "isBestSeller": false,
+    "isTrending": false,
+    "isDoctorRecommended": false,
+    "isNewProduct": false,
+    "isAiRecommended": true,
+    "skinTypes": [
+      "all",
+      "sensitive",
+      "normal"
+    ],
+    "concerns": [
+      "dullness",
+      "barrier-repair"
+    ],
+    "benefits": [
+      "Dermatologist tested",
+      "Restores skin barrier",
+      "Cruelty-free"
+    ],
+    "usage": [
+      "Apply generously to clean skin/hair daily."
+    ],
+    "keyFacts": [
+      "Clean Actives",
+      "Barrier Safe"
+    ],
+    "tags": [
+      "skincare"
+    ],
+    "images": [
+      {
+        "id": "p48-primary",
+        "url": "https://res.cloudinary.com/j9yeiuld/image/upload/v1787049766/bareo/products/bareo-watery-gel-cooling-sunscreen-spf-50-pa.png",
+        "publicId": "bareo/products/bareo-watery-gel-cooling-sunscreen-spf-50-pa",
+        "alt": "Bareo Watery Gel Cooling Sunscreen SPF 50 PA++++ Primary Image",
+        "type": "primary"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Active Botanical Extract",
+        "description": "Nourishes and repairs skin"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this suitable for daily use?",
+        "answer": "Yes, formulated for safe daily usage."
+      }
+    ]
+  }
+]
