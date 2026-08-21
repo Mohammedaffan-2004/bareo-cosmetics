@@ -14,7 +14,7 @@ export function CategorySection({ categories }: CategorySectionProps) {
         <div className="space-y-2">
           {/* BAREO Catalogue Index Pill */}
           <div className="inline-flex items-center gap-2 rounded-full border border-[#DCE6E9] bg-white px-3.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#172126] shadow-2xs">
-            <span className="text-[#167C86]">✦</span> BAREO / 002 · THE FORMULATIONS
+            <span className="text-[#167C86]">✦</span> BAREO / 002 · THE COLLECTION
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-normal text-[#172126] tracking-tight">
             Four disciplines. One considered routine.

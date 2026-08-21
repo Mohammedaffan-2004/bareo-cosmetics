@@ -47,12 +47,27 @@ function applyQuery(query: ProductQuery): Product[] {
     list = list.filter((p) => p.categorySlug === cat || (p.categoryName || '').toLowerCase() === cat.toLowerCase())
   }
   if (query.concern) {
-    const concerns = query.concern.split(',')
-    list = list.filter((p) => (p.concerns || []).some((c) => concerns.includes(c)))
+    const concerns = query.concern
+      .toLowerCase()
+      .split(',')
+      .map((c) => c.trim())
+      .filter(Boolean)
+    list = list.filter((p) =>
+      (p.concerns || []).some((c) => concerns.includes((c || '').toLowerCase()))
+    )
   }
   if (query.skinType) {
-    const types = query.skinType.split(',')
-    list = list.filter((p) => (p.skinTypes || []).some((t) => types.includes(t)))
+    const types = query.skinType
+      .toLowerCase()
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean)
+    list = list.filter((p) =>
+      (p.skinTypes || []).some((t) => {
+        const lowerT = (t || '').toLowerCase()
+        return types.includes(lowerT) || lowerT === 'all' || lowerT === 'all-skin-types'
+      })
+    )
   }
   if (query.minRating) {
     list = list.filter((p) => (p.rating || 0) >= (query.minRating as number))
@@ -98,9 +113,12 @@ export function productService() {
         if (res.data?.items) {
           const apiProducts = res.data.items.map((p: any) => ({
             ...p,
-            images: Array.isArray(p.images)
-              ? p.images.map((img: any, idx: number) => (typeof img === 'string' ? { id: `img-${idx}`, url: img } : img))
-              : [{ id: 'img-def', url: '/images/products/bareo-cica-serum.png' }],
+            images:
+              Array.isArray(p.images) && p.images.length > 0
+                ? p.images.map((img: any, idx: number) =>
+                    typeof img === 'string' ? { id: `img-${idx}`, url: img, type: idx === 0 ? 'primary' : 'gallery' } : img
+                  )
+                : [{ id: 'img-0', url: p.slug ? `/new-img/${p.slug}.png` : '/editorial/category/bareo-category-skincare.jpg', type: 'primary' }],
           }))
 
           // Update product store with live backend data
@@ -170,6 +188,15 @@ export function productService() {
       const product = getCatalog().find((p) => p.slug === slug || p.id === slug)
       if (!product) mockError('Product not found', 404)
       return mockFetch(product!).then((res) => res.data)
+    },
+
+    async submitReview(productIdOrSlug: string, reviewData: { rating: number; title?: string; comment: string }): Promise<Product> {
+      const res = await apiFetch<Product>(`/products/${productIdOrSlug}/reviews`, {
+        method: 'POST',
+        body: JSON.stringify(reviewData),
+      })
+      if (res.data) return res.data
+      throw new Error(res.message || 'Failed to submit review')
     },
 
     async getProductById(id: string): Promise<Product> {

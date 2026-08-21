@@ -6,6 +6,22 @@ function escapeRegex(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+const SYNONYM_MAP: Record<string, string[]> = {
+  moisturizer: ['cream', 'lotion', 'hydrat', 'barrier', 'gel', 'moisture'],
+  moisturiser: ['cream', 'lotion', 'hydrat', 'barrier', 'gel', 'moisture'],
+  cleanser: ['wash', 'cleanse', 'cleansing', 'face wash', 'foam'],
+  facewash: ['wash', 'cleanse', 'cleansing', 'face wash', 'foam'],
+  sunscreen: ['spf', 'sun', 'shield', 'sunblock', 'uv', 'fluid'],
+  sunblock: ['spf', 'sun', 'shield', 'sunblock', 'uv', 'fluid'],
+  serum: ['serum', 'concentrate', 'treatment', 'drop', 'essence', 'ampoule'],
+  shampoo: ['shampoo', 'scalp', 'hair wash'],
+  hair: ['hair', 'scalp', 'shampoo'],
+  baby: ['baby', 'baby-care', 'infant', 'diaper', 'tear-free'],
+  body: ['body', 'scrub', 'body wash', 'body-care'],
+  acne: ['acne', 'pimple', 'blemish', 'salicylic', 'cica', 'clarifying'],
+  pigmentation: ['pigment', 'brighten', 'vitamin c', 'dark spot', 'niacinamide', 'glow'],
+}
+
 export class ProductService {
   /**
    * Format raw Mongoose product document into consistent API payload structure.
@@ -23,8 +39,14 @@ export class ProductService {
       tags: Array.isArray(p.tags) ? p.tags : JSON.parse(p.tags || '[]'),
       images: (p.images || []).map((img: any, idx: number) =>
         typeof img === 'string'
-          ? { id: `img-${idx}`, url: img, alt: p.name }
-          : { id: img._id?.toString() || img.id || `img-${idx}`, url: img.url, alt: img.alt || p.name }
+          ? { id: `img-${idx}`, url: img, alt: p.name, type: idx === 0 ? 'primary' : 'gallery' }
+          : {
+              id: img._id?.toString() || img.id || `img-${idx}`,
+              url: img.url,
+              alt: img.alt || p.name,
+              type: img.type || (idx === 0 ? 'primary' : 'gallery'),
+              publicId: img.publicId,
+            }
       ),
     }
   }
@@ -48,38 +70,98 @@ export class ProductService {
     const limitNum = parseInt(limit as string, 10) || 12
     const skip = (pageNum - 1) * limitNum
 
-    const query: any = {
-      status: { $in: ['active', 'out-of-stock'] },
-    }
+    const conditions: any[] = [{ status: { $in: ['active', 'out-of-stock'] } }]
 
     if (category && category !== 'all' && category !== 'all-products') {
-      query.$or = [{ categorySlug: category as string }, { categoryId: category as string }]
+      conditions.push({
+        $or: [{ categorySlug: category as string }, { categoryId: category as string }],
+      })
     }
 
     if (brand && brand !== 'all') {
       const safeBrand = escapeRegex(brand as string)
-      query.brand = new RegExp(`^${safeBrand}$`, 'i')
+      conditions.push({ brand: new RegExp(`^${safeBrand}$`, 'i') })
     }
 
     if (minPrice || maxPrice) {
-      query.offerPrice = {}
-      if (minPrice) query.offerPrice.$gte = parseFloat(minPrice as string)
-      if (maxPrice) query.offerPrice.$lte = parseFloat(maxPrice as string)
+      const priceFilter: any = {}
+      if (minPrice) priceFilter.$gte = parseFloat(minPrice as string)
+      if (maxPrice) priceFilter.$lte = parseFloat(maxPrice as string)
+      conditions.push({ offerPrice: priceFilter })
     }
 
-    if (search) {
-      const safeSearch = escapeRegex(search as string)
-      const q = new RegExp(safeSearch, 'i')
-      query.$or = [{ name: q }, { shortDescription: q }, { brand: q }]
+    if (search && (search as string).trim()) {
+      const rawSearch = (search as string).trim()
+      const searchTerms = rawSearch.toLowerCase().split(/\s+/).filter(Boolean)
+      const searchOrs: any[] = []
+
+      // 1. Exact string search
+      const safeExact = escapeRegex(rawSearch)
+      const exactRegex = new RegExp(safeExact, 'i')
+      searchOrs.push(
+        { name: exactRegex },
+        { shortDescription: exactRegex },
+        { description: exactRegex },
+        { brand: exactRegex },
+        { categoryName: exactRegex },
+        { categorySlug: exactRegex },
+        { tags: exactRegex }
+      )
+
+      // 2. Term-by-term and synonym search
+      for (const term of searchTerms) {
+        const safeTerm = escapeRegex(term)
+        const termRegex = new RegExp(safeTerm, 'i')
+        searchOrs.push(
+          { name: termRegex },
+          { shortDescription: termRegex },
+          { categoryName: termRegex },
+          { tags: termRegex }
+        )
+
+        const synonyms = SYNONYM_MAP[term]
+        if (synonyms && synonyms.length > 0) {
+          for (const syn of synonyms) {
+            const synRegex = new RegExp(escapeRegex(syn), 'i')
+            searchOrs.push(
+              { name: synRegex },
+              { shortDescription: synRegex },
+              { categoryName: synRegex },
+              { tags: synRegex }
+            )
+          }
+        }
+      }
+
+      conditions.push({ $or: searchOrs })
     }
 
     if (skinType) {
-      query.skinTypes = skinType as string
+      const types = (skinType as string)
+        .split(',')
+        .map((t) => t.trim().toLowerCase())
+        .filter(Boolean)
+      if (types.length > 0) {
+        // A product matches if skinTypes includes the specific skin type OR 'all'
+        conditions.push({
+          skinTypes: { $in: [...types, 'all', 'all-skin-types'] },
+        })
+      }
     }
 
     if (concern) {
-      query.concerns = concern as string
+      const concernsList = (concern as string)
+        .split(',')
+        .map((c) => c.trim().toLowerCase())
+        .filter(Boolean)
+      if (concernsList.length > 0) {
+        conditions.push({
+          concerns: { $in: concernsList },
+        })
+      }
     }
+
+    const query = conditions.length > 1 ? { $and: conditions } : conditions[0]
 
     let sortOptions: any = { soldCount: -1 }
     if (sort === 'price-asc') sortOptions = { offerPrice: 1 }
@@ -307,6 +389,71 @@ export class ProductService {
       throw error
     }
     return { success: true }
+  }
+
+  /** Add or update customer product review */
+  async addReview(
+    productIdOrSlug: string,
+    userId: string,
+    userName: string,
+    reviewData: { rating: number; title?: string; comment: string }
+  ) {
+    const isObjId = isValidObjectId(productIdOrSlug)
+    const query = isObjId
+      ? { $or: [{ slug: productIdOrSlug }, { _id: productIdOrSlug }] }
+      : { $or: [{ slug: productIdOrSlug }, { id: productIdOrSlug }] }
+
+    const product = await Product.findOne(query)
+
+    if (!product) {
+      const error: any = new Error('Product not found')
+      error.statusCode = 404
+      throw error
+    }
+
+    const { rating, title, comment } = reviewData
+    const numRating = Number(rating)
+    if (!numRating || numRating < 1 || numRating > 5) {
+      const error: any = new Error('Rating must be between 1 and 5')
+      error.statusCode = 400
+      throw error
+    }
+
+    if (!comment || !comment.trim()) {
+      const error: any = new Error('Review comment is required')
+      error.statusCode = 400
+      throw error
+    }
+
+    const existingReviewIndex = product.reviews.findIndex((r) => r.userId === userId)
+
+    const newReview = {
+      userId,
+      userName: userName || 'Bareo Customer',
+      rating: numRating,
+      title: title?.trim() || '',
+      comment: comment.trim(),
+      date: new Date().toISOString(),
+      verified: true,
+      helpful: 0,
+    }
+
+    if (existingReviewIndex >= 0) {
+      product.reviews[existingReviewIndex] = {
+        ...product.reviews[existingReviewIndex],
+        ...newReview,
+      }
+    } else {
+      product.reviews.unshift(newReview as any)
+    }
+
+    product.ratingCount = product.reviews.length
+    const totalRatingSum = product.reviews.reduce((sum, r) => sum + r.rating, 0)
+    product.rating = parseFloat((totalRatingSum / product.ratingCount).toFixed(1))
+
+    await product.save()
+
+    return this.formatProduct(product.toObject())
   }
 }
 

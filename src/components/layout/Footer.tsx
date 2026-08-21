@@ -148,7 +148,7 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/shop" className="text-[#52636B] hover:text-[#172126] transition-colors min-h-[32px] inline-flex items-center">
-                  All Formulations
+                  All Products
                 </Link>
               </li>
               <li>

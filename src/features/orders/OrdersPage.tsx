@@ -150,12 +150,12 @@ export function OrdersPage() {
             My Orders
           </h1>
           <p className="mt-1 text-xs text-[#52636B] font-medium">
-            Track your formulations, delivery progress and past purchases.
+            Track your orders, delivery progress and past purchases.
           </p>
         </div>
         <div className="flex items-center gap-1.5 rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-3.5 py-1.5 text-[11px] font-medium text-[#172126]">
           <ShieldCheck className="size-3.5 text-[#167C86]" />
-          <span>100% Authentic Formulations</span>
+          <span>100% Authentic Products</span>
         </div>
       </div>
 
@@ -199,13 +199,13 @@ export function OrdersPage() {
             title={filter === 'all' ? 'No orders yet' : `No ${filter} orders yet`}
             description={
               filter === 'all'
-                ? "Your saved formulations will appear here once you place your first order."
+                ? "Your orders will appear here once you place your first order."
                 : `Your ${filter} orders will appear here once an order has reached this stage.`
             }
             action={
               <Button asChild className="rounded-xl bg-[#172126] text-white text-xs px-6 hover:bg-[#253239] min-h-[44px] border border-[#172126]">
                 <Link to="/shop">
-                  Explore Formulations <ArrowRight className="size-4 ml-1.5" />
+                  Explore Products <ArrowRight className="size-4 ml-1.5" />
                 </Link>
               </Button>
             }
@@ -297,7 +297,7 @@ export function OrdersPage() {
                           to={`/product/${leadItem?.productId}`}
                           className="font-serif text-base sm:text-lg font-medium text-[#172126] hover:underline line-clamp-2 leading-snug"
                         >
-                          {leadItem?.name || 'Bareo Formulation'}
+                          {leadItem?.name || 'Bareo Product'}
                         </Link>
 
                         <div className="flex items-center gap-2 text-xs text-[#52636B]">

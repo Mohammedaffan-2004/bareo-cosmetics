@@ -1,14 +1,15 @@
 import { PRODUCTS } from '@/mocks/productCatalog'
 import type { Product } from '@/types'
 
-const STORAGE_KEY = 'bareo_catalog_v3'
+const STORAGE_KEY = 'bareo_catalog_v5'
 
 function loadInitialCatalog(): Product[] {
+  if (typeof window === 'undefined') return [...PRODUCTS]
   try {
     const cached = localStorage.getItem(STORAGE_KEY)
     if (cached) {
       const parsed = JSON.parse(cached)
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed
+      if (Array.isArray(parsed) && parsed.length >= 48) return parsed
     }
   } catch (_e) {
     // Ignore storage parse error

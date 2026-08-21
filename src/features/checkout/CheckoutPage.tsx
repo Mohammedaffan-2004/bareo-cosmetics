@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -60,6 +60,7 @@ const STEPS = [
 ]
 
 export function CheckoutPage() {
+  const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const toast = useToast()
@@ -88,7 +89,7 @@ export function CheckoutPage() {
   } = useForm<AddressForm>({ resolver: zodResolver(addressSchema) })
 
   // Pre-fill default address when savedAddresses are loaded
-  useState(() => {
+  useEffect(() => {
     if (savedAddresses && savedAddresses.length > 0 && !address) {
       const def = savedAddresses.find((a) => a.isDefault) || savedAddresses[0]
       if (def) {
@@ -100,7 +101,7 @@ export function CheckoutPage() {
           line1: def.line1,
           line2: def.line2 ?? '',
           city: def.city,
-          state: def.state,
+          state: def.state || 'Karnataka',
           pincode: def.pincode,
           landmark: def.landmark ?? '',
         }
@@ -110,7 +111,7 @@ export function CheckoutPage() {
         }
       }
     }
-  })
+  }, [savedAddresses, address, setValue])
 
   const selectedDeliveryOpt = deliveryOptions?.find((d) => d.id === delivery)
   const isStandardFree = delivery === 'standard' && (totals.subtotal - totals.couponDiscount >= 299)
@@ -148,12 +149,31 @@ export function CheckoutPage() {
   }
 
   const placeOrder = async () => {
-    if (!address) return
+    let targetAddress = address
+    if (!targetAddress && savedAddresses && savedAddresses.length > 0) {
+      const def = savedAddresses.find((a) => a.isDefault) || savedAddresses[0]
+      targetAddress = {
+        fullName: def.fullName,
+        phone: def.phone.replace(/\D/g, '').slice(-10),
+        email: def.email ?? '',
+        line1: def.line1,
+        line2: def.line2 ?? '',
+        city: def.city,
+        state: def.state || 'Karnataka',
+        pincode: def.pincode,
+        landmark: def.landmark ?? '',
+      }
+    }
+    if (!targetAddress) {
+      toast.error('Shipping Address Required', 'Please provide a shipping address.')
+      setStep(0)
+      return
+    }
     setPlacing(true)
     try {
       const order = await orderService().placeOrder({
         items,
-        address: { ...address, phone: `+91 ${address.phone}` },
+        address: { ...targetAddress, phone: `+91 ${targetAddress.phone}` },
         deliveryId: delivery,
         paymentMethod: paymentMethodLabel(paymentMethod),
         couponCode: coupon?.code,
@@ -166,6 +186,7 @@ export function CheckoutPage() {
           total: grandTotal,
         },
       })
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
       dispatch(clearCart())
       navigate(`/order-success?order=${order.orderId}`)
     } catch (err) {

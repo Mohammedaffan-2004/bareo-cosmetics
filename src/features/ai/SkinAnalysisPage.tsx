@@ -133,12 +133,15 @@ export function SkinAnalysisPage() {
 
   const triggerFileSelect = () => {
     uploadIdRef.current++ // Invalidate previous image evaluation
+    stopCameraStream()
     setSelfie(null)
     setImageQuality(null)
     setImageEligibility(null)
     setAnalysisState('IDLE')
+    setError(null)
+    setStep(2) // Return to Visual Skin Check step
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''
+      fileInputRef.current.value = '' // Reset so re-selecting identical file triggers onChange
       fileInputRef.current.click()
     }
   }
@@ -386,6 +389,15 @@ export function SkinAnalysisPage() {
 
       {/* Main Step Panels Container */}
       <div className="mx-auto max-w-3xl">
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileUpload}
+          accept="image/jpeg,image/png,image/webp,image/jpg,.jpg,.jpeg,.png,.webp"
+          className="hidden"
+          aria-hidden="true"
+        />
+
         <AnimatePresence mode="wait">
           {/* STEP 0: PREMIUM EDITORIAL INTRO */}
           {step === 0 && (
@@ -524,7 +536,7 @@ export function SkinAnalysisPage() {
                       Select your primary skin focus areas
                     </h2>
                     <p className="text-xs text-[#52636B] font-light mt-1">
-                      Choose all concerns you would like BAREO formulations to target.
+                      Choose all concerns you would like BAREO products to target.
                     </p>
                   </div>
 
@@ -667,14 +679,6 @@ export function SkinAnalysisPage() {
               exit={{ opacity: 0, y: -12 }}
               className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-10 shadow-2xs space-y-6 text-center"
             >
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileUpload}
-                accept="image/jpeg,image/png,image/webp,image/jpg,.jpg,.jpeg,.png,.webp"
-                className="hidden"
-              />
-
               <div className="space-y-2 max-w-md mx-auto">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
                   OPTIONAL VISUAL SIGNAL

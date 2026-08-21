@@ -247,7 +247,7 @@ async function chatReply(text: string): Promise<ChatMessage> {
     reply = 'Oil control starts with niacinamide and a gel moisturizer — never skip hydration on oily skin:'
     products = activeCatalog.filter((p) => (p.concerns || []).includes('oiliness')).sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 3)
   } else {
-    reply = 'Our dermal intelligence system formulates routines based on barrier support and hydration. Here are recommended formulations:'
+    reply = 'Our dermal intelligence system formulates routines based on barrier support and hydration. Here are recommended products:'
     products = activeCatalog.slice(0, 3)
   }
 

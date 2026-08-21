@@ -16,7 +16,7 @@ export function ShopByConcern() {
     <section className="container-page py-16 sm:py-20 border-b border-[#DCE6E9]">
       <div className="space-y-12">
         <div className="text-center space-y-1.5 max-w-2xl mx-auto">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">Targeted Formulations</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">Targeted Care</span>
           <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight">Shop by Skin & Scalp Concern</h2>
           <p className="text-xs sm:text-sm text-[#52636B] font-normal">Engineered precision formulas for targeted skin concerns and barrier repair.</p>
         </div>

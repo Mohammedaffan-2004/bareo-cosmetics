@@ -12,11 +12,31 @@ export function getProductImage(product?: Partial<Product> | null): string | nul
   const rawUrl = primaryObj?.url || product.images?.[0]?.url
 
   // If rawUrl is a valid URL or local product image, return it
-  if (rawUrl && (rawUrl.startsWith('http://') || rawUrl.startsWith('https://') || rawUrl.startsWith('/new-img/'))) {
+  if (
+    rawUrl &&
+    (rawUrl.startsWith('http://') ||
+      rawUrl.startsWith('https://') ||
+      rawUrl.startsWith('/new-img/') ||
+      rawUrl.startsWith('/images/products/') ||
+      rawUrl.startsWith('/images/'))
+  ) {
     return rawUrl
   }
 
+  // 2. Derive deterministic local packshot from slug
+  if (product.slug) {
+    return `/new-img/${product.slug}.png`
+  }
+
   return rawUrl || null
+}
+
+/**
+ * Returns a guaranteed local fallback packshot URL based on product slug.
+ */
+export function getProductFallbackImage(product?: Partial<Product> | null): string | null {
+  if (!product?.slug) return null
+  return `/new-img/${product.slug}.png`
 }
 
 /**

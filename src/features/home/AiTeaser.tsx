@@ -51,7 +51,7 @@ export function AiTeaser() {
                 <span className="text-[#167C86]">✦</span> BAREO / 003 · DERMAL INTELLIGENCE
               </div>
               <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#7A8A91] block">
-                PERSONAL FORMULATION INDEX / 003
+                PERSONAL ROUTINE INDEX / 003
               </span>
             </div>
 
@@ -63,7 +63,7 @@ export function AiTeaser() {
 
             {/* Supporting Copy */}
             <p className="text-xs sm:text-sm text-[#52636B] leading-relaxed font-normal max-w-xl">
-              Understand your skin profile, identify its routine priorities, and discover BAREO formulations selected around what your skin actually needs.
+              Understand your skin profile, identify its routine priorities, and discover BAREO products selected around what your skin actually needs.
             </p>
 
             {/* Action CTA */}
@@ -113,7 +113,7 @@ export function AiTeaser() {
                     </div>
                     <div>
                       <span className="text-[9px] font-bold text-[#167C86] uppercase tracking-widest block">
-                        FORMULATION DIRECTION
+                        ROUTINE DIRECTION
                       </span>
                       <p className="text-xs font-semibold text-[#167C86]">Hydrate · Repair · Protect</p>
                     </div>
@@ -148,7 +148,7 @@ export function AiTeaser() {
                 {/* Formulation Output & Routine Lines */}
                 <div className="pt-3 border-t border-[#DCE6E9]/60 space-y-2 text-[11px]">
                   <div className="flex items-center justify-between text-[9px] font-bold tracking-widest text-[#7A8A91] uppercase">
-                    <span>FORMULATION PRIORITIES</span>
+                    <span>ROUTINE PRIORITIES</span>
                     <span className="text-[#167C86]">01 / HYDRATE · 02 / REPAIR · 03 / PROTECT</span>
                   </div>
 
@@ -167,7 +167,7 @@ export function AiTeaser() {
 
               {/* Panel Footer */}
               <div className="flex items-center justify-between text-[9px] font-bold tracking-widest text-[#7A8A91] uppercase pt-0.5">
-                <span>BAREO / FORMULATION MATCH</span>
+                <span>BAREO / ROUTINE MATCH</span>
                 <span className="text-[#167C86]">6 ACTIVE INGREDIENTS IDENTIFIED</span>
               </div>
             </div>
@@ -191,8 +191,8 @@ export function AiTeaser() {
 
         {/* Subtle Editorial Catalogue Transition to Formulations */}
         <div className="pt-6 text-center border-t border-[#DCE6E9]/60 text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">
-          <span>FORMULATION MATCH · </span>
-          <span className="text-[#52636B]">Personalized priorities → considered formulations</span>
+          <span>ROUTINE MATCH · </span>
+          <span className="text-[#52636B]">Personalized priorities → considered products</span>
         </div>
       </motion.div>
     </section>

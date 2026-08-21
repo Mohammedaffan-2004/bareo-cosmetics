@@ -5,7 +5,7 @@ import { User } from '../models/User.model.js'
 import { Address } from '../models/Address.model.js'
 import { PaymentMethod } from '../models/PaymentMethod.model.js'
 import { signToken } from '../utils/jwt.js'
-import { AuthenticatedRequest } from '../middlewares/auth.middleware.js'
+import { AuthenticatedRequest, resetAuthRateLimit } from '../middlewares/auth.middleware.js'
 import { success, created, badRequest, unauthorized, notFound } from '../utils/response.js'
 
 import {
@@ -84,6 +84,13 @@ export const login = async (req: AuthenticatedRequest, res: Response) => {
     role: user.role,
     joinedAt: user.joinedAt ? user.joinedAt.toISOString() : new Date().toISOString(),
   }
+
+  const ip =
+    (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim() ||
+    req.ip ||
+    req.socket.remoteAddress ||
+    'unknown-ip'
+  resetAuthRateLimit(ip)
 
   return success(
     res,

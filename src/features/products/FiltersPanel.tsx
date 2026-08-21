@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { ChevronDown, RotateCcw } from 'lucide-react'
 import { Slider } from '@/components/ui/slider'
 import { formatINR, cn } from '@/utils'
+import { getCatalog } from '@/services/productStore'
 
 export interface ShopFilters {
   concern: string[]
@@ -213,6 +214,38 @@ export function FiltersPanel({
       ? CATEGORY_CONFIGS['baby-care']
       : CATEGORY_CONFIGS['skincare'])
 
+  const allCatalog = getCatalog()
+  const catProducts = useMemo(() => {
+    if (!category || category === 'all' || category === 'all-products') return allCatalog
+    return allCatalog.filter(
+      (p) =>
+        (p.categorySlug || '').toLowerCase() === catKey ||
+        (p.categoryName || '').toLowerCase() === catKey ||
+        (catKey === 'hair-care' && (p.categorySlug === 'haircare' || p.categoryName === 'Hair Care')) ||
+        (catKey === 'body-care' && (p.categorySlug === 'bodycare' || p.categoryName === 'Body Care')) ||
+        (catKey === 'baby-care' && (p.categorySlug === 'babycare' || p.categoryName === 'Baby Care'))
+    )
+  }, [allCatalog, category, catKey])
+
+  const getOptionCount = (type: 'concern' | 'skinType' | 'productType' | 'ingredient', value: string, fallbackCount: number): number => {
+    if (!catProducts || catProducts.length === 0) return fallbackCount
+    const valLower = value.toLowerCase()
+    if (type === 'concern') {
+      const cnt = catProducts.filter((p) => (p.concerns || []).some((c) => (c || '').toLowerCase() === valLower)).length
+      return cnt > 0 ? cnt : fallbackCount
+    }
+    if (type === 'skinType') {
+      const cnt = catProducts.filter((p) =>
+        (p.skinTypes || []).some((t) => {
+          const l = (t || '').toLowerCase()
+          return l === valLower || l === 'all' || l === 'all-skin-types'
+        })
+      ).length
+      return cnt > 0 ? cnt : fallbackCount
+    }
+    return fallbackCount
+  }
+
   const toggleIn = (list: string[], value: string): string[] =>
     list.includes(value) ? list.filter((v) => v !== value) : [...list, value]
 
@@ -248,6 +281,7 @@ export function FiltersPanel({
         <div className="space-y-0.5">
           {config.concerns.map((opt) => {
             const selected = filters.concern.includes(opt.value)
+            const count = getOptionCount('concern', opt.value, opt.count)
             return (
               <label
                 key={opt.value}
@@ -267,7 +301,7 @@ export function FiltersPanel({
                   />
                   <span>{opt.label}</span>
                 </div>
-                <span className="text-[11px] text-[#9CA3AF] font-mono ml-auto">{opt.count}</span>
+                <span className="text-[11px] text-[#9CA3AF] font-mono ml-auto">{count}</span>
               </label>
             )
           })}
@@ -279,6 +313,7 @@ export function FiltersPanel({
         <div className="space-y-0.5">
           {config.secondaryOptions.map((opt) => {
             const selected = filters.skinType.includes(opt.value)
+            const count = getOptionCount('skinType', opt.value, opt.count)
             return (
               <label
                 key={opt.value}
@@ -298,7 +333,7 @@ export function FiltersPanel({
                   />
                   <span>{opt.label}</span>
                 </div>
-                <span className="text-[11px] text-[#9CA3AF] font-mono ml-auto">{opt.count}</span>
+                <span className="text-[11px] text-[#9CA3AF] font-mono ml-auto">{count}</span>
               </label>
             )
           })}

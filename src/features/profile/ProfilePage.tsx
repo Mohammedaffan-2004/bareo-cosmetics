@@ -212,7 +212,7 @@ export function ProfilePage() {
     .slice(0, 2)
     .join('')
 
-  const orderCount = orders?.length || 2
+  const orderCount = orders?.length ?? 0
   const aiConsultationCount = 2
 
   return (
@@ -379,7 +379,7 @@ export function ProfilePage() {
 
           <div>
             <p className="font-serif text-3xl font-bold text-[#172126]">{formatINR(1480)}</p>
-            <p className="text-xs text-[#52636B] font-light mt-0.5">with Bareo offers &amp; formulation combos</p>
+            <p className="text-xs text-[#52636B] font-light mt-0.5">with Bareo offers &amp; product combos</p>
           </div>
 
           <div className="pt-2 border-t border-[#DCE6E9] text-xs text-[#167C86] font-medium flex items-center gap-1.5">
@@ -394,7 +394,7 @@ export function ProfilePage() {
           <div className="space-y-1">
             <h2 className="font-serif text-xl font-normal text-[#172126]">YOUR SKIN PROFILE</h2>
             <p className="text-xs text-[#52636B] font-light">
-              Your active skin traits help Bareo personalize formulation recommendations and AI skin diagnosis.
+              Your active skin traits help Bareo personalize product recommendations and AI skin diagnosis.
             </p>
           </div>
           <Button
@@ -429,7 +429,7 @@ export function ProfilePage() {
           </div>
 
           <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Formulation Preferences</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Product Preferences</span>
             <p className="text-xs text-[#52636B] font-medium pt-1">
               Dermatologist Tested · Sulphate-Free · Fragrance-Free
             </p>

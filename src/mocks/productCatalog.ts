@@ -13,7 +13,7 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const PRODUCTS: Product[] = [
-  {
+{
     "id": "p1",
     "sku": "BAR-HC-001",
     "slug": "bareo-scalp-reset-anti-dandruff-shampoo",
@@ -36,13 +36,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "oily-scalp",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dandruff",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -104,13 +105,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "curly",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "frizz",
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -172,13 +175,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "curly",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "frizz",
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -240,13 +245,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "sensitive-skin",
+      "diaper-rash"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -308,13 +316,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "sensitive-skin",
+      "diaper-rash"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -376,13 +387,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "sensitive-skin",
+      "diaper-rash"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -444,13 +458,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "sensitive-skin",
+      "diaper-rash"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -512,13 +529,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "sensitive-skin",
+      "diaper-rash"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -580,13 +600,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "sensitive-skin",
+      "cradle-cap"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -648,13 +670,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "sensitive-skin",
+      "cradle-cap"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -716,13 +740,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "newborn",
+      "baby",
+      "toddler",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "sensitive-skin",
+      "diaper-rash"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -784,13 +811,13 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -852,13 +879,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness",
+      "rough-skin"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -920,13 +948,18 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "combination",
+      "oily",
+      "normal",
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "sensitivity",
+      "redness",
+      "barrier-repair",
+      "acne"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -988,13 +1021,18 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "combination",
+      "oily",
+      "normal",
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "sensitivity",
+      "redness",
+      "barrier-repair",
+      "acne"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1056,13 +1094,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "normal",
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "kp",
+      "body-acne",
+      "rough-skin"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1124,12 +1163,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "combination",
+      "oily",
+      "normal",
       "sensitive",
-      "normal"
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
+      "sun-protection",
+      "pigmentation",
       "barrier-repair"
     ],
     "benefits": [
@@ -1192,13 +1235,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "dry",
+      "normal",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness",
+      "rough-skin",
+      "kp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1260,13 +1305,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "curly",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "frizz",
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1328,13 +1375,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "curly",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "frizz",
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1396,13 +1445,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "combination",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
+      "barrier-repair",
       "dullness",
-      "barrier-repair"
+      "dryness"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1464,13 +1516,13 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1532,13 +1584,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness",
+      "rough-skin"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1600,13 +1653,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "curly",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "frizz",
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1668,12 +1723,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "combination",
+      "oily",
+      "normal",
       "sensitive",
-      "normal"
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
+      "sun-protection",
+      "pigmentation",
       "barrier-repair"
     ],
     "benefits": [
@@ -1736,13 +1795,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "dry",
+      "normal",
+      "combination",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "barrier-repair",
+      "dehydration"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1804,13 +1866,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "dry",
+      "normal",
+      "combination",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "barrier-repair",
+      "dehydration"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1872,13 +1937,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "dry",
+      "normal",
+      "combination",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "dryness",
+      "barrier-repair",
+      "dehydration"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -1940,13 +2008,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "curly",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "frizz",
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2008,13 +2078,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "normal",
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "kp",
+      "body-acne",
+      "rough-skin"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2076,13 +2147,13 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2144,13 +2215,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness",
+      "rough-skin"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2212,13 +2284,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "oily",
+      "combination",
+      "normal",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "acne",
+      "oiliness",
+      "pores",
+      "blemishes"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2280,13 +2355,17 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "combination",
+      "oily",
+      "normal",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "oiliness",
+      "barrier-repair",
+      "acne",
+      "pigmentation"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2348,13 +2427,18 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
       "sensitive",
-      "normal"
+      "combination",
+      "oily",
+      "normal",
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "sensitivity",
+      "redness",
+      "barrier-repair",
+      "acne"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2416,13 +2500,17 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "normal",
+      "combination",
+      "dry",
+      "oily",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "anti-aging",
+      "texture",
+      "pigmentation",
+      "fine-lines"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2484,13 +2572,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "normal",
+      "dry",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness",
+      "rough-skin"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2552,13 +2641,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "thinning",
+      "normal-scalp",
+      "oily-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "hair-fall",
+      "thinning"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2620,13 +2710,14 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "thinning",
+      "normal-scalp",
+      "oily-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "hair-fall",
+      "thinning"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2688,13 +2779,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "oily",
+      "combination",
+      "normal",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "acne",
+      "oiliness",
+      "pores",
+      "blemishes"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2756,13 +2850,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "oily",
+      "combination",
+      "normal",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "acne",
+      "oiliness",
+      "pores",
+      "blemishes"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2824,13 +2921,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "normal-scalp",
+      "oily-scalp",
+      "dry-scalp",
+      "curly",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2892,13 +2991,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": true,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "dry",
+      "normal",
       "sensitive",
-      "normal"
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "body-dryness",
+      "rough-skin",
+      "kp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -2960,13 +3061,15 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "curly",
+      "dry-scalp",
+      "normal-scalp",
+      "all"
     ],
     "concerns": [
-      "dullness",
-      "barrier-repair"
+      "frizz",
+      "hair-fall",
+      "dry-scalp"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -3028,12 +3131,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "combination",
+      "oily",
+      "normal",
       "sensitive",
-      "normal"
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
+      "sun-protection",
+      "pigmentation",
       "barrier-repair"
     ],
     "benefits": [
@@ -3096,13 +3203,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "dry",
+      "normal",
+      "combination",
+      "all"
     ],
     "concerns": [
       "dullness",
-      "barrier-repair"
+      "pigmentation",
+      "glow",
+      "dryness"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -3164,13 +3274,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
-      "sensitive",
-      "normal"
+      "dry",
+      "normal",
+      "combination",
+      "all"
     ],
     "concerns": [
       "dullness",
-      "barrier-repair"
+      "pigmentation",
+      "glow",
+      "dryness"
     ],
     "benefits": [
       "Dermatologist tested",
@@ -3232,12 +3345,16 @@ export const PRODUCTS: Product[] = [
     "isNewProduct": false,
     "isAiRecommended": true,
     "skinTypes": [
-      "all",
+      "combination",
+      "oily",
+      "normal",
       "sensitive",
-      "normal"
+      "dry",
+      "all"
     ],
     "concerns": [
-      "dullness",
+      "sun-protection",
+      "pigmentation",
       "barrier-repair"
     ],
     "benefits": [

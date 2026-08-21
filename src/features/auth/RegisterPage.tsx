@@ -67,7 +67,7 @@ export function RegisterPage() {
           Create your Bareo account.
         </h1>
         <p className="text-xs text-[#52636B] font-light leading-relaxed">
-          Build your personalized skincare profile and keep your formulations in one place.
+          Build your personalized skincare profile and keep your saved products in one place.
         </p>
       </div>
 

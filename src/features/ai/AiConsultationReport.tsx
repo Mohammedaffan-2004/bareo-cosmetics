@@ -440,13 +440,13 @@ export function AiConsultationReport({ consultation, compact }: { consultation: 
         <div className="space-y-6 pt-2">
           <div className="border-b border-[#DCE6E9] pb-3">
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
-              YOUR BAREO FORMULATION MATCH
+              YOUR BAREO ROUTINE MATCH
             </span>
             <h3 className="font-serif text-2xl font-normal text-[#172126] tracking-tight">
-              Formulation Match
+              Recommended Products
             </h3>
             <p className="text-xs text-[#52636B] font-medium mt-0.5">
-              Selected from available BAREO formulations based on your assessment.
+              Selected from available BAREO products based on your assessment.
             </p>
           </div>
 
@@ -486,8 +486,8 @@ export function AiConsultationReport({ consultation, compact }: { consultation: 
             </div>
           ) : (
             <div className="rounded-3xl border border-[#DCE6E9] bg-[#FAF7F2] p-8 text-center space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#172126]">NO FORMULATION MATCH AVAILABLE</p>
-              <p className="text-xs text-[#52636B] font-light max-w-sm mx-auto">Your assessment is complete, but matching formulations are temporarily unavailable.</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#172126]">NO PRODUCT MATCH AVAILABLE</p>
+              <p className="text-xs text-[#52636B] font-light max-w-sm mx-auto">Your assessment is complete, but matching products are temporarily unavailable.</p>
               <Button onClick={() => refetchRecs()} variant="outline" size="sm" className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126]">
                 <RefreshCw className="size-3.5 mr-1.5 text-[#167C86]" /> RETRY MATCHING
               </Button>

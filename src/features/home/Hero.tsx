@@ -65,7 +65,7 @@ export function Hero({ banner: _banner }: HeroProps) {
         >
           {/* Subtle Clinical Eyebrow Pill */}
           <div className="inline-flex items-center gap-1.5 rounded-full border border-[#DCE6E9] bg-white/90 px-3.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#172126] shadow-2xs backdrop-blur-xs">
-            <Sparkles className="size-3 text-[#167C86]" /> 01 / 04 FORMULATION INDEX · DERMATOLOGIST FORMULATED
+            <Sparkles className="size-3 text-[#167C86]" /> 01 / 04 SKINCARE COLLECTION · DERMATOLOGIST FORMULATED
           </div>
 
           {/* Large Editorial Heading */}

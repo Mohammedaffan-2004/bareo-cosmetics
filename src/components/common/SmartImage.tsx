@@ -24,7 +24,7 @@ export interface SmartImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageE
  */
 export function SmartImage({
   src,
-  alt = 'Bareo Skincare Formulation',
+  alt = 'Bareo Skincare Product',
   fallbackSrc,
   className,
   containerClassName,
@@ -42,11 +42,7 @@ export function SmartImage({
 
   const resolveInitialSrc = (input?: string | null): string | null => {
     if (!input || input.trim() === '' || input === 'undefined' || input === 'null') {
-      return fallbackSrc && fallbackSrc.startsWith('http') ? fallbackSrc : null
-    }
-    // If it's a local PNG, convert to WebP for faster download
-    if (input.startsWith('/images/products/') && input.endsWith('.png')) {
-      return input.replace(/\.png$/, '.webp')
+      return fallbackSrc && fallbackSrc.trim() !== '' ? fallbackSrc : null
     }
     return input
   }
@@ -72,14 +68,11 @@ export function SmartImage({
   }, [src, fallbackSrc])
 
   const handleError = () => {
-    if (!fallbackAttempted && imgSrc) {
+    if (!fallbackAttempted && fallbackSrc && fallbackSrc !== imgSrc) {
       setFallbackAttempted(true)
-      if (imgSrc.endsWith('.webp')) {
-        const pngFallback = imgSrc.replace(/\.webp$/, '.png')
-        setImgSrc(pngFallback)
-        setIsLoading(true)
-        return
-      }
+      setImgSrc(fallbackSrc)
+      setIsLoading(true)
+      return
     }
     setHasError(true)
     setIsLoading(false)
@@ -92,7 +85,6 @@ export function SmartImage({
 
   const imageLoading = priority ? 'eager' : (customLoading || 'lazy')
   const imageFetchPriority = priority ? 'high' : (customFetchPriority || 'auto')
-  const webpSrc = imgSrc && imgSrc.endsWith('.png') ? imgSrc.replace(/\.png$/, '.webp') : null
 
   return (
     <div
@@ -119,28 +111,24 @@ export function SmartImage({
           <span className="text-[10px] text-[#9CA3AF] font-sans mt-0.5">Packshot Coming Soon</span>
         </div>
       ) : (
-        <picture className="contents">
-          {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
-          <img
-            ref={imgRef}
-            src={imgSrc}
-            alt={alt}
-            width={width}
-            height={height}
-            onLoad={handleLoad}
-            onError={handleError}
-            loading={imageLoading}
-            // @ts-expect-error - fetchPriority attribute support in HTMLImageElement
-            fetchpriority={imageFetchPriority}
-            decoding={decoding}
-            className={cn(
-              'h-full w-full object-contain transition-opacity duration-200 ease-out',
-              isLoading ? 'opacity-0' : 'opacity-100',
-              className
-            )}
-            {...props}
-          />
-        </picture>
+        <img
+          ref={imgRef}
+          src={imgSrc}
+          alt={alt}
+          width={width}
+          height={height}
+          onLoad={handleLoad}
+          onError={handleError}
+          loading={imageLoading}
+          fetchPriority={imageFetchPriority}
+          decoding={decoding}
+          className={cn(
+            'h-full w-full object-contain transition-opacity duration-200 ease-out',
+            isLoading ? 'opacity-0' : 'opacity-100',
+            className
+          )}
+          {...props}
+        />
       )}
     </div>
   )

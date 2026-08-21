@@ -1,14 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { homeService } from '@/services/homeService'
 import { Hero } from './Hero'
-import { BrandManifesto } from './BrandManifesto'
 import { ProductRail } from './ProductRail'
 import { ShopByConcern } from './ShopByConcern'
 import { IngredientsSection } from './IngredientsSection'
 import { AiTeaser } from './AiTeaser'
 import { TestimonialsSection } from './TestimonialsSection'
 import { BlogSection } from './BlogSection'
-import { PreFooterStatement } from './PreFooterStatement'
 import { CategorySection } from './CategorySection'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -49,20 +47,17 @@ export function HomePage() {
       {/* Hero */}
       <Hero banner={data.banners[0]} />
 
-      {/* 01 — THE PHILOSOPHY */}
-      <BrandManifesto />
-
-      {/* 02 — THE FORMULATIONS */}
+      {/* 01 — THE FORMULATIONS (Category Index) */}
       <CategorySection categories={data.categories} />
 
-      {/* 03 — DERMAL INTELLIGENCE */}
+      {/* 02 — DERMAL INTELLIGENCE (AI Assessment) */}
       <AiTeaser />
 
-      {/* CURATED ROUTINES — Best Sellers */}
+      {/* 03 — CURATED ROUTINES (Best Sellers) */}
       <ProductRail
         eyebrow="Curated Routines"
         title="Best Sellers"
-        subtitle="Considered formulations for the priorities your skin actually needs."
+        subtitle="Considered products for the priorities your skin actually needs."
         products={data.bestSellers.slice(0, 8)}
         viewAllLink="/shop?sort=popular"
       />
@@ -78,9 +73,6 @@ export function HomePage() {
 
       {/* Journal */}
       <BlogSection posts={data.blogPosts || data.blogs || []} />
-
-      {/* 10 — PRE-FOOTER BRAND STATEMENT */}
-      <PreFooterStatement />
     </div>
   )
 }

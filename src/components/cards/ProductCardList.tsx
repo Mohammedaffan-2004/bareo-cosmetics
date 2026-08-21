@@ -40,7 +40,12 @@ export function ProductCardList({ product, className }: ProductCardListProps) {
       className={cn('group flex gap-4 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-card sm:gap-5', className)}
     >
       <Link to={`/product/${product.slug}`} className="relative h-36 w-36 shrink-0 overflow-hidden rounded-xl bg-secondary sm:h-44 sm:w-44">
-        <SmartImage src={getProductImage(product)} alt={product.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+        <SmartImage
+          src={getProductImage(product)}
+          fallbackSrc={product.slug ? `/new-img/${product.slug}.png` : null}
+          alt={product.name}
+          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+        />
         {product.isAiRecommended && (
           <Badge variant="accent" className="absolute left-2 top-2">
             <Sparkles className="size-3" /> AI

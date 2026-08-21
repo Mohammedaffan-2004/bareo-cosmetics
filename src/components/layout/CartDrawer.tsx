@@ -25,6 +25,17 @@ export function CartDrawer() {
   const totals = selectCartTotals(items, coupon)
 
   useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && open) {
         dispatch(setDrawerOpen(false))
@@ -133,6 +144,7 @@ export function CartDrawer() {
                           >
                             <SmartImage
                               src={imgUrl}
+                              fallbackSrc={item.product.slug ? `/new-img/${item.product.slug}.png` : null}
                               alt={item.product.name}
                               className="size-16 rounded-xl object-contain bg-[#FAF7F2] border border-[#DCE6E9] p-1 transition-transform group-hover:scale-102"
                             />

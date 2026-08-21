@@ -180,7 +180,7 @@ export function BlogPostDetailPage() {
           <div className="space-y-1 text-center sm:text-left">
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86]">DERMAL MATCH</span>
             <h4 className="font-serif text-lg font-normal text-[#172126]">Have questions about your skin barrier?</h4>
-            <p className="text-xs text-[#52636B]">Let BAREO's dermal intelligence analyze your exact formulation needs.</p>
+            <p className="text-xs text-[#52636B]">Let BAREO's dermal intelligence analyze your exact skincare needs.</p>
           </div>
           <Button
             onClick={() => navigate('/skin-analysis')}

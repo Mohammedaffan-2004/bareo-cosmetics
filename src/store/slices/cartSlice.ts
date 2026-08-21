@@ -19,14 +19,13 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, action: PayloadAction<{ product: CartItem['product']; quantity?: number }>) {
       const { product, quantity = 1 } = action.payload
-      const maxStock = typeof product.stock === 'number' && product.stock >= 0 ? Math.min(10, product.stock) : 10
-      if (maxStock <= 0) return
+      const maxAllowed = 99
 
       const existing = state.items.find((i) => i.product.id === product.id)
       if (existing) {
-        existing.quantity = Math.min(maxStock, existing.quantity + quantity)
+        existing.quantity = Math.min(maxAllowed, existing.quantity + quantity)
       } else {
-        state.items.push({ product, quantity: Math.min(maxStock, quantity) })
+        state.items.push({ product, quantity: Math.min(maxAllowed, quantity) })
       }
     },
 
@@ -34,8 +33,8 @@ const cartSlice = createSlice({
       const { productId, quantity } = action.payload
       const item = state.items.find((i) => i.product.id === productId)
       if (item) {
-        const maxStock = typeof item.product.stock === 'number' && item.product.stock >= 0 ? Math.min(10, item.product.stock) : 10
-        item.quantity = Math.min(maxStock, Math.max(1, quantity))
+        const maxAllowed = 99
+        item.quantity = Math.min(maxAllowed, Math.max(1, quantity))
       }
     },
 

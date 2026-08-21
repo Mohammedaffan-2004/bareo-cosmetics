@@ -15,7 +15,7 @@ export function NotFoundPage() {
         <Compass className="size-10 text-[#111111]" />
       </motion.div>
       <h1 className="mt-6 font-serif text-5xl sm:text-6xl font-normal text-[#111111] tracking-tight">404</h1>
-      <p className="mt-2 font-serif text-xl text-[#111111]">Formulation Not Found</p>
+      <p className="mt-2 font-serif text-xl text-[#111111]">Page Not Found</p>
       <p className="mt-1.5 max-w-md text-xs sm:text-sm text-[#6B7280] font-light leading-relaxed">
         The page you are looking for may have been moved or updated. Explore our dermatologist-formulated collection or return home.
       </p>
@@ -24,7 +24,7 @@ export function NotFoundPage() {
           <Link to="/">Back to Home</Link>
         </Button>
         <Button asChild variant="outline" size="lg" className="rounded-xl border-[#E5E7EB] text-xs font-semibold text-[#111111]">
-          <Link to="/shop">Explore Formulations <ArrowRight className="size-3.5 ml-1" /></Link>
+          <Link to="/shop">Explore Products <ArrowRight className="size-3.5 ml-1" /></Link>
         </Button>
       </div>
     </div>

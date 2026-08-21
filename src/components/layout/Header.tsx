@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   Heart,
@@ -12,8 +12,10 @@ import {
   Package,
   LogOut,
   BookHeart,
+  ArrowRight,
 } from 'lucide-react'
 import { Logo } from './Logo'
+import { AnnouncementBar } from './AnnouncementBar'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setDrawerOpen } from '@/store/slices/cartSlice'
 import { logout } from '@/store/slices/authSlice'
@@ -27,17 +29,38 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { cn } from '@/utils'
 
 const NAV_LINKS = [
-  { label: 'Skincare', to: '/shop?category=skincare' },
-  { label: 'Hair Care', to: '/shop?category=hair-care' },
-  { label: 'Body Care', to: '/shop?category=body-care' },
-  { label: 'Baby Care', to: '/shop?category=baby-care' },
-  { label: 'AI Skin Assessment ✦', to: '/skin-analysis', isAi: true },
-  { label: 'Journal', to: '/blog' },
+  { id: 'home', label: 'Home', to: '/' },
+  { id: 'skincare', label: 'Skincare', to: '/shop?category=skincare' },
+  { id: 'haircare', label: 'Hair Care', to: '/shop?category=haircare' },
+  { id: 'bodycare', label: 'Body Care', to: '/shop?category=bodycare' },
+  { id: 'babycare', label: 'Baby Care', to: '/shop?category=babycare' },
+  { id: 'ai', label: 'AI Skin Assessment ✦', to: '/skin-analysis', isAi: true },
+  { id: 'journal', label: 'Journal', to: '/blog' },
 ]
+
+function isLinkActive(linkId: string, pathname: string, search: string) {
+  switch (linkId) {
+    case 'home':
+      return pathname === '/'
+    case 'skincare':
+      return pathname === '/shop' && search.includes('category=skincare')
+    case 'haircare':
+      return pathname === '/shop' && (search.includes('category=haircare') || search.includes('category=hair-care'))
+    case 'bodycare':
+      return pathname === '/shop' && (search.includes('category=bodycare') || search.includes('category=body-care'))
+    case 'babycare':
+      return pathname === '/shop' && (search.includes('category=babycare') || search.includes('category=baby-care'))
+    case 'ai':
+      return pathname.startsWith('/skin-analysis')
+    case 'journal':
+      return pathname.startsWith('/blog')
+    default:
+      return false
+  }
+}
 
 export function Header() {
   const dispatch = useAppDispatch()
@@ -60,32 +83,17 @@ export function Header() {
   const initials = user?.name?.split(' ').map((w) => w[0]).slice(0, 2).join('') ?? 'BA'
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-50 overflow-x-hidden w-full max-w-full">
       {/* SECTION 1: Announcement Bar */}
-      <div className="bg-[#172126] text-white flex h-[34px] items-center justify-center px-4 overflow-hidden border-b border-white/10 select-none">
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 text-[11px] sm:text-[12px] font-medium tracking-[0.05em] text-[#DCE6E9] whitespace-nowrap overflow-x-auto no-scrollbar py-1">
-          <Sparkles className="size-3 text-[#167C86] shrink-0" />
-          <span>
-            <strong className="font-semibold text-white">Free Express Shipping</strong> on orders above ₹499
-          </span>
-          <span className="text-[#7A8A91] font-normal px-0.5 sm:px-1">•</span>
-          <span>
-            Dermatologist Formulated from ₹199
-          </span>
-          <span className="text-[#7A8A91] font-normal px-0.5 sm:px-1">•</span>
-          <span className="text-white">
-            100% Clean &amp; Cruelty-Free
-          </span>
-        </div>
-      </div>
+      <AnnouncementBar />
 
       {/* SECTION 2: Bareo Sticky Navigation */}
       <div className={cn('border-b border-[#DCE6E9] bg-white/95 backdrop-blur-md transition-shadow', scrolled && 'shadow-2xs')}>
-        <div className="container-page flex h-16 items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16 flex h-16 items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <button
               type="button"
-              className="flex h-11 w-11 items-center justify-center rounded-xl text-[#172126] hover:bg-[#F6FAFB] lg:hidden cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-[#172126] hover:bg-[#FAF7F2] lg:hidden cursor-pointer transition-colors"
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
@@ -95,43 +103,52 @@ export function Header() {
             <Logo />
           </div>
 
-          <nav className="hidden items-center gap-1.5 lg:flex" aria-label="Main navigation">
-            {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className={({ isActive }) =>
-                  cn(
-                    'rounded-lg px-3 py-1.5 text-xs font-medium tracking-wide transition-colors',
-                    link.isAi && (isActive ? 'bg-[#EDF6F8] text-[#167C86] font-semibold border border-[#167C86]/30' : 'text-[#167C86] hover:bg-[#EDF6F8] font-medium'),
-                    !link.isAi && (isActive ? 'bg-[#F6FAFB] text-[#172126] font-semibold border border-[#DCE6E9]' : 'text-[#52636B] hover:bg-[#F6FAFB] hover:text-[#172126]')
-                  )
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
+          {/* DESKTOP NAVIGATION LINKS */}
+          <nav className="hidden items-center gap-1.5 xl:gap-2.5 lg:flex" aria-label="Main navigation">
+            {NAV_LINKS.map((link) => {
+              const active = isLinkActive(link.id, location.pathname, location.search)
+              return (
+                <Link
+                  key={link.id}
+                  to={link.to}
+                  className={cn(
+                    'rounded-lg px-2.5 xl:px-3 py-1.5 text-xs font-medium tracking-wide transition-all duration-150 whitespace-nowrap',
+                    link.isAi &&
+                    (active
+                      ? 'bg-[#EDF6F8] text-[#167C86] font-semibold border border-[#167C86]/30 shadow-2xs'
+                      : 'text-[#167C86] hover:bg-[#EDF6F8]/80 font-medium'),
+                    !link.isAi &&
+                    (active
+                      ? 'bg-[#FAF7F2] text-[#172126] font-semibold border border-[#DCE6E9] shadow-2xs'
+                      : 'text-[#52636B] hover:bg-[#FAF7F2] hover:text-[#172126]')
+                  )}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </nav>
 
-          <div className="flex items-center gap-1">
+          {/* HEADER ACTION ICONS */}
+          <div className="flex items-center gap-1 shrink-0">
             <button
               type="button"
               onClick={() => setSearchOpen((s) => !s)}
-              className="flex h-11 w-11 items-center justify-center rounded-full text-[#172126] transition-colors hover:bg-[#F6FAFB] cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-[#172126] transition-colors hover:bg-[#FAF7F2] cursor-pointer"
               aria-label="Toggle search drawer"
               aria-expanded={searchOpen}
             >
-              <Search className="size-5" />
+              <Search className="size-[19px]" />
             </button>
 
             <Link
               to="/wishlist"
-              className="relative flex h-11 w-11 items-center justify-center rounded-full text-[#172126] transition-colors hover:bg-[#F6FAFB]"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full text-[#172126] transition-colors hover:bg-[#FAF7F2]"
               aria-label={`Wishlist (${wishlistCount} items)`}
             >
-              <Heart className="size-5" />
+              <Heart className="size-[19px]" />
               {wishlistCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#172126] text-[10px] font-bold text-white">
+                <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#172126] text-[9px] font-bold text-white shadow-2xs">
                   {wishlistCount}
                 </span>
               )}
@@ -140,12 +157,12 @@ export function Header() {
             <button
               type="button"
               onClick={() => dispatch(setDrawerOpen(true))}
-              className="relative flex h-11 w-11 items-center justify-center rounded-full text-[#172126] transition-colors hover:bg-[#F6FAFB] cursor-pointer"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full text-[#172126] transition-colors hover:bg-[#FAF7F2] cursor-pointer"
               aria-label={`Open shopping cart (${cartCount} items)`}
             >
-              <ShoppingBag className="size-5" />
+              <ShoppingBag className="size-[19px]" />
               {cartCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#172126] text-[10px] font-bold text-white">
+                <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#172126] text-[9px] font-bold text-white shadow-2xs">
                   {cartCount}
                 </span>
               )}
@@ -156,18 +173,16 @@ export function Header() {
                 <DropdownMenuTrigger asChild>
                   <button
                     type="button"
-                    className="ml-1 flex h-11 w-11 items-center justify-center rounded-full transition-transform hover:scale-105 cursor-pointer ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#167C86]"
+                    className="ml-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#172126] text-white font-serif font-bold text-xs tracking-wider shadow-2xs hover:bg-[#253239] transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#167C86]"
                     aria-label="User profile menu"
                   >
-                    <Avatar className="size-9 ring-2 ring-[#DCE6E9]">
-                      <AvatarFallback className="bg-[#172126] text-white font-serif font-bold text-xs">{initials}</AvatarFallback>
-                    </Avatar>
+                    {initials}
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
                   sideOffset={8}
-                  className="w-[260px] sm:w-[270px] rounded-[18px] border border-[#DCE6E9] bg-white p-1.5 shadow-[0_12px_30px_rgba(23,33,38,0.08)] animate-in fade-in-0 slide-in-from-top-1 duration-150"
+                  className="w-[260px] sm:w-[270px] rounded-[18px] border border-[#DCE6E9] bg-white p-1.5 shadow-[0_12px_30px_rgba(23,33,38,0.08)] animate-in fade-in-0 slide-in-from-top-1 duration-150 z-[100]"
                 >
                   {/* IDENTITY HEADER */}
                   <DropdownMenuLabel className="px-3.5 py-3 font-normal">
@@ -260,10 +275,10 @@ export function Header() {
             ) : (
               <Link
                 to="/login"
-                className="ml-1 flex h-11 w-11 items-center justify-center rounded-full bg-[#F6FAFB] border border-[#DCE6E9] text-[#172126] transition-colors hover:bg-[#172126] hover:text-white"
+                className="ml-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-[#FAF7F2] border border-[#DCE6E9] text-[#172126] transition-colors hover:bg-[#172126] hover:text-white"
                 aria-label="Sign in to your account"
               >
-                <User className="size-5" />
+                <User className="size-[19px]" />
               </Link>
             )}
           </div>
@@ -278,7 +293,7 @@ export function Header() {
               transition={{ duration: 0.2 }}
               className="overflow-hidden border-t border-[#DCE6E9]"
             >
-              <div className="container-page py-3">
+              <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16 py-3">
                 <SearchBar autoFocus onNavigate={() => setSearchOpen(false)} />
               </div>
             </motion.div>
@@ -293,7 +308,19 @@ export function Header() {
 
 function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
   const navigate = useNavigate()
+  const location = useLocation()
   const drawerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -323,7 +350,7 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed left-0 top-0 z-[70] flex h-full w-[82%] max-w-sm flex-col bg-white shadow-lg lg:hidden"
+            className="fixed left-0 top-0 z-[70] flex h-full w-[85%] max-w-sm flex-col bg-white shadow-xl lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation"
@@ -333,39 +360,49 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex h-11 w-11 items-center justify-center rounded-xl text-[#172126] hover:bg-[#F6FAFB] cursor-pointer"
+                className="flex h-10 w-10 items-center justify-center rounded-xl text-[#172126] hover:bg-[#FAF7F2] cursor-pointer transition-colors"
                 aria-label="Close navigation menu"
               >
                 <X className="size-5" />
               </button>
             </div>
-            <nav className="flex-1 space-y-1 overflow-y-auto p-4" aria-label="Mobile links">
-              {NAV_LINKS.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  onClick={onClose}
-                  className={({ isActive }) =>
-                    cn(
+            <nav className="flex-1 space-y-1.5 overflow-y-auto p-4" aria-label="Mobile links">
+              {NAV_LINKS.map((link) => {
+                const active = isLinkActive(link.id, location.pathname, location.search)
+                return (
+                  <Link
+                    key={link.id}
+                    to={link.to}
+                    onClick={onClose}
+                    className={cn(
                       'flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors min-h-[44px]',
-                      link.isAi && (isActive ? 'bg-[#EDF6F8] text-[#167C86] font-semibold border border-[#167C86]/30' : 'text-[#167C86] bg-[#EDF6F8] font-semibold'),
-                      !link.isAi && (isActive ? 'bg-[#F6FAFB] font-semibold text-[#172126] border border-[#DCE6E9]' : 'text-[#52636B] hover:bg-[#F6FAFB] hover:text-[#172126]')
-                    )
-                  }
+                      link.isAi &&
+                      (active
+                        ? 'bg-[#EDF6F8] text-[#167C86] font-semibold border border-[#167C86]/30'
+                        : 'text-[#167C86] bg-[#EDF6F8] font-semibold'),
+                      !link.isAi &&
+                      (active
+                        ? 'bg-[#FAF7F2] font-semibold text-[#172126] border border-[#DCE6E9]'
+                        : 'text-[#52636B] hover:bg-[#FAF7F2] hover:text-[#172126]')
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
+
+              <div className="pt-4 mt-4 border-t border-[#DCE6E9]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose()
+                    navigate('/skin-analysis')
+                  }}
+                  className="flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl bg-[#172126] px-4 py-3 text-sm font-semibold text-white shadow-2xs hover:bg-[#253239] transition-colors cursor-pointer"
                 >
-                  {link.label}
-                </NavLink>
-              ))}
-              <button
-                type="button"
-                onClick={() => {
-                  onClose()
-                  navigate('/skin-analysis')
-                }}
-                className="mt-4 flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[#172126] px-4 py-3 text-sm font-semibold text-white shadow-2xs hover:bg-[#253239] transition-colors cursor-pointer"
-              >
-                <Sparkles className="size-4 text-[#167C86]" /> Start Dermal Assessment
-              </button>
+                  <Sparkles className="size-4 text-[#167C86]" /> Start Dermal Assessment <ArrowRight className="size-4 text-[#167C86] ml-1" />
+                </button>
+              </div>
             </nav>
           </motion.aside>
         </>
@@ -373,4 +410,3 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
     </AnimatePresence>
   )
 }
-

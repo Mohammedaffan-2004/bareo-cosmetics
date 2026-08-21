@@ -52,7 +52,7 @@ export function WishlistPage() {
               Your wishlist is empty.
             </h1>
             <p className="text-xs text-[#52636B] leading-relaxed max-w-xs mx-auto">
-              Save formulations you love and return anytime to build your personalized skincare routine.
+              Save products you love and return anytime to build your personalized skincare routine.
             </p>
           </div>
           <div className="pt-2">
@@ -61,7 +61,7 @@ export function WishlistPage() {
               onClick={() => navigate('/shop')}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#172126] px-6 py-3 text-xs font-semibold text-white hover:bg-[#253239] transition-colors min-h-[44px] shadow-2xs"
             >
-              Explore Formulations <ArrowRight className="size-4" />
+              Explore Products <ArrowRight className="size-4" />
             </button>
           </div>
         </div>
@@ -74,7 +74,7 @@ export function WishlistPage() {
                 BAREO SELECTIONS
               </span>
               <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#172126] mt-0.5">
-                Popular Formulations
+                Popular Products
               </h2>
               <p className="text-xs text-[#52636B] font-light mt-0.5">
                 Explore clinical active skincare loved by our community.
@@ -101,7 +101,7 @@ export function WishlistPage() {
           </span>
           <h1 className="font-serif text-3xl font-normal text-[#172126] tracking-tight">My Wishlist</h1>
           <p className="mt-1 text-xs text-[#7A8A91] font-medium">
-            {products.length} {products.length === 1 ? 'saved formulation' : 'saved formulations'}
+            {products.length} {products.length === 1 ? 'saved item' : 'saved items'}
           </p>
         </div>
 
@@ -153,7 +153,7 @@ export function WishlistPage() {
                 Complete Your Routine
               </h2>
               <p className="text-xs text-[#52636B] font-light mt-0.5 max-w-xl">
-                Clinical active formulations designed to pair seamlessly with your saved essentials.
+                Clinical active products designed to pair seamlessly with your saved essentials.
               </p>
             </div>
             <Link

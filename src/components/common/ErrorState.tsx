@@ -14,7 +14,7 @@ interface ErrorStateProps {
  * Standardized Bareo Error State Component — Clinical, clear, action-oriented.
  */
 export function ErrorState({
-  title = 'Unable to Load Formulation Data',
+  title = 'Unable to Load Products',
   message = 'We encountered an issue connecting to our servers. Please try refreshing or checking your network.',
   onRetry,
   action,

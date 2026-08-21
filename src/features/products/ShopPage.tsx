@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { LayoutGrid, List, SlidersHorizontal, Search, X, Sparkles } from 'lucide-react'
@@ -47,6 +47,22 @@ export function ShopPage() {
     minRating: 0,
     inStockOnly: false,
   })
+
+  const prevCatRef = useRef(category)
+  useEffect(() => {
+    if (prevCatRef.current !== category) {
+      prevCatRef.current = category
+      setFilters({
+        concern: concern ? [concern] : [],
+        skinType: [],
+        productType: [],
+        ingredient: [],
+        price: [0, 4000],
+        minRating: 0,
+        inStockOnly: false,
+      })
+    }
+  }, [category, concern])
 
   useEffect(() => {
     setSearchInput(q)
@@ -128,41 +144,41 @@ export function ShopPage() {
     switch (category) {
       case 'skincare':
         return {
-          eyebrow: 'SKINCARE / FORMULATION INDEX',
+          eyebrow: 'SKINCARE / COLLECTION INDEX',
           title: 'Skincare',
           description: 'Dermatologist-formulated essentials for hydration, barrier care and everyday protection.',
-          meta: `${totalCount} formulations · Targeted care · Dermatologist-led`,
+          meta: `${totalCount} products · Targeted care · Dermatologist-led`,
         }
       case 'haircare':
       case 'hair-care':
         return {
-          eyebrow: 'HAIR CARE / FORMULATION INDEX',
+          eyebrow: 'HAIR CARE / COLLECTION INDEX',
           title: 'Hair Care',
           description: 'Dermatologist-formulated hair and scalp essentials for stronger, healthier-looking hair.',
-          meta: `${totalCount} formulations · Scalp balance · Dermatologist-led`,
+          meta: `${totalCount} products · Scalp balance · Dermatologist-led`,
         }
       case 'bodycare':
       case 'body-care':
         return {
-          eyebrow: 'BODY CARE / FORMULATION INDEX',
+          eyebrow: 'BODY CARE / COLLECTION INDEX',
           title: 'Body Care',
           description: 'Targeted body care formulated for hydration, texture, comfort and barrier support.',
-          meta: `${totalCount} formulations · Lipid support · Dermatologist-led`,
+          meta: `${totalCount} products · Lipid support · Dermatologist-led`,
         }
       case 'babycare':
       case 'baby-care':
         return {
-          eyebrow: 'BABY CARE / FORMULATION INDEX',
+          eyebrow: 'BABY CARE / COLLECTION INDEX',
           title: 'Baby Care',
           description: 'Gentle care for delicate skin, every day.',
-          meta: `${totalCount} formulations · Ultra-gentle · Barrier focused`,
+          meta: `${totalCount} products · Ultra-gentle · Barrier focused`,
         }
       default:
         return {
-          eyebrow: 'BAREO FORMULATION INDEX',
-          title: 'All Formulations',
+          eyebrow: 'BAREO COLLECTION INDEX',
+          title: 'All Products',
           description: 'Explore dermatologist-formulated care for skin, hair, body and baby.',
-          meta: `${totalCount} formulations · Targeted care · Dermatologist-led`,
+          meta: `${totalCount} products · Targeted care · Dermatologist-led`,
         }
     }
   }, [category, data])
@@ -223,7 +239,7 @@ export function ShopPage() {
                 setSearchInput(e.target.value)
                 updateParams({ q: e.target.value || null })
               }}
-              placeholder="Search formulations, ingredients or concerns..."
+              placeholder="Search products, ingredients or concerns..."
               className="w-full rounded-xl border border-[#DCE6E9] bg-[#FAF7F2] py-2 pl-9 pr-8 text-xs text-[#172126] placeholder-[#7A8A91] focus:border-[#172126] focus:bg-white focus:outline-none"
             />
             {searchInput && (
@@ -243,7 +259,7 @@ export function ShopPage() {
 
         <div className="flex items-center gap-3 justify-between sm:justify-end">
           <span className="text-xs font-serif font-semibold text-[#172126] sm:hidden">
-            {data ? formatNumber(data.total) : '0'} formulations
+            {data ? formatNumber(data.total) : '0'} products
           </span>
 
           <button
@@ -323,7 +339,7 @@ export function ShopPage() {
             <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2]/80 shadow-2xs">
               <div className="flex flex-wrap items-center gap-2 text-xs">
                 <span className="font-serif text-sm font-semibold text-[#172126] pr-2">
-                  {data ? `${data.total} formulations` : '0 formulations'}
+                  {data ? `${data.total} products` : '0 products'}
                 </span>
 
                 {filters.concern.map((c) => (
@@ -462,7 +478,7 @@ export function ShopPage() {
             loading={isLoading}
             view={view}
             skeletonCount={8}
-            emptyTitle="No formulations found"
+            emptyTitle="No products found"
             emptyDescription="Try adjusting your filters or searching for another skin concern."
           />
 

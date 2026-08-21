@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Clock, BookOpen, Sparkles, Zap, ShieldCheck, Mail, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Clock, BookOpen, Sparkles, Zap, ShieldCheck, Mail, CheckCircle2, Search, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { homeService } from '@/services/homeService'
 import { BlogCard } from '@/components/cards/BlogCard'
@@ -13,6 +13,7 @@ import type { BlogPost } from '@/types'
 
 export function BlogPage() {
   const [activeCategory, setActiveCategory] = useState('All Stories')
+  const [searchQuery, setSearchQuery] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const [emailInput, setEmailInput] = useState('')
 
@@ -41,8 +42,14 @@ export function BlogPage() {
   const filterCategories = ['All Stories', ...rawCategories]
 
   const filteredArticles = articles.filter((a) => {
-    if (activeCategory === 'All Stories') return true
-    return a.category?.toLowerCase() === activeCategory.toLowerCase()
+    const matchesCategory = activeCategory === 'All Stories' || a.category?.toLowerCase() === activeCategory.toLowerCase()
+    const query = searchQuery.trim().toLowerCase()
+    const matchesSearch = !query ||
+      (a.title || '').toLowerCase().includes(query) ||
+      (a.excerpt || '').toLowerCase().includes(query) ||
+      (a.category || '').toLowerCase().includes(query) ||
+      (a.tags || []).some((t) => t.toLowerCase().includes(query))
+    return matchesCategory && matchesSearch
   })
 
   const getCategoryCount = (category: string) => {
@@ -64,31 +71,31 @@ export function BlogPage() {
   const pubDate = featuredArticle?.publishedAt || featuredArticle?.date || new Date().toISOString()
 
   return (
-    <div className="bg-[#FAFBFA] min-h-screen text-[#111111]">
-      {/* 1. EDITORIAL JOURNAL HERO (Subtle gradient: #F7FBFC → #EEF6F8 → #FAFBFA) */}
+    <div className="bg-[#FAFBFA] min-h-screen text-[#111111] overflow-x-hidden">
+      {/* 1. EDITORIAL JOURNAL HERO */}
       <section className="border-b border-[#E1E8EA] bg-gradient-to-b from-[#F7FBFC] via-[#EEF6F8] to-[#FAFBFA] py-12 sm:py-16 lg:py-20 relative overflow-hidden">
         {/* Subtle Ambient Light Caustic */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(15,143,131,0.035),transparent)] pointer-events-none" />
         
-        <div className="container-page relative z-10 text-center space-y-4 max-w-3xl">
+        <div className="container-page relative z-10 text-center space-y-4 max-w-3xl px-4">
           {/* Eyebrow Pill */}
           <div className="inline-flex items-center gap-2 rounded-full bg-white/95 border border-[#E1E8EA] px-3.5 py-1 text-[11px] font-semibold text-[#111111] uppercase tracking-[0.18em] shadow-2xs">
             <BookOpen className="size-3 text-[#0F8F83]" /> THE BAREO JOURNAL · EDITION 14
           </div>
 
           {/* Main Editorial Headline */}
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-[58px] font-normal text-[#111111] tracking-tight leading-[1.08]">
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-[58px] font-normal text-[#111111] tracking-tight leading-[1.08]">
             Science for <br />
             <span className="italic font-serif">Everyday Skin.</span>
           </h1>
 
           {/* Supporting Copy */}
-          <p className="text-sm sm:text-base text-[#52616A] font-normal leading-relaxed max-w-xl mx-auto">
+          <p className="text-xs sm:text-base text-[#52616A] font-normal leading-relaxed max-w-xl mx-auto">
             Evidence-based dermatological insights, bioactive ingredient breakdowns, and routine guides written with leading skincare specialists.
           </p>
 
           {/* Clinical Verification Badges Strip */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-[11px] font-semibold text-[#52616A] uppercase tracking-wider">
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[10px] sm:text-[11px] font-semibold text-[#52616A] uppercase tracking-wider">
             <span className="flex items-center gap-1.5 text-[#111111]">
               <span className="text-[#0F8F83]">✦</span> {articles.length} STORIES
             </span>
@@ -104,14 +111,14 @@ export function BlogPage() {
         </div>
       </section>
 
-      {/* 2. FEATURED COVER STORY (Magazine Spread Layout with Clear Separation) */}
+      {/* 2. FEATURED COVER STORY */}
       {featuredArticle && (
-        <section className="py-16 sm:py-20 bg-[#F3F8FA] border-b border-[#E1E8EA]">
-          <div className="container-page">
-            <div className="rounded-[20px] border border-[#E1E8EA] bg-white p-7 sm:p-10 lg:p-12 shadow-2xs">
-              <div className="grid gap-10 lg:grid-cols-12 items-center">
-                {/* Left Column: Large Editorial Photography (58% width on desktop) */}
-                <div className="lg:col-span-7 aspect-16/10 overflow-hidden rounded-2xl bg-[#F3F8FA] border border-[#E1E8EA]/60 shadow-2xs w-full">
+        <section className="py-12 sm:py-16 lg:py-20 bg-[#F3F8FA] border-b border-[#E1E8EA]">
+          <div className="container-page px-4 sm:px-6">
+            <div className="rounded-[20px] border border-[#E1E8EA] bg-white p-5 sm:p-10 lg:p-12 shadow-2xs">
+              <div className="grid gap-8 lg:grid-cols-12 items-center">
+                {/* Left Column: Large Editorial Photography */}
+                <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-2xl bg-[#F3F8FA] border border-[#E1E8EA]/60 shadow-2xs w-full">
                   <SmartImage
                     src={featuredArticle.coverImage || featuredArticle.image}
                     alt={featuredArticle.title}
@@ -121,10 +128,10 @@ export function BlogPage() {
                   />
                 </div>
 
-                {/* Right Column: Editorial Byline & Spaced Content (42% width) */}
-                <div className="lg:col-span-5 flex flex-col justify-between h-full">
+                {/* Right Column: Editorial Byline & Content */}
+                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4">
                   {/* Category Labels */}
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2">
                     <span className="rounded-full bg-[#111111] text-white px-3.5 py-1 font-semibold text-[10px] uppercase tracking-widest shadow-2xs">
                       Cover Story
                     </span>
@@ -134,30 +141,30 @@ export function BlogPage() {
                   </div>
 
                   {/* Article Title */}
-                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-[32px] font-normal leading-[1.18] text-[#111111] mb-4">
+                  <h2 className="font-serif text-xl sm:text-3xl lg:text-[32px] font-normal leading-[1.18] text-[#111111]">
                     {featuredArticle.title}
                   </h2>
 
                   {/* Description */}
-                  <p className="text-sm text-[#52616A] font-normal leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-[#52616A] font-normal leading-relaxed">
                     {featuredArticle.excerpt}
                   </p>
 
                   {/* Hairline Divider */}
-                  <div className="border-t border-[#E1E8EA] pt-5 mb-6">
-                    {/* Author + Date (Left) and Read Time (Right) */}
+                  <div className="border-t border-[#E1E8EA] pt-4">
+                    {/* Author + Date and Read Time */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         {authorAvatar ? (
-                          <SmartImage src={authorAvatar} alt={authorName} className="size-9 rounded-full object-cover border border-[#E1E8EA]" />
+                          <SmartImage src={authorAvatar} alt={authorName} className="size-8 sm:size-9 rounded-full object-cover border border-[#E1E8EA]" />
                         ) : (
-                          <div className="flex size-9 items-center justify-center rounded-full bg-[#111111] text-white text-xs font-semibold">
+                          <div className="flex size-8 sm:size-9 items-center justify-center rounded-full bg-[#111111] text-white text-xs font-semibold">
                             {authorName.charAt(0)}
                           </div>
                         )}
                         <div>
                           <p className="text-xs font-semibold text-[#111111]">{authorName}</p>
-                          <p className="text-[11px] text-[#7B8790] font-normal">{authorRole} • {formatDate(pubDate)}</p>
+                          <p className="text-[10px] sm:text-[11px] text-[#7B8790] font-normal">{authorRole} • {formatDate(pubDate)}</p>
                         </div>
                       </div>
 
@@ -167,10 +174,10 @@ export function BlogPage() {
                     </div>
                   </div>
 
-                  {/* Read Full Editorial CTA (Separate Row) */}
-                  <div>
+                  {/* Read Full Editorial CTA */}
+                  <div className="pt-2">
                     <Link to={`/blog/${featuredArticle.slug || featuredArticle.id}`} className="inline-block w-full sm:w-auto">
-                      <Button className="h-[46px] w-full sm:w-auto rounded-full bg-[#111111] text-white text-xs font-semibold px-7 hover:bg-black transition-all hover:scale-[1.01] inline-flex items-center justify-center gap-2">
+                      <Button className="h-[44px] sm:h-[46px] w-full sm:w-auto rounded-full bg-[#111111] text-white text-xs font-semibold px-7 hover:bg-black transition-all hover:scale-[1.01] inline-flex items-center justify-center gap-2 shadow-2xs">
                         <span>Read Full Editorial</span>
                         <ArrowRight className="size-3.5" />
                       </Button>
@@ -183,39 +190,64 @@ export function BlogPage() {
         </section>
       )}
 
-      {/* 3. LATEST EDITORIALS + CATEGORY FILTER BAR */}
-      <section className="container-page py-16 sm:py-20 space-y-8">
-        {/* Filter Bar Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E1E8EA] pb-5">
-          <div>
-            <span className="text-[11px] font-semibold uppercase tracking-widest text-[#0F8F83]">The Clinical Archive</span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] mt-0.5">Latest Editorials</h2>
+      {/* 3. LATEST EDITORIALS + SEARCH & CATEGORY FILTER BAR */}
+      <section className="container-page py-12 sm:py-16 lg:py-20 space-y-8 px-4 sm:px-6">
+        {/* Filter Bar Header with Integrated Search */}
+        <div className="flex flex-col gap-5 border-b border-[#E1E8EA] pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-[#0F8F83]">The Clinical Archive</span>
+              <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] mt-0.5">Latest Editorials</h2>
+            </div>
+
+            {/* Keyword Search Input */}
+            <div className="relative w-full sm:w-72">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#7B8790]" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search articles & ingredients..."
+                className="w-full h-[40px] rounded-full border border-[#E1E8EA] bg-white pl-9 pr-8 text-xs text-[#111111] placeholder:text-[#7B8790] shadow-2xs transition-colors focus:border-[#0F8F83] focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7B8790] hover:text-[#111111]"
+                >
+                  <X className="size-3.5" />
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* Filter Tabs with Live Count Badges */}
-          <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-            {filterCategories.map((cat) => {
-              const count = getCategoryCount(cat)
-              const isActive = activeCategory.toLowerCase() === cat.toLowerCase()
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setActiveCategory(cat)}
-                  className={cn(
-                    'shrink-0 rounded-full border px-4 py-2 text-xs font-medium transition-all duration-200 min-h-[38px] flex items-center gap-1.5 cursor-pointer',
-                    isActive
-                      ? 'border-[#111111] bg-[#111111] text-white font-semibold shadow-2xs'
-                      : 'border-[#E1E8EA] bg-white text-[#52616A] hover:bg-[#F3F8FA] hover:text-[#111111]'
-                  )}
-                >
-                  <span>{cat}</span>
-                  <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full', isActive ? 'bg-white/20 text-white' : 'bg-[#EEF6F8] text-[#52616A]')}>
-                    {count}
-                  </span>
-                </button>
-              )
-            })}
+          {/* Filter Tabs with Clean Category Count Formatting */}
+          <div className="w-full overflow-hidden">
+            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar max-w-full touch-pan-x">
+              {filterCategories.map((cat) => {
+                const count = getCategoryCount(cat)
+                const isActive = activeCategory.toLowerCase() === cat.toLowerCase()
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setActiveCategory(cat)}
+                    className={cn(
+                      'shrink-0 rounded-full border px-4 py-2 text-xs font-medium transition-all duration-200 min-h-[38px] flex items-center gap-1.5 cursor-pointer',
+                      isActive
+                        ? 'border-[#111111] bg-[#111111] text-white font-semibold shadow-2xs'
+                        : 'border-[#E1E8EA] bg-white text-[#52616A] hover:bg-[#F3F8FA] hover:text-[#111111]'
+                    )}
+                  >
+                    <span>{cat}</span>
+                    <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full ml-0.5', isActive ? 'bg-white/20 text-white' : 'bg-[#EEF6F8] text-[#0F8F83]')}>
+                      ({count})
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </div>
 
@@ -248,12 +280,12 @@ export function BlogPage() {
 
       {/* 4. EDITOR'S PICK SECTION */}
       {editorsPick && (
-        <section className="border-t border-[#E1E8EA] bg-[#F3F8FA] py-18 sm:py-22">
-          <div className="container-page">
-            <div className="rounded-[20px] border border-[#E1E8EA] bg-white p-7 sm:p-10 lg:p-12 shadow-2xs">
-              <div className="grid gap-10 lg:grid-cols-12 items-center">
+        <section className="border-t border-[#E1E8EA] bg-[#F3F8FA] py-12 sm:py-16 lg:py-20">
+          <div className="container-page px-4 sm:px-6">
+            <div className="rounded-[20px] border border-[#E1E8EA] bg-white p-5 sm:p-10 lg:p-12 shadow-2xs">
+              <div className="grid gap-8 lg:grid-cols-12 items-center">
                 {/* Left Column: Image (55% width) */}
-                <div className="lg:col-span-7 aspect-16/10 overflow-hidden rounded-2xl bg-[#F3F8FA] border border-[#E1E8EA]/60 shadow-2xs w-full">
+                <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-2xl bg-[#F3F8FA] border border-[#E1E8EA]/60 shadow-2xs w-full">
                   <SmartImage
                     src={editorsPick.coverImage || editorsPick.image}
                     alt={editorsPick.title}
@@ -312,9 +344,9 @@ export function BlogPage() {
 
       {/* 5. 60-SECOND SKIN SCIENCE (Compact Sidebar/Callout Note) */}
       {quickReadArticle && (
-        <section className="border-t border-[#E1E8EA] bg-[#FAFBFA] py-18 sm:py-22">
-          <div className="container-page max-w-[780px]">
-            <div className="rounded-2xl border border-[#E1E8EA] bg-[#EDF6F7] p-8 sm:p-10 space-y-5 shadow-2xs">
+        <section className="border-t border-[#E1E8EA] bg-[#FAFBFA] py-12 sm:py-16 lg:py-20">
+          <div className="container-page max-w-[780px] px-4 sm:px-6">
+            <div className="rounded-2xl border border-[#E1E8EA] bg-[#EDF6F7] p-6 sm:p-10 space-y-5 shadow-2xs">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="inline-flex items-center gap-1.5 rounded-full border border-[#0F8F83]/20 bg-white px-3.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#0F8F83]">
                   <Zap className="size-3 text-[#0F8F83]" /> SKIN SCIENCE · 60 SECONDS
@@ -322,15 +354,15 @@ export function BlogPage() {
                 <span className="text-xs font-semibold text-[#52616A]">{quickReadArticle.readTime}</span>
               </div>
 
-              <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] leading-snug">
+              <h3 className="font-serif text-xl sm:text-3xl font-normal text-[#111111] leading-snug">
                 {quickReadArticle.title}
               </h3>
 
-              <p className="text-sm text-[#52616A] font-normal leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#52616A] font-normal leading-relaxed">
                 {quickReadArticle.excerpt}
               </p>
 
-              <div className="pt-4 border-t border-[#E1E8EA]/70 flex items-center justify-between text-xs">
+              <div className="pt-4 border-t border-[#E1E8EA]/70 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                 <span className="font-semibold text-[#111111]">
                   Focus: {quickReadArticle.category} &amp; Intercellular Lipids
                 </span>
@@ -345,13 +377,13 @@ export function BlogPage() {
       )}
 
       {/* 6. BAREO PHILOSOPHY QUOTE MANIFESTO (Warm-Neutral Ivory #FAF9F6) */}
-      <section className="border-y border-[#E1E8EA] bg-[#FAF9F6] py-[90px]">
-        <div className="container-page text-center max-w-[820px] space-y-6">
+      <section className="border-y border-[#E1E8EA] bg-[#FAF9F6] py-14 sm:py-20">
+        <div className="container-page text-center max-w-[820px] space-y-6 px-4 sm:px-6">
           <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-[#0F8F83]">
             <Sparkles className="size-3 text-[#0F8F83]" /> THE BAREO CLINICAL PHILOSOPHY
           </div>
           
-          <blockquote className="font-serif text-2xl sm:text-3xl lg:text-[32px] font-normal leading-relaxed text-[#111111]">
+          <blockquote className="font-serif text-xl sm:text-3xl lg:text-[32px] font-normal leading-relaxed text-[#111111]">
             “We believe skincare should be straightforward. No inflated percentages, no misleading claims — just biocompatible formulations that respect your dermal ecosystem.”
           </blockquote>
           
@@ -362,8 +394,8 @@ export function BlogPage() {
         </div>
       </section>
 
-      {/* 7. CLINICAL DISPATCH NEWSLETTER CAPTURE (Refined Luxury Skincare Editorial Finish) */}
-      <section className="relative overflow-hidden border-b border-[#E1E8EA] bg-gradient-to-b from-[#F8FBFC] to-[#F2F8FA] py-14 sm:py-[72px]">
+      {/* 7. CLINICAL DISPATCH NEWSLETTER CAPTURE */}
+      <section className="relative overflow-hidden border-b border-[#E1E8EA] bg-gradient-to-b from-[#F8FBFC] to-[#F2F8FA] py-12 sm:py-16 px-4">
         {/* Soft Radial Ambient Depth */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(220,235,239,0.55),transparent_55%)]" />
 

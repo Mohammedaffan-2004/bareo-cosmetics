@@ -1,46 +1,69 @@
-// Central API Client connecting the frontend to the Express + MongoDB Backend
+function isBrowser(): boolean {
+  return typeof window !== 'undefined'
+}
 
-const rawBaseUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || 'https://bareo-cosmetics-api.onrender.com/api/v1'
+const defaultBaseUrl =
+  isBrowser() && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? '/api/v1'
+    : 'https://bareo-cosmetics-api.onrender.com/api/v1'
+
+const rawBaseUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || defaultBaseUrl
 const API_BASE_URL = rawBaseUrl.replace(/\/+$/, '')
 
 export interface ApiResponse<T> {
   data: T
   message: string
   status: number
+  retryAfter?: number
 }
 
 export function getStoredToken(): string | null {
-  const token =
-    localStorage.getItem('bareo_auth_token') ||
-    localStorage.getItem('token') ||
-    localStorage.getItem('lumina_auth_token') ||
-    localStorage.getItem('auth_token') ||
-    sessionStorage.getItem('bareo_auth_token') ||
-    sessionStorage.getItem('lumina_auth_token') ||
-    sessionStorage.getItem('auth_token')
+  if (!isBrowser()) return null
+  try {
+    const token =
+      localStorage.getItem('bareo_auth_token') ||
+      localStorage.getItem('token') ||
+      localStorage.getItem('lumina_auth_token') ||
+      localStorage.getItem('auth_token') ||
+      sessionStorage.getItem('bareo_auth_token') ||
+      sessionStorage.getItem('lumina_auth_token') ||
+      sessionStorage.getItem('auth_token')
 
-  if (token && token.startsWith('mock-')) {
-    removeStoredToken()
+    if (token && token.startsWith('mock-')) {
+      removeStoredToken()
+      return null
+    }
+    return token
+  } catch {
     return null
   }
-  return token
 }
 
 export function setStoredToken(token: string): void {
-  localStorage.setItem('token', token)
-  localStorage.setItem('bareo_auth_token', token)
-  localStorage.setItem('lumina_auth_token', token)
-  localStorage.setItem('auth_token', token)
+  if (!isBrowser()) return
+  try {
+    localStorage.setItem('token', token)
+    localStorage.setItem('bareo_auth_token', token)
+    localStorage.setItem('lumina_auth_token', token)
+    localStorage.setItem('auth_token', token)
+  } catch {
+    // Ignore storage write errors (e.g. private browsing storage limits)
+  }
 }
 
 export function removeStoredToken(): void {
-  localStorage.removeItem('token')
-  localStorage.removeItem('bareo_auth_token')
-  localStorage.removeItem('lumina_auth_token')
-  localStorage.removeItem('auth_token')
-  sessionStorage.removeItem('bareo_auth_token')
-  sessionStorage.removeItem('lumina_auth_token')
-  sessionStorage.removeItem('auth_token')
+  if (!isBrowser()) return
+  try {
+    localStorage.removeItem('token')
+    localStorage.removeItem('bareo_auth_token')
+    localStorage.removeItem('lumina_auth_token')
+    localStorage.removeItem('auth_token')
+    sessionStorage.removeItem('bareo_auth_token')
+    sessionStorage.removeItem('lumina_auth_token')
+    sessionStorage.removeItem('auth_token')
+  } catch {
+    // Ignore storage clear errors
+  }
 }
 
 /**

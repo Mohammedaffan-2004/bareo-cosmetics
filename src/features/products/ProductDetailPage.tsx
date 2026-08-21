@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   ShoppingBag,
   Zap,
@@ -56,7 +56,7 @@ export function ProductDetailPage() {
 
   useEffect(() => {
     if (product?.name) {
-      document.title = `${product.name} — BAREO Formulations`
+      document.title = `${product.name} — BAREO Skincare`
     } else {
       document.title = 'BAREO — Science for Everyday Skin'
     }
@@ -146,16 +146,16 @@ export function ProductDetailPage() {
     return (
       <div className="container-page flex min-h-[55vh] flex-col items-center justify-center gap-4 py-20 text-center">
         <span className="text-[10px] font-bold tracking-widest text-[#7A8A91] uppercase">BAREO CATALOG</span>
-        <h1 className="font-serif text-3xl font-normal text-[#172126]">Formulation Not Found</h1>
+        <h1 className="font-serif text-3xl font-normal text-[#172126]">Product Not Found</h1>
         <p className="max-w-md text-xs text-[#627279] leading-relaxed">
-          The requested formulation details may have been updated or relocated within our dermatological store.
+          The requested product details may have been updated or relocated within our dermatological store.
         </p>
         <div className="pt-2">
           <Button
             onClick={() => navigate('/shop')}
             className="h-11 px-6 rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239]"
           >
-            Explore BAREO Formulations
+            Explore BAREO Products
           </Button>
         </div>
       </div>
@@ -171,7 +171,7 @@ export function ProductDetailPage() {
   } else if (product.isBestSeller) {
     primaryBadge = { label: 'BESTSELLER', style: 'bg-[#FAF7F2] text-[#8C6D3B] border border-[#E8E2D7]' }
   } else if (product.isNewProduct || product.isNew) {
-    primaryBadge = { label: 'NEW FORMULATION', style: 'bg-[#172126] text-white border border-[#172126]' }
+    primaryBadge = { label: 'NEW RELEASE', style: 'bg-[#172126] text-white border border-[#172126]' }
   } else if (isLowStock) {
     primaryBadge = { label: 'LIMITED UNITS', style: 'bg-[#FFF7ED] text-[#C2410C] border border-[#FFEDD5]' }
   }
@@ -187,7 +187,7 @@ export function ProductDetailPage() {
           <li><ChevronRight className="size-3 text-[#A0AEC0]" /></li>
           <li>
             <Link to={`/shop?category=${product.categorySlug}`} className="hover:text-[#172126] transition-colors">
-              {product.categoryName || 'Formulations'}
+              {product.categoryName || 'Products'}
             </Link>
           </li>
           <li><ChevronRight className="size-3 text-[#A0AEC0]" /></li>
@@ -340,21 +340,23 @@ export function ProductDetailPage() {
 
           {/* 10. PURCHASE CONTROLS (QUANTITY + ADD TO CART + BUY NOW) */}
           <div className="space-y-4 pt-4 border-t border-[#E2E8F0]">
-            <div className="flex items-center gap-3">
-              <QuantitySelector value={quantity} onChange={setQuantity} />
-              <Button
-                size="lg"
-                disabled={isOutOfStock}
-                className="flex-1 rounded-xl bg-[#172126] text-white hover:bg-[#253239] h-12 text-xs sm:text-sm font-semibold shadow-2xs border border-[#172126] transition-colors"
-                onClick={() => addToCart()}
-              >
-                <ShoppingBag className="size-4 mr-2 text-[#167C86]" /> {isOutOfStock ? 'Out of Stock' : 'ADD TO CART'}
-              </Button>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <div className="flex items-center gap-3 flex-1">
+                <QuantitySelector value={quantity} onChange={setQuantity} />
+                <Button
+                  size="lg"
+                  disabled={isOutOfStock}
+                  className="flex-1 rounded-xl bg-[#172126] text-white hover:bg-[#253239] h-12 text-xs sm:text-sm font-semibold shadow-2xs border border-[#172126] transition-colors"
+                  onClick={() => addToCart()}
+                >
+                  <ShoppingBag className="size-4 mr-2 text-[#167C86]" /> {isOutOfStock ? 'Out of Stock' : 'ADD TO CART'}
+                </Button>
+              </div>
               <Button
                 size="lg"
                 variant="outline"
                 disabled={isOutOfStock}
-                className="rounded-xl h-12 border-[#DCE6E9] text-[#172126] hover:bg-[#EDF6F8] px-5 text-xs sm:text-sm font-semibold transition-colors"
+                className="w-full sm:w-auto rounded-xl h-12 border-[#DCE6E9] text-[#172126] hover:bg-[#EDF6F8] px-5 text-xs sm:text-sm font-semibold transition-colors"
                 onClick={buyNow}
               >
                 <Zap className="size-4 mr-1.5 text-[#167C86]" /> Buy Now
@@ -420,13 +422,13 @@ export function ProductDetailPage() {
               value="faqs"
               className="border-b-2 border-transparent data-[state=active]:border-[#172126] data-[state=active]:bg-transparent font-serif text-base rounded-none pb-3 font-normal text-[#172126]"
             >
-              Formulation FAQs
+              Product FAQs
             </TabsTrigger>
           </TabsList>
 
-          {/* Formulation Overview Tab */}
+          {/* Product Overview Tab */}
           <TabsContent value="benefits" className="rounded-2xl border border-[#DCE6E9] bg-white p-6 sm:p-8 mt-6 space-y-4">
-            <h3 className="font-serif text-xl font-normal text-[#172126]">Key Formulation Benefits</h3>
+            <h3 className="font-serif text-xl font-normal text-[#172126]">Key Product Benefits</h3>
             <p className="text-xs sm:text-sm text-[#627279] font-light leading-relaxed">
               {product.description}
             </p>
@@ -445,7 +447,7 @@ export function ProductDetailPage() {
           </TabsContent>
 
           {/* Active Ingredients Tab */}
-          <TabsContent value="ingredients" className="rounded-2xl border border-[#DCE6E9] bg-white p-6 sm:p-8 mt-6 space-y-4">
+          <TabsContent value="ingredients" className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-6 sm:p-8 mt-6 space-y-4">
             <h3 className="font-serif text-xl font-normal text-[#172126]">Active Ingredients & Concentrations</h3>
             <div className="grid gap-4 sm:grid-cols-2 pt-2">
               {product.ingredients && product.ingredients.length > 0 ? (
@@ -489,18 +491,26 @@ export function ProductDetailPage() {
 
           {/* Customer Reviews Tab */}
           <TabsContent value="reviews" className="space-y-6 mt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCE6E9] pb-4">
+              <div>
+                <h3 className="font-serif text-xl font-normal text-[#172126]">Customer Reviews</h3>
+                <p className="text-xs text-[#7A8A91] font-light">Verified customer feedback and dermal experience.</p>
+              </div>
+              <WriteReview product={product} />
+            </div>
+
             <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
               <RatingSummary summary={ratingSummary} />
               <div className="space-y-4">
                 {product.reviews && product.reviews.length > 0 ? (
-                  product.reviews.map((r) => <ReviewCard key={r.id} review={r} />)
+                  product.reviews.map((r, idx) => <ReviewCard key={r.id || `rev-${idx}`} review={r} />)
                 ) : (
                   <div className="rounded-xl border border-[#DCE6E9] bg-[#FAF9F6] p-6 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-[#172126]">No written reviews yet</p>
-                      <p className="text-xs text-[#7A8A91] font-light">Be the first to share your experience with this formulation.</p>
+                      <p className="text-xs text-[#7A8A91] font-light">Be the first to share your experience with this product.</p>
                     </div>
-                    <WriteReview productName={product.name} />
+                    <WriteReview product={product} />
                   </div>
                 )}
               </div>
@@ -521,7 +531,7 @@ export function ProductDetailPage() {
                 </details>
               ))
             ) : (
-              <p className="text-xs text-[#7A8A91] font-light">No additional FAQs available for this formulation.</p>
+              <p className="text-xs text-[#7A8A91] font-light">No additional FAQs available for this product.</p>
             )}
           </TabsContent>
         </Tabs>
@@ -533,7 +543,7 @@ export function ProductDetailPage() {
           <div className="border-b border-[#E2E8F0] pb-4 mb-6 flex items-center justify-between">
             <h2 className="font-serif text-2xl font-normal text-[#172126]">Complete Your Routine</h2>
             <Link to="/shop" className="text-xs font-semibold text-[#172126] hover:underline flex items-center gap-1">
-              Explore All Formulations <ArrowRight className="size-3" />
+              <span>Explore All Products</span> <ArrowRight className="size-3" />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -561,7 +571,7 @@ export function ProductDetailPage() {
       {/* MOBILE STICKY PURCHASE BAR */}
       <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-[#DCE6E9] p-3.5 sm:hidden z-40 flex items-center justify-between gap-3 shadow-md">
         <div>
-          <span className="text-[9px] font-bold text-[#7A8A91] uppercase tracking-wider block">FORMULATION PRICE</span>
+          <span className="text-[9px] font-bold text-[#7A8A91] uppercase tracking-wider block">PRICE</span>
           <span className="font-serif text-base font-bold text-[#172126]">
             {formatINR(product.offerPrice ?? product.mrp)}
           </span>
@@ -604,36 +614,101 @@ function RatingSummary({ summary }: { summary: { average: number; total: number;
   )
 }
 
-function WriteReview({ productName }: { productName: string }) {
+function WriteReview({ product }: { product: any }) {
   const [open, setOpen] = useState(false)
   const [rating, setRating] = useState(5)
-  const toast = useToast()
+  const [comment, setComment] = useState('')
+  const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(false)
+  const toast = useToast()
+  const queryClient = useQueryClient()
+  const user = useAppSelector((s) => s.auth.user)
+  const navigate = useNavigate()
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+
+    if (!user) {
+      toast.error('Authentication required', 'Please sign in to write a review.')
+      navigate('/login')
+      return
+    }
+
+    if (!comment.trim()) {
+      toast.error('Validation error', 'Please enter a review comment.')
+      return
+    }
+
+    try {
+      setLoading(true)
+      await productService().submitReview(product.slug || product.id, {
+        rating,
+        title,
+        comment,
+      })
+      await queryClient.invalidateQueries({ queryKey: ['product', product.slug] })
+      await queryClient.invalidateQueries({ queryKey: ['product', product.id] })
+      toast.success('Review submitted', `Thanks for reviewing ${product.name}!`)
       setOpen(false)
-      toast.success('Review submitted', `Thanks for reviewing ${productName}`)
-    }, 800)
+      setComment('')
+      setTitle('')
+    } catch (err: any) {
+      toast.error('Submission failed', err.message || 'Unable to submit review.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <>
-      <Button variant="outline" size="sm" className="rounded-xl text-xs font-medium border-[#DCE6E9] text-[#172126] hover:bg-[#EDF6F8]" onClick={() => setOpen(true)}>
+      <Button
+        variant="outline"
+        size="sm"
+        className="rounded-xl text-xs font-medium border-[#DCE6E9] text-[#172126] hover:bg-[#EDF6F8] shadow-2xs"
+        onClick={() => {
+          if (!user) {
+            toast.error('Authentication required', 'Please sign in to write a review.')
+            navigate('/login')
+            return
+          }
+          setOpen(true)
+        }}
+      >
         Write a Review
       </Button>
-      <AppModal open={open} onOpenChange={setOpen} title="Write a Review" description={productName}>
+      <AppModal open={open} onOpenChange={setOpen} title="Write a Review" description={product.name}>
         <form onSubmit={submit} className="space-y-4 pt-2">
           <div>
             <label className="text-xs font-semibold text-[#172126] block pb-1">Your Rating</label>
             <RatingStarsInput value={rating} onChange={setRating} />
           </div>
-          <AppTextarea name="review" label="Your Review" placeholder="Share your experience with this formulation..." rows={4} />
-          <AppTextarea name="title" label="Headline" placeholder="Short summary of your experience" rows={1} />
-          <Button type="submit" variant="primary" className="w-full rounded-xl bg-[#172126] text-white font-semibold text-xs h-10 hover:bg-[#253239]" loading={loading}>
+          <div>
+            <label className="text-xs font-semibold text-[#172126] block pb-1">Headline (Optional)</label>
+            <AppTextarea
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Short summary of your experience"
+              rows={1}
+            />
+          </div>
+          <div>
+            <label className="text-xs font-semibold text-[#172126] block pb-1">Your Review</label>
+            <AppTextarea
+              name="review"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Share your experience with this product..."
+              rows={4}
+            />
+          </div>
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-full rounded-xl bg-[#172126] text-white font-semibold text-xs h-10 hover:bg-[#253239] border border-[#172126]"
+            loading={loading}
+            disabled={loading}
+          >
             Submit Review
           </Button>
         </form>

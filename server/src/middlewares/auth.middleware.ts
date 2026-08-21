@@ -6,13 +6,18 @@ export interface AuthenticatedRequest extends Request {
   user?: JwtPayload & { id: string }
 }
 
-// In-Memory Authentication Rate Limiter (5 attempts per 15 minute window per IP)
+// In-Memory Authentication Rate Limiter
+// Allows up to 20 legitimate attempts per 15-minute window per IP to prevent brute-force while accommodating normal user retries.
 interface RateLimitRecord {
   count: number
   resetTime: number
 }
 
 const rateLimitMap = new Map<string, RateLimitRecord>()
+
+export function resetAuthRateLimit(ip: string): void {
+  rateLimitMap.delete(ip)
+}
 
 export const authRateLimiter = (
   req: Request,
@@ -27,7 +32,7 @@ export const authRateLimiter = (
 
   const now = Date.now()
   const windowMs = 15 * 60 * 1000 // 15 minutes
-  const maxAttempts = 5
+  const maxAttempts = 20
 
   const record = rateLimitMap.get(ip)
 
@@ -40,10 +45,13 @@ export const authRateLimiter = (
   }
 
   if (record.count >= maxAttempts) {
+    const remainingSec = Math.ceil((record.resetTime - now) / 1000)
+    res.setHeader('Retry-After', remainingSec)
     return res.status(429).json({
       data: null,
-      message: 'Too many authentication attempts. Please try again after 15 minutes.',
+      message: `Too many authentication attempts. Please try again in ${Math.ceil(remainingSec / 60)} minutes.`,
       status: 429,
+      retryAfter: remainingSec,
     })
   }
 

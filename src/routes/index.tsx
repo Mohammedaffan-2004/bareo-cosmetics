@@ -50,7 +50,7 @@ const NotFoundPage = lazy(() => import('@/features/NotFoundPage').then((m) => ({
 function PageLoader() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
-      <Loader label="Loading Bareo formulation..." />
+      <Loader label="Loading Bareo..." />
     </div>
   )
 }

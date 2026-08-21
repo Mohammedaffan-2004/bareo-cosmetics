@@ -137,7 +137,7 @@ export function AuthLayout() {
           <div className="lg:hidden flex flex-col items-end">
             <Logo />
             <span className="text-[8px] font-bold tracking-widest text-[#167C86] uppercase mt-0.5">
-              FORMULATION INDEX / 001
+              PRODUCT INDEX / 001
             </span>
           </div>
         </div>

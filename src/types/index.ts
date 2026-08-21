@@ -16,7 +16,21 @@ export interface User {
   joinedAt: string
 }
 
-export type SkinType = 'dry' | 'oily' | 'combination' | 'normal' | 'sensitive' | 'all' | 'baby'
+export type SkinType =
+  | 'dry'
+  | 'oily'
+  | 'combination'
+  | 'normal'
+  | 'sensitive'
+  | 'all'
+  | 'baby'
+  | 'oily-scalp'
+  | 'dry-scalp'
+  | 'normal-scalp'
+  | 'curly'
+  | 'newborn'
+  | 'toddler'
+  | 'thinning'
 
 export type Concern =
   | 'acne'
@@ -63,6 +77,12 @@ export type Concern =
   | 'sweat-folds'
   | 'chafing'
   | 'barrier-repair'
+  | 'sensitive-skin'
+  | 'kp'
+  | 'pores'
+  | 'blemishes'
+  | 'texture'
+  | 'glow'
 
 
 export interface Ingredient {

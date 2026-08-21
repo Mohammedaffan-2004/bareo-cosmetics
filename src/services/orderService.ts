@@ -121,7 +121,7 @@ export function orderService() {
       } catch (err) {
         console.warn('[Order Service] Backend getOrders fallback:', err)
       }
-      return mockFetch([...placedOrders, ...MOCK_ORDERS].sort((a, b) => +new Date(b.placedAt) - +new Date(a.placedAt))).then(
+      return mockFetch([...placedOrders].sort((a, b) => +new Date(b.placedAt) - +new Date(a.placedAt))).then(
         (r) => r.data
       )
     },

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,6 +32,9 @@ export function LoginPage() {
   const isAuthenticated = useAppSelector((s) => s.auth.isAuthenticated)
   const user = useAppSelector((s) => s.auth.user)
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [rateLimitSeconds, setRateLimitSeconds] = useState<number>(0)
+
   const from = (location.state as { from?: string } | null)?.from ?? '/'
 
   // Auto-redirect if already logged in
@@ -46,6 +49,15 @@ export function LoginPage() {
     }
   }, [isAuthenticated, user, navigate, from])
 
+  // Rate-limit countdown timer
+  useEffect(() => {
+    if (rateLimitSeconds <= 0) return
+    const timer = setInterval(() => {
+      setRateLimitSeconds((prev) => (prev > 1 ? prev - 1 : 0))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [rateLimitSeconds])
+
   const {
     register,
     handleSubmit,
@@ -57,16 +69,37 @@ export function LoginPage() {
   })
 
   const onSubmit = async (data: LoginForm) => {
-    const res = await dispatch(loginUser({ email: data.email, password: data.password, remember: data.remember }))
-    if (loginUser.fulfilled.match(res)) {
-      if (res.payload.user?.role === 'ADMIN') {
-        navigate('/admin', { replace: true })
-      } else {
-        const destination = from === '/login' ? '/' : from
-        navigate(destination, { replace: true })
+    if (isSubmitting || isLoading || rateLimitSeconds > 0) return
+    setIsSubmitting(true)
+
+    try {
+      const res = await dispatch(loginUser({ email: data.email, password: data.password, remember: data.remember }))
+      if (loginUser.fulfilled.match(res)) {
+        if (res.payload.user?.role === 'ADMIN') {
+          navigate('/admin', { replace: true })
+        } else {
+          const destination = from === '/login' ? '/' : from
+          navigate(destination, { replace: true })
+        }
+      } else if (loginUser.rejected.match(res)) {
+        const errorMsg = res.error.message || ''
+        if (errorMsg.includes('429') || errorMsg.toLowerCase().includes('too many')) {
+          setRateLimitSeconds(60) // 60s cooldown
+        }
       }
+    } catch (err) {
+      console.warn('[Login Error]', err)
+    } finally {
+      setIsSubmitting(false)
     }
   }
+
+  const isButtonDisabled = isSubmitting || isLoading || rateLimitSeconds > 0
+  const buttonLabel = isSubmitting || isLoading
+    ? 'Signing in…'
+    : rateLimitSeconds > 0
+    ? `Try again in ${rateLimitSeconds}s`
+    : 'Sign In →'
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -87,7 +120,7 @@ export function LoginPage() {
       {error && (
         <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-800 flex items-center gap-2">
           <AlertCircle className="size-4 shrink-0 text-rose-600" />
-          <span>{error}</span>
+          <span>{rateLimitSeconds > 0 ? 'Too many sign-in attempts. Please try again shortly.' : error}</span>
         </div>
       )}
 
@@ -126,11 +159,11 @@ export function LoginPage() {
         {/* Primary CTA */}
         <Button
           type="submit"
-          disabled={isLoading}
-          className="h-12 w-full rounded-xl bg-[#172126] text-white text-xs sm:text-sm font-semibold hover:bg-[#253239] transition-all duration-200 shadow-2xs mt-2 border border-[#172126]"
-          loading={isLoading}
+          disabled={isButtonDisabled}
+          className="h-12 w-full rounded-xl bg-[#172126] text-white text-xs sm:text-sm font-semibold hover:bg-[#253239] transition-all duration-200 shadow-2xs mt-2 border border-[#172126] flex items-center justify-center gap-2"
+          loading={isSubmitting || isLoading}
         >
-          {isLoading ? 'Signing in...' : 'Sign In →'}
+          {buttonLabel}
         </Button>
       </form>
 

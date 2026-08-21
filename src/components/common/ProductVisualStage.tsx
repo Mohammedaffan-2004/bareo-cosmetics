@@ -50,7 +50,7 @@ export interface ProductVisualStageProps {
 export function ProductVisualStage({
   product,
   imageUrl,
-  alt = 'Bareo Skincare Formulation',
+  alt = 'Bareo Skincare Product',
   variant = 'card',
   className,
   containerClassName,
@@ -86,7 +86,8 @@ export function ProductVisualStage({
       {/* 2. Product Packshot Image Layer via SmartImage */}
       <SmartImage
         src={imageUrl}
-        alt={alt || product?.name || 'Bareo Formulation'}
+        fallbackSrc={product?.slug ? `/new-img/${product.slug}.png` : null}
+        alt={alt || product?.name || 'Bareo Product'}
         priority={priority}
         className={cn(
           'relative z-1 h-full w-full object-contain transition-transform duration-500 ease-out',

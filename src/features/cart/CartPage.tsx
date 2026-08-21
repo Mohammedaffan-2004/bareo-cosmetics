@@ -51,7 +51,7 @@ export function CartPage() {
           YOUR CART
         </span>
         <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight mt-0.5">Shopping Bag</h1>
-        <p className="text-xs text-[#7A8A91] font-medium mt-1">{totals.itemCount} active formulations in your cart</p>
+        <p className="text-xs text-[#7A8A91] font-medium mt-1">{totals.itemCount} {totals.itemCount === 1 ? 'item' : 'items'} in your cart</p>
       </div>
 
       {items.length === 0 ? (
@@ -100,7 +100,12 @@ export function CartPage() {
                 return (
                   <div key={item.product.id} className="pt-4 first:pt-0 flex gap-4">
                     <Link to={`/product/${item.product.slug}`} className="shrink-0">
-                      <SmartImage src={imgUrl} alt={item.product.name} className="size-20 rounded-xl object-contain bg-[#FAF7F2] border border-[#DCE6E9] p-1.5 sm:size-24" />
+                      <SmartImage
+                        src={imgUrl}
+                        fallbackSrc={item.product.slug ? `/new-img/${item.product.slug}.png` : null}
+                        alt={item.product.name}
+                        className="size-20 rounded-xl object-contain bg-[#FAF7F2] border border-[#DCE6E9] p-1.5 sm:size-24"
+                      />
                     </Link>
                     <div className="flex min-w-0 flex-1 flex-col justify-between">
                       <div className="flex items-start justify-between gap-2">
@@ -158,7 +163,7 @@ export function CartPage() {
                   Clear entire cart
                 </button>
                 <Link to="/shop" className="text-xs font-semibold text-[#172126] hover:text-[#167C86] transition-colors">
-                  + Add More Formulations
+                  + Add More Products
                 </Link>
               </div>
             </div>

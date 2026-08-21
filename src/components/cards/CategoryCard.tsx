@@ -65,7 +65,7 @@ export function CategoryCard({ category, className }: CategoryCardProps) {
 
         {/* Action Link */}
         <div className="pt-3 border-t border-[#DCE6E9] flex items-center justify-between text-xs font-semibold text-[#172126] group-hover:text-[#167C86] transition-colors min-h-[32px]">
-          <span>Explore Formulations</span>
+          <span>Explore Products</span>
           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
