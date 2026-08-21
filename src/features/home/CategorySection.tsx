@@ -8,18 +8,19 @@ interface CategorySectionProps {
 
 export function CategorySection({ categories }: CategorySectionProps) {
   return (
-    <section className="container-page py-14 sm:py-18">
+    <section className="container-page py-16 sm:py-20 border-b border-[#DCE6E9]">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E1E8EA] pb-5 mb-8">
-        <div className="space-y-1">
-          <span className="text-[11px] font-semibold uppercase tracking-widest text-[#0F8F83]">
-            Curated Formulations
-          </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] tracking-tight">
-            Shop by Category
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#DCE6E9] pb-6 mb-10">
+        <div className="space-y-2">
+          {/* BAREO Catalogue Index Pill */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#DCE6E9] bg-white px-3.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#172126] shadow-2xs">
+            <span className="text-[#167C86]">✦</span> BAREO / 002 · THE FORMULATIONS
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-normal text-[#172126] tracking-tight">
+            Four disciplines. One considered routine.
           </h2>
-          <p className="text-xs text-[#52616A] font-normal">
-            Everything you need for a complete, considered routine across all dermal disciplines.
+          <p className="text-xs text-[#52636B] font-normal sm:text-sm max-w-xl">
+            Skincare, hair, body and baby care — formulated around what everyday skin actually needs.
           </p>
         </div>
       </div>

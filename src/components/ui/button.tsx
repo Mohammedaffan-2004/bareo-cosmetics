@@ -4,19 +4,19 @@ import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@/utils'
 
 const buttonVariants = cva(
-  'group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#111111] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-200 hover:[&_svg]:translate-x-0.5',
+  'group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#167C86] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-200 hover:[&_svg]:translate-x-0.5',
   {
     variants: {
       variant: {
-        default: 'bg-[#111111] text-white shadow-xs hover:bg-black/90 active:bg-black',
-        primary: 'bg-[#111111] text-white shadow-xs hover:bg-black/90 active:bg-black',
-        secondary: 'bg-white text-[#111111] border border-[#111111] hover:bg-[#FAFAFA]',
-        outline: 'border border-[#E5E7EB] bg-white text-[#111111] hover:bg-[#FAFAFA] hover:border-slate-400',
-        ghost: 'text-[#111111] hover:bg-[#FAFAFA]',
-        ai: 'bg-[#7C3AED] text-white shadow-xs hover:bg-[#6D28D9] active:bg-[#5B21B6] focus-visible:ring-[#7C3AED]',
-        accent: 'bg-[#111111] text-white hover:bg-black/90',
-        destructive: 'bg-[#EF4444] text-white hover:bg-[#EF4444]/90',
-        link: 'text-[#111111] underline-offset-4 hover:underline',
+        default: 'bg-[#172126] text-white shadow-2xs hover:bg-[#253239] active:bg-[#121A1E]',
+        primary: 'bg-[#172126] text-white shadow-2xs hover:bg-[#253239] active:bg-[#121A1E]',
+        secondary: 'bg-white text-[#172126] border border-[#172126] hover:bg-[#EDF6F8]',
+        outline: 'border border-[#DCE6E9] bg-white text-[#172126] hover:bg-[#EDF6F8] hover:border-[#172126]/30',
+        ghost: 'text-[#172126] hover:bg-[#EDF6F8]',
+        ai: 'bg-[#167C86] text-white shadow-2xs hover:bg-[#126872] active:bg-[#0E545C] focus-visible:ring-[#167C86]',
+        accent: 'bg-[#167C86] text-white hover:bg-[#126872]',
+        destructive: 'bg-[#B85C5C] text-white hover:bg-[#A34E4E]',
+        link: 'text-[#172126] underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-11 px-6 py-2.5',

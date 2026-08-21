@@ -66,7 +66,7 @@ export function BlogPage() {
   return (
     <div className="bg-[#FAFBFA] min-h-screen text-[#111111]">
       {/* 1. EDITORIAL JOURNAL HERO (Subtle gradient: #F7FBFC → #EEF6F8 → #FAFBFA) */}
-      <section className="border-b border-[#E1E8EA] bg-gradient-to-b from-[#F7FBFC] via-[#EEF6F8] to-[#FAFBFA] py-16 sm:py-20 lg:py-24 relative overflow-hidden">
+      <section className="border-b border-[#E1E8EA] bg-gradient-to-b from-[#F7FBFC] via-[#EEF6F8] to-[#FAFBFA] py-12 sm:py-16 lg:py-20 relative overflow-hidden">
         {/* Subtle Ambient Light Caustic */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(15,143,131,0.035),transparent)] pointer-events-none" />
         
@@ -169,7 +169,7 @@ export function BlogPage() {
 
                   {/* Read Full Editorial CTA (Separate Row) */}
                   <div>
-                    <Link to="/blog" className="inline-block w-full sm:w-auto">
+                    <Link to={`/blog/${featuredArticle.slug || featuredArticle.id}`} className="inline-block w-full sm:w-auto">
                       <Button className="h-[46px] w-full sm:w-auto rounded-full bg-[#111111] text-white text-xs font-semibold px-7 hover:bg-black transition-all hover:scale-[1.01] inline-flex items-center justify-center gap-2">
                         <span>Read Full Editorial</span>
                         <ArrowRight className="size-3.5" />
@@ -296,7 +296,7 @@ export function BlogPage() {
                   </div>
 
                   <div>
-                    <Link to="/blog" className="inline-block w-full sm:w-auto">
+                    <Link to={`/blog/${editorsPick.slug || editorsPick.id}`} className="inline-block w-full sm:w-auto">
                       <Button className="h-[46px] w-full sm:w-auto rounded-full bg-[#111111] text-white text-xs font-semibold px-7 hover:bg-black transition-all hover:scale-[1.01] inline-flex items-center justify-center gap-2">
                         <span>Read Editorial</span>
                         <ArrowRight className="size-3.5" />
@@ -334,7 +334,7 @@ export function BlogPage() {
                 <span className="font-semibold text-[#111111]">
                   Focus: {quickReadArticle.category} &amp; Intercellular Lipids
                 </span>
-                <Link to="/blog" className="font-semibold text-[#0F8F83] flex items-center gap-1.5 hover:underline">
+                <Link to={`/blog/${quickReadArticle.slug || quickReadArticle.id}`} className="font-semibold text-[#0F8F83] flex items-center gap-1.5 hover:underline">
                   <span>Read the science</span>
                   <ArrowRight className="size-3.5" />
                 </Link>

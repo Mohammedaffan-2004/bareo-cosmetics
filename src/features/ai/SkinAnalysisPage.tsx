@@ -1,85 +1,129 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import {
   Sparkles,
   Camera,
   ChevronLeft,
-  ChevronRight,
-  ScanFace,
   CheckCircle2,
-  ShieldCheck,
-  Activity,
-  HeartHandshake,
-  Award,
   Upload,
   Lock,
-  RefreshCw,
   Check,
   ArrowRight,
+  RotateCcw,
+  CheckCircle,
+  BookmarkPlus,
+  AlertCircle,
+  XCircle,
+  RefreshCw,
 } from 'lucide-react'
 import type { AiConsultationAnswers, AiConsultation, Concern, SkinType } from '@/types'
 import { useAppDispatch } from '@/store/hooks'
 import { runAnalysis, setAnalyzing } from '@/store/slices/aiSlice'
-import { Stepper } from '@/components/common/Stepper'
 import { Button } from '@/components/ui/button'
 import { AppSelect } from '@/components/common/AppSelect'
 import { AppInput } from '@/components/common/AppInput'
 import { AiConsultationReport } from './AiConsultationReport'
-import { CONCERNS, SKIN_TYPES, SLEEP_OPTIONS, WATER_OPTIONS, SUN_OPTIONS } from './consultationQuestions'
-import { avatarImage } from '@/utils/images'
+import { CONCERNS, SLEEP_OPTIONS, WATER_OPTIONS, SUN_OPTIONS } from './consultationQuestions'
 import { cn } from '@/utils'
+import { analyzeImageTelemetry, type ImageEligibilityResult } from '@/utils/imageDermalAnalyzer'
 
-const STEPS = [
-  { key: 'intro', label: 'Intro' },
-  { key: 'questions', label: 'Questions' },
-  { key: 'selfie', label: 'Selfie' },
-  { key: 'scan', label: 'Scanning' },
-  { key: 'report', label: 'Report' },
+const SKIN_TYPE_CARDS: { value: SkinType; title: string; desc: string }[] = [
+  { value: 'dry', title: 'DRY', desc: 'Skin feels tight after washing or experiences flakiness.' },
+  { value: 'combination', title: 'COMBINATION', desc: 'Oily T-zone (forehead, nose, chin) with normal or dry cheeks.' },
+  { value: 'oily', title: 'OILY', desc: 'Shine appears quickly, especially through the T-zone.' },
+  { value: 'sensitive', title: 'SENSITIVE', desc: 'Easily reacts to active products with redness or burning.' },
+  { value: 'normal', title: 'NORMAL', desc: 'Well-balanced moisture with minimal oiliness or dry patches.' },
 ]
 
-const INTRO_METRICS = [
-  { icon: Activity, label: 'Hydration Index', desc: 'Dermal moisture retention' },
-  { icon: Sparkles, label: 'Sebum Balance', desc: 'T-zone oil regulation' },
-  { icon: ShieldCheck, label: 'Barrier Resilience', desc: 'Epidermal protection' },
-  { icon: HeartHandshake, label: 'Sensitivity Level', desc: 'Reactivity to actives' },
-  { icon: ScanFace, label: 'Pigmentation Risk', desc: 'Melanin distribution' },
-  { icon: Award, label: 'Collagen Elasticity', desc: 'Skin firmness & bounce' },
+const SCAN_PROGRESS_STEPS = [
+  { step: '01', title: 'QUESTIONNAIRE SIGNALS', status: 'Evaluating survey responses...' },
+  { step: '02', title: 'VISUAL SIGNALS', status: 'Measuring optical luminance & texture...' },
+  { step: '03', title: 'SKIN PROFILE', status: 'Calculating dermal indicator index...' },
+  { step: '04', title: 'FORMULATION MATCH', status: 'Selecting compatible catalog actives...' },
 ]
 
-const SCAN_STEPS = [
-  { label: 'Hydration analysis', status: 'Analysing hydration levels...' },
-  { label: 'Oil balance', status: 'Evaluating T-zone sebum production...' },
-  { label: 'Skin sensitivity', status: 'Scanning erythema & reactivity markers...' },
-  { label: 'Pigmentation analysis', status: 'Detecting melanin & UV exposure risk...' },
-  { label: 'Barrier appearance', status: 'Calculating epidermal lipid barrier score...' },
-]
+export type SkinAnalysisState =
+  | 'IDLE'          // Initial landing state
+  | 'UPLOADING'     // Image loading
+  | 'VALIDATING'    // Face detection & quality evaluation running
+  | 'VALID'         // Exactly 1 valid human face detected & passed quality checks
+  | 'INVALID'       // No face, multiple faces, blurry, screenshot, or product image
+  | 'ANALYZING'     // Dermal score computation & scanning
+  | 'COMPLETED'     // Dermal intelligence report displayed
+  | 'ERROR'         // General error state
 
 export function SkinAnalysisPage() {
   const dispatch = useAppDispatch()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const uploadIdRef = useRef<number>(0)
   const shouldReduceMotion = useReducedMotion()
 
+  // State Machine: 0: Intro, 1: Questions (sub 0..2), 2: Selfie, 3: Image Quality Check, 4: Scanning, 5: Report
   const [step, setStep] = useState(0)
+  const [questionSubStep, setQuestionSubStep] = useState(0)
   const [answers, setAnswers] = useState<AiConsultationAnswers>({})
   const [selfie, setSelfie] = useState<string | null>(null)
-  const [analysisMode, setAnalysisMode] = useState<'photo' | 'questionnaire'>('photo')
+  const [analysisState, setAnalysisState] = useState<SkinAnalysisState>('IDLE')
 
-  const [scanCheckIndex, setScanCheckIndex] = useState(0)
-  const [scanPhaseText, setScanPhaseText] = useState('Preparing dermal scan...')
+  // Camera stream state
+  const [isCameraActive, setIsCameraActive] = useState(false)
+  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null)
+
+  // Image quality telemetry state
+  const [imageQuality, setImageQuality] = useState<{ usable: boolean; qualityScore: number; reason: string } | null>(null)
+  const [imageEligibility, setImageEligibility] = useState<ImageEligibilityResult | null>(null)
+
+  // Scanning sequence state
+  const [scanStepIndex, setScanStepIndex] = useState(0)
+  const [scanPhaseText, setScanPhaseText] = useState('Preparing dermal assessment...')
   const [animatedScore, setAnimatedScore] = useState(0)
   const [scanComplete, setScanComplete] = useState(false)
   const [result, setResult] = useState<AiConsultation | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [formError, setFormError] = useState<string | null>(null)
+  const [savedProfileSuccess, setSavedProfileSuccess] = useState(false)
 
-  // Defensive Guard: Step 3 (Scanning Screen) should ONLY be reachable when a selfie exists and photo mode is active
-  useEffect(() => {
-    if (step === 3 && (!selfie || analysisMode === 'questionnaire')) {
-      startQuestionnaireAnalysis()
+  // Stop camera stream tracks cleanly
+  const stopCameraStream = () => {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach((t) => t.stop())
+      setCameraStream(null)
     }
-  }, [step, selfie, analysisMode])
+    setIsCameraActive(false)
+  }
+
+  // Clean up camera stream on unmount
+  useEffect(() => {
+    return () => {
+      stopCameraStream()
+    }
+  }, [cameraStream])
+
+  // Complete State Reset Guard & Invalidation
+  const handleResetAnalysis = () => {
+    uploadIdRef.current++ // Invalidate any pending async evaluations
+    stopCameraStream()
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+    setAnswers({})
+    setSelfie(null)
+    setImageQuality(null)
+    setImageEligibility(null)
+    setResult(null)
+    setError(null)
+    setFormError(null)
+    setAnalysisState('IDLE')
+    setStep(0)
+    setQuestionSubStep(0)
+    setScanStepIndex(0)
+    setScanComplete(false)
+    setSavedProfileSuccess(false)
+  }
 
   const toggleConcern = (c: Concern) => {
+    setFormError(null)
     setAnswers((a) => {
       const current = a.concerns ?? []
       const next = current.includes(c) ? current.filter((x) => x !== c) : [...current, c]
@@ -88,85 +132,170 @@ export function SkinAnalysisPage() {
   }
 
   const triggerFileSelect = () => {
+    uploadIdRef.current++ // Invalidate previous image evaluation
+    setSelfie(null)
+    setImageQuality(null)
+    setImageEligibility(null)
+    setAnalysisState('IDLE')
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
       fileInputRef.current.click()
     }
   }
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
+    const currentUploadId = ++uploadIdRef.current
     const validTypes = ['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/webp']
     const ext = file.name.split('.').pop()?.toLowerCase() || ''
     const validExts = ['jpg', 'jpeg', 'png', 'webp']
 
-    const MIN_FILE_SIZE = 1024
-    const MAX_FILE_SIZE = 10 * 1024 * 1024
-
-    const isValidType = validTypes.includes(file.type.toLowerCase()) || validExts.includes(ext)
-    const isValidSize = file.size >= MIN_FILE_SIZE && file.size <= MAX_FILE_SIZE
-
-    if (!isValidType || !isValidSize) {
-      setError('Please upload a JPG, PNG, or WEBP image between 1KB and 10MB.')
+    if (!validTypes.includes(file.type.toLowerCase()) && !validExts.includes(ext)) {
+      setError('Please upload a JPG, PNG, or WEBP image under 10MB.')
+      setAnalysisState('INVALID')
       return
     }
 
     setError(null)
+    setAnalysisState('UPLOADING')
+
     const reader = new FileReader()
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
+      if (currentUploadId !== uploadIdRef.current) return
       const src = event.target?.result as string
       if (typeof src === 'string' && src.startsWith('data:image/')) {
         setSelfie(src)
-        setError(null)
-      } else {
-        setError('Please upload a JPG, PNG, or WEBP image between 1KB and 10MB.')
+        await evaluateImage(src, currentUploadId)
       }
-    }
-    reader.onerror = () => {
-      setError('Please upload a JPG, PNG, or WEBP image between 1KB and 10MB.')
     }
     reader.readAsDataURL(file)
   }
 
+  const startCamera = async () => {
+    setError(null)
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 640 } } })
+      setCameraStream(stream)
+      setIsCameraActive(true)
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+      }
+    } catch (err) {
+      setError('Camera access unavailable. You can upload a selfie photo instead.')
+    }
+  }
+
+  const captureCameraPhoto = async () => {
+    if (!videoRef.current) return
+    const currentUploadId = ++uploadIdRef.current
+    const video = videoRef.current
+    const canvas = document.createElement('canvas')
+    canvas.width = video.videoWidth || 400
+    canvas.height = video.videoHeight || 400
+    const ctx = canvas.getContext('2d')
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.9)
+      stopCameraStream()
+      setSelfie(dataUrl)
+      await evaluateImage(dataUrl, currentUploadId)
+    }
+  }
+
+  const evaluateImage = async (imgSrc: string, reqUploadId?: number) => {
+    const currentUploadId = reqUploadId || ++uploadIdRef.current
+    setAnalysisState('VALIDATING')
+    setStep(3) // Enter Step 3: Image Quality & Face Eligibility Check
+    setImageQuality(null)
+    setImageEligibility(null)
+
+    try {
+      const telemetry = await analyzeImageTelemetry(imgSrc)
+      
+      // Prevent Stale Async Results: Discard if user retook/reuploaded during async telemetry
+      if (currentUploadId !== uploadIdRef.current) {
+        console.warn('[SKIN_ANALYSIS_VALIDATION] Stale upload evaluation discarded:', { currentUploadId, activeUploadId: uploadIdRef.current })
+        return
+      }
+
+      setImageQuality(telemetry.imageQuality)
+      setImageEligibility(telemetry.eligibility)
+
+      const isStrictlyValid = Boolean(
+        telemetry.eligibility?.eligible === true &&
+        telemetry.eligibility?.reason === 'VALID' &&
+        telemetry.eligibility?.faceCount === 1
+      )
+
+      if (isStrictlyValid) {
+        setAnalysisState('VALID')
+        console.log('[SKIN_ANALYSIS_VALIDATION]', { imageId: currentUploadId, faceCount: 1, eligibility: true, reason: 'VALID', canAnalyze: true })
+      } else {
+        setAnalysisState('INVALID')
+        console.warn('[SKIN_ANALYSIS_VALIDATION]', { imageId: currentUploadId, faceCount: telemetry.eligibility?.faceCount, eligibility: false, reason: telemetry.eligibility?.reason, canAnalyze: false })
+      }
+    } catch (err) {
+      if (currentUploadId !== uploadIdRef.current) return
+      setImageQuality({
+        usable: false,
+        qualityScore: 30,
+        reason: 'Image could not be processed cleanly.',
+      })
+      setImageEligibility({
+        eligible: false,
+        reason: 'NO_FACE',
+        userMessage: 'Please upload a clear photo of your face. Product images, screenshots and packaging are not supported.',
+        faceCount: 0,
+        qualityScore: 20,
+      })
+      setAnalysisState('INVALID')
+    }
+  }
+
   /**
-   * PATH A: PHOTO ANALYSIS FLOW
-   * Executed when a valid selfie photo exists and user clicks "Analyse My Skin".
+   * GATE 2: Runs Photo Analysis Scanning Sequence STRICTLY gated by analysisState === 'VALID'
    */
   const startPhotoAnalysis = async () => {
-    if (!selfie) {
-      startQuestionnaireAnalysis()
+    console.log('[SKIN_ANALYSIS_GATE]', {
+      imageId: uploadIdRef.current,
+      analysisState,
+      eligible: imageEligibility?.eligible,
+      faceCount: imageEligibility?.faceCount,
+      reason: imageEligibility?.reason,
+      analysisAllowed: analysisState === 'VALID' && imageEligibility?.eligible === true
+    })
+
+    // GATE 2 HARD SECURITY STOP: If current upload is not strictly VALID, halt execution immediately!
+    if (analysisState !== 'VALID' || !imageEligibility || imageEligibility.eligible !== true || imageEligibility.faceCount !== 1 || imageEligibility.reason !== 'VALID') {
+      console.error('[SKIN_ANALYSIS_GATE] Execution blocked: Current image is NOT eligible for dermal analysis.')
+      setError("Photo not suitable for dermal assessment. Please upload a well-lit photo of your human face.")
       return
     }
 
-    setAnalysisMode('photo')
+    stopCameraStream()
+    setAnalysisState('ANALYZING')
     dispatch(setAnalyzing(true))
-    setStep(3) // Enter Step 3: Scanning screen
-    setScanCheckIndex(0)
+    setStep(4) // Enter Step 4: Scanning animation
+    setScanStepIndex(0)
     setScanComplete(false)
     setScanPhaseText('Preparing dermal scan...')
     setError(null)
 
-    // Run actual consultation analysis with selfie image telemetry
     const consultationPromise = dispatch(runAnalysis(answers, selfie))
 
-    // 0.0s Preparation delay
-    await new Promise((resolve) => setTimeout(resolve, shouldReduceMotion ? 100 : 500))
+    await new Promise((resolve) => setTimeout(resolve, shouldReduceMotion ? 100 : 400))
 
-    // Progressive scanning presentation sequence (5 indicators: ~650ms per step = 3.25s total)
-    for (let i = 0; i < SCAN_STEPS.length; i++) {
-      setScanCheckIndex(i)
-      setScanPhaseText(SCAN_STEPS[i].status)
-      await new Promise((resolve) => setTimeout(resolve, shouldReduceMotion ? 100 : 650))
+    for (let i = 0; i < SCAN_PROGRESS_STEPS.length; i++) {
+      setScanStepIndex(i)
+      setScanPhaseText(SCAN_PROGRESS_STEPS[i].status)
+      await new Promise((resolve) => setTimeout(resolve, shouldReduceMotion ? 100 : 750))
     }
 
-    setScanCheckIndex(SCAN_STEPS.length)
-    setScanPhaseText('All dermal indicators analysed')
+    setScanStepIndex(SCAN_PROGRESS_STEPS.length)
+    setScanPhaseText('Compiling formulation matrix...')
     await new Promise((resolve) => setTimeout(resolve, shouldReduceMotion ? 100 : 500))
-
-    setScanPhaseText('Compiling your skin profile...')
-    await new Promise((resolve) => setTimeout(resolve, shouldReduceMotion ? 100 : 600))
 
     const consultation = (await consultationPromise) as unknown as AiConsultation | null
     dispatch(setAnalyzing(false))
@@ -175,297 +304,368 @@ export function SkinAnalysisPage() {
       setResult(consultation)
       setScanComplete(true)
 
-      const targetScore = consultation.report.skinScore ?? 75
+      const targetScore = consultation.report?.skinScore ?? 75
       if (shouldReduceMotion) {
         setAnimatedScore(targetScore)
       } else {
-        const steps = 16
-        const stepDuration = 35
+        const steps = 15
         for (let i = 1; i <= steps; i++) {
-          await new Promise((resolve) => setTimeout(resolve, stepDuration))
+          await new Promise((resolve) => setTimeout(resolve, 30))
           setAnimatedScore(Math.round((targetScore / steps) * i))
         }
       }
 
       setTimeout(() => {
-        setStep(4) // Move to Step 4: Report
-      }, shouldReduceMotion ? 200 : 1000)
+        setStep(5) // Move to Step 5: Report View
+      }, shouldReduceMotion ? 200 : 900)
     } else {
-      setError('Analysis could not be completed. Please try uploading a clearer daylight portrait.')
-      setStep(2)
+      setError("WE COULDN'T COMPLETE THE ASSESSMENT. Your information is safe. Please try again.")
+      setStep(1)
     }
   }
 
   /**
-   * PATH B: QUESTIONNAIRE-ONLY ANALYSIS FLOW
-   * Executed when the user clicks "Skip & Analyse" or chooses not to upload a selfie.
-   * DOES NOT enter Step 3 scanning screen or run photo scanning animation.
+   * Runs Questionnaire-only Analysis
    */
   const startQuestionnaireAnalysis = async () => {
-    setAnalysisMode('questionnaire')
+    stopCameraStream()
     setError(null)
     dispatch(setAnalyzing(true))
 
-    // Pass null for selfie to ensure questionnaire-only report generation
     const consultation = (await dispatch(runAnalysis(answers, null))) as unknown as AiConsultation | null
     dispatch(setAnalyzing(false))
 
     if (consultation) {
       setResult(consultation)
-      setAnimatedScore(consultation.report.skinScore ?? 75)
-      setStep(4) // Direct transition to Step 4: Report view
+      setAnimatedScore(consultation.report?.skinScore ?? 75)
+      setStep(5) // Move to Step 5: Report View
     } else {
-      setError('Could not generate questionnaire analysis. Please check your survey inputs.')
+      setError("WE COULDN'T COMPLETE THE ASSESSMENT. Please check your survey inputs and try again.")
       setStep(1)
     }
   }
 
+  // Handle Question Step Continuation Validation
+  const handleQuestionContinue = () => {
+    setFormError(null)
+    if (questionSubStep === 0) {
+      if (!answers.skinType) {
+        setFormError('Please select a skin type that best describes your skin to continue.')
+        return
+      }
+      setQuestionSubStep(1)
+    } else if (questionSubStep === 1) {
+      if (!answers.concerns || answers.concerns.length === 0) {
+        setFormError('Please select at least one focus area to calibrate your analysis.')
+        return
+      }
+      setQuestionSubStep(2)
+    } else if (questionSubStep === 2) {
+      if (!answers.age || answers.age <= 0) {
+        setFormError('Please enter your age to help us calculate skin elasticity.')
+        return
+      }
+      setStep(2) // Move to Selfie step
+    }
+  }
+
   return (
-    <div className="container-page py-6 sm:py-8 space-y-6">
-      {/* Header Section */}
-      <div className="mx-auto max-w-3xl text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-[#FAF7F2] px-3.5 py-1 text-xs font-semibold text-[#111111]">
-          <Sparkles className="size-3.5 text-[#7C3AED]" /> Bareo Dermal Intelligence v2.4
+    <div className="container-page py-8 sm:py-12 space-y-8">
+      {/* Header Badge & Brand Title */}
+      <div className="mx-auto max-w-3xl text-center space-y-3">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#DCE6E9] bg-[#EDF6F8] px-4 py-1.5 text-xs font-semibold text-[#172126]">
+          <Sparkles className="size-3.5 text-[#167C86]" /> BAREO / DERMAL INTELLIGENCE
         </div>
-        <h1 className="font-serif text-3xl font-normal text-[#111111] sm:text-4xl tracking-tight">
-          AI Dermal Assessment
+        <h1 className="font-serif text-3xl sm:text-5xl font-normal text-[#172126] tracking-tight">
+          Personal Skin Assessment
         </h1>
-        <p className="text-xs text-[#6B7280] font-light max-w-md mx-auto leading-relaxed">
-          Clinical-grade skin diagnostic engine analyzing hydration, lipid barrier resilience, and active formulation compatibility.
+        <p className="text-xs sm:text-sm text-[#52636B] font-light max-w-lg mx-auto leading-relaxed">
+          Guided AI-assisted assessment analyzing hydration, lipid barrier integrity, and active formulation compatibility.
         </p>
       </div>
 
-      {/* Stepper Navigation */}
-      <div className="mx-auto max-w-2xl">
-        <Stepper steps={STEPS} current={step} />
-      </div>
-
-      {/* Step Panels Container */}
+      {/* Main Step Panels Container */}
       <div className="mx-auto max-w-3xl">
         <AnimatePresence mode="wait">
-          {/* STEP 0: INTRO SCREEN */}
+          {/* STEP 0: PREMIUM EDITORIAL INTRO */}
           {step === 0 && (
             <motion.div
               key="intro"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 shadow-2xs space-y-6"
+              exit={{ opacity: 0, y: -12 }}
+              className="rounded-3xl border border-[#DCE6E9] bg-white p-8 sm:p-12 shadow-2xs space-y-8 text-center"
             >
-              <div className="text-center space-y-2.5">
-                <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111]">
-                  Clinical-Grade Skin Assessment
+              <div className="space-y-4 max-w-xl mx-auto">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+                  BAREO DERMAL INTELLIGENCE
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] leading-tight">
+                  "Understand your skin. <br className="hidden sm:inline" /> Then build around it."
                 </h2>
-                <p className="text-xs text-[#6B7280] font-light max-w-lg mx-auto leading-relaxed">
-                  Engineered with dermatologist-reviewed protocols to analyze 6 vital dermal indicators in under 60 seconds.
+                <p className="text-xs sm:text-sm text-[#52636B] font-light leading-relaxed">
+                  A guided AI-assisted assessment using your responses and, when available, visual skin signals.
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-[#111111] pt-1">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="size-3.5 text-[#059669]" /> Dermatologist-Inspired AI
+
+                {/* Editorial Metadata Chips */}
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                  <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-4 py-1.5 text-xs font-medium text-[#172126]">
+                    ~2 MINUTES
                   </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="size-3.5 text-[#059669]" /> Private Analysis
+                  <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-4 py-1.5 text-xs font-medium text-[#172126]">
+                    PRIVATE PROCESSING
                   </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="size-3.5 text-[#059669]" /> 60-Second Assessment
+                  <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-4 py-1.5 text-xs font-medium text-[#172126]">
+                    PERSONALIZED ROUTINE
                   </span>
                 </div>
               </div>
 
-              {/* 6 Key Metrics Grid */}
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {INTRO_METRICS.map((m) => {
-                  const Icon = m.icon
-                  return (
-                    <div key={m.label} className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2]/60 p-3.5 space-y-1 hover:border-[#111111]/20 transition-colors">
-                      <div className="flex size-7 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#111111]">
-                        <Icon className="size-3.5" />
-                      </div>
-                      <h4 className="text-xs font-semibold text-[#111111] pt-0.5">{m.label}</h4>
-                      <p className="text-[11px] text-[#6B7280] font-light leading-snug">{m.desc}</p>
-                    </div>
-                  )
-                })}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
+              {/* Primary CTA Button */}
+              <div className="space-y-3 pt-2">
                 <Button
                   size="lg"
-                  className="h-11 w-full sm:w-auto px-8 rounded-xl bg-[#111111] text-white font-semibold text-xs transition-colors hover:bg-black min-h-[44px]"
-                  onClick={() => setStep(1)}
+                  className="h-12 w-full sm:w-auto px-10 rounded-2xl bg-[#172126] text-white font-semibold text-xs transition-all hover:bg-[#253239] border border-[#172126] min-h-[48px]"
+                  onClick={() => {
+                    setStep(1)
+                    setQuestionSubStep(0)
+                  }}
                 >
-                  Start Analysis <ChevronRight className="size-4 ml-1" />
+                  BEGIN YOUR ASSESSMENT <ArrowRight className="size-4 ml-2 text-[#167C86]" />
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-11 w-full sm:w-auto px-6 rounded-xl border-[#E5E7EB] text-xs font-medium text-[#111111] hover:bg-[#FAFAFA] min-h-[44px]"
-                  onClick={() => setStep(1)}
-                >
-                  Learn More about Methodology
-                </Button>
+                <p className="text-[11px] text-[#7A8A91] font-light max-w-sm mx-auto">
+                  AI-assisted cosmetic skin assessment. Not a medical diagnosis.
+                </p>
               </div>
             </motion.div>
           )}
 
-          {/* STEP 1: QUESTIONS SCREEN */}
+          {/* STEP 1: GUIDED QUESTION EXPERIENCE (SUB-STEPS 0..2) */}
           {step === 1 && (
             <motion.div
-              key="questions"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 shadow-2xs space-y-6"
+              key={`questions-${questionSubStep}`}
+              initial={{ opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -16 }}
+              className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-10 shadow-2xs space-y-8"
             >
-              <div>
-                <h2 className="font-serif text-2xl font-normal text-[#111111]">
-                  Personal Skincare Profile
-                </h2>
-                <p className="text-xs text-[#6B7280] font-light mt-1">
-                  Let's understand your skin to calibrate your formulation analysis.
-                </p>
+              {/* Question Header & Step Counter */}
+              <div className="flex items-center justify-between border-b border-[#DCE6E9] pb-4">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86]">
+                  QUESTION 0{questionSubStep + 1} / 03
+                </span>
+                <span className="text-xs font-medium text-[#7A8A91]">
+                  {questionSubStep === 0 ? 'Skin profile' : questionSubStep === 1 ? 'Primary concerns' : 'Daily environment'}
+                </span>
               </div>
 
-              {/* Group 1: Personal Information */}
-              <div className="space-y-3.5">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-[#111111] border-b border-[#E5E7EB] pb-2">
-                  1. Personal Information
-                </h3>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <AppInput
-                    label="Your Age"
-                    type="number"
-                    inputMode="numeric"
-                    placeholder="e.g. 28"
-                    value={answers.age ?? ''}
-                    onChange={(e) => setAnswers((a) => ({ ...a, age: Number(e.target.value) || undefined }))}
-                  />
-                  <AppSelect
-                    label="Primary Skin Type"
-                    placeholder="Select skin type"
-                    value={answers.skinType ?? ''}
-                    onValueChange={(v) => setAnswers((a) => ({ ...a, skinType: v as SkinType }))}
-                    options={SKIN_TYPES.map((s) => ({ value: s.value, label: s.label }))}
+              {formError && (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50/80 p-3.5 text-xs text-amber-900 font-medium flex items-center gap-2">
+                  <AlertCircle className="size-4 text-amber-700 shrink-0" />
+                  <span>{formError}</span>
+                </div>
+              )}
+
+              {/* SUB-STEP 0: SKIN TYPE SELECTION CARDS */}
+              {questionSubStep === 0 && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126]">
+                      What best describes your skin?
+                    </h2>
+                    <p className="text-xs text-[#52636B] font-light mt-1">
+                      Select the primary characteristic that feels most consistent daily.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {SKIN_TYPE_CARDS.map((card) => {
+                      const isSelected = answers.skinType === card.value
+                      return (
+                        <button
+                          key={card.value}
+                          type="button"
+                          onClick={() => {
+                            setFormError(null)
+                            setAnswers((a) => ({ ...a, skinType: card.value }))
+                          }}
+                          className={cn(
+                            'flex flex-col justify-between text-left p-5 rounded-2xl border transition-all duration-200 min-h-[110px]',
+                            isSelected
+                              ? 'border-[#167C86] bg-[#FAF7F2] shadow-2xs ring-1 ring-[#167C86]'
+                              : 'border-[#DCE6E9] bg-white hover:border-[#172126]/30 hover:bg-[#FAF7F2]/50'
+                          )}
+                        >
+                          <div className="flex items-center justify-between w-full">
+                            <span className="text-xs font-bold text-[#172126] tracking-wider">{card.title}</span>
+                            {isSelected ? (
+                              <div className="flex size-5 items-center justify-center rounded-full bg-[#167C86] text-white">
+                                <Check className="size-3" />
+                              </div>
+                            ) : (
+                              <span className="size-4 rounded-full border border-[#DCE6E9]" />
+                            )}
+                          </div>
+                          <p className="text-[11px] text-[#52636B] font-light leading-relaxed mt-2">
+                            {card.desc}
+                          </p>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-STEP 1: PRIMARY CONCERNS MULTI-SELECT */}
+              {questionSubStep === 1 && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126]">
+                      Select your primary skin focus areas
+                    </h2>
+                    <p className="text-xs text-[#52636B] font-light mt-1">
+                      Choose all concerns you would like BAREO formulations to target.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {CONCERNS.map((c) => {
+                      const isSelected = answers.concerns?.includes(c.value)
+                      return (
+                        <button
+                          key={c.value}
+                          type="button"
+                          onClick={() => toggleConcern(c.value)}
+                          className={cn(
+                            'flex items-center justify-between p-4 rounded-2xl border transition-all duration-200 text-xs min-h-[54px]',
+                            isSelected
+                              ? 'border-[#167C86] bg-[#FAF7F2] font-semibold text-[#172126] ring-1 ring-[#167C86]'
+                              : 'border-[#DCE6E9] bg-white text-[#52636B] hover:border-[#172126]/30 hover:bg-[#FAF7F2]/50'
+                          )}
+                        >
+                          <span className="flex items-center gap-2.5">
+                            <span className="text-base">{c.emoji}</span>
+                            <span>{c.label}</span>
+                          </span>
+                          {isSelected ? (
+                            <div className="flex size-5 items-center justify-center rounded-full bg-[#167C86] text-white shrink-0">
+                              <Check className="size-3" />
+                            </div>
+                          ) : (
+                            <span className="size-4 rounded-full border border-[#DCE6E9] shrink-0" />
+                          )}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-STEP 2: AGE & LIFESTYLE HABITS */}
+              {questionSubStep === 2 && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126]">
+                      Tell us about your daily environment
+                    </h2>
+                    <p className="text-xs text-[#52636B] font-light mt-1">
+                      Environmental exposure directly affects epidermal barrier resilience.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <AppInput
+                      label="Your Age"
+                      type="number"
+                      inputMode="numeric"
+                      placeholder="e.g. 28"
+                      value={answers.age ?? ''}
+                      onChange={(e) => {
+                        setFormError(null)
+                        setAnswers((a) => ({ ...a, age: Number(e.target.value) || undefined }))
+                      }}
+                    />
+
+                    <AppSelect
+                      label="Sleep Duration"
+                      placeholder="Select average sleep"
+                      value={answers.sleepHours ?? ''}
+                      onValueChange={(v) => setAnswers((a) => ({ ...a, sleepHours: v }))}
+                      options={SLEEP_OPTIONS}
+                    />
+
+                    <AppSelect
+                      label="Daily Water Intake"
+                      placeholder="Select water intake"
+                      value={answers.waterIntake ?? ''}
+                      onValueChange={(v) => setAnswers((a) => ({ ...a, waterIntake: v }))}
+                      options={WATER_OPTIONS}
+                    />
+
+                    <AppSelect
+                      label="Sun Exposure"
+                      placeholder="Select sun exposure"
+                      value={answers.sunExposure ?? ''}
+                      onValueChange={(v) => setAnswers((a) => ({ ...a, sunExposure: v }))}
+                      options={SUN_OPTIONS}
+                    />
+                  </div>
+
+                  {/* Adaptive Indicator Badge */}
+                  <div className="rounded-2xl border border-[#DCE6E9] bg-[#EDF6F8]/60 p-3.5 text-xs text-[#167C86] font-medium flex items-center gap-2">
+                    <Sparkles className="size-4 shrink-0 text-[#167C86]" />
+                    <span>3 questions tailored to your responses</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Bottom Progress & Navigation Bar */}
+              <div className="space-y-4 pt-4 border-t border-[#DCE6E9]">
+                {/* Visual Progress Bar */}
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#DCE6E9]/50">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${((questionSubStep + 1) / 3) * 100}%` }}
+                    className="h-full rounded-full bg-[#167C86]"
                   />
                 </div>
-              </div>
 
-              {/* Group 2: Skin Concerns */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-[#111111] border-b border-[#E5E7EB] pb-2">
-                  2. Skin Concerns (Select all that apply)
-                </h3>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {CONCERNS.map((c) => {
-                    const selected = answers.concerns?.includes(c.value)
-                    return (
-                      <button
-                        key={c.value}
-                        type="button"
-                        onClick={() => toggleConcern(c.value)}
-                        className={cn(
-                          'flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-200 border min-h-[36px]',
-                          selected
-                            ? 'bg-[#111111] text-white border-[#111111] shadow-2xs font-semibold'
-                            : 'bg-white text-[#374151] border-[#E5E7EB] hover:border-[#111111]/30 hover:bg-[#FAFAFA]'
-                        )}
-                      >
-                        <span>{c.emoji}</span>
-                        <span>{c.label}</span>
-                        {selected && <Check className="size-3.5 text-white ml-0.5" />}
-                      </button>
-                    )
-                  })}
+                <div className="flex items-center justify-between">
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setFormError(null)
+                      if (questionSubStep > 0) {
+                        setQuestionSubStep((s) => s - 1)
+                      } else {
+                        setStep(0)
+                      }
+                    }}
+                    className="text-xs text-[#52636B] hover:text-[#172126]"
+                  >
+                    <ChevronLeft className="size-4 mr-1" /> BACK
+                  </Button>
+
+                  <Button
+                    size="lg"
+                    className="h-11 rounded-xl bg-[#172126] text-white text-xs font-semibold px-6 hover:bg-[#253239] min-h-[44px]"
+                    onClick={handleQuestionContinue}
+                  >
+                    CONTINUE →
+                  </Button>
                 </div>
-              </div>
-
-              {/* Group 3: Lifestyle & Environment */}
-              <div className="space-y-3.5">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-[#111111] border-b border-[#E5E7EB] pb-2">
-                  3. Lifestyle & Environment
-                </h3>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <AppSelect
-                    label="Sleep Duration"
-                    value={answers.sleepHours ?? ''}
-                    onValueChange={(v) => setAnswers((a) => ({ ...a, sleepHours: v }))}
-                    options={SLEEP_OPTIONS}
-                  />
-                  <AppSelect
-                    label="Daily Water Intake"
-                    value={answers.waterIntake ?? ''}
-                    onValueChange={(v) => setAnswers((a) => ({ ...a, waterIntake: v }))}
-                    options={WATER_OPTIONS}
-                  />
-                  <AppSelect
-                    label="Sun Exposure"
-                    value={answers.sunExposure ?? ''}
-                    onValueChange={(v) => setAnswers((a) => ({ ...a, sunExposure: v }))}
-                    options={SUN_OPTIONS}
-                  />
-                </div>
-              </div>
-
-              {/* Group 4: Quick Dermal Checks */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-[#111111] border-b border-[#E5E7EB] pb-2">
-                  4. Quick Dermal Checks
-                </h3>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {(
-                    [
-                      ['oilySkin', 'Is your T-zone shiny by noon?'],
-                      ['drySkin', 'Does your skin feel tight after washing?'],
-                      ['hasSensitiveSkin', 'Do you get redness from active products?'],
-                      ['hasDarkCircles', 'Do you experience dark under-eye circles?'],
-                    ] as const
-                  ).map(([key, label]) => (
-                    <label
-                      key={key}
-                      className={cn(
-                        'flex cursor-pointer items-center gap-3 rounded-2xl border p-3.5 transition-all text-xs',
-                        answers[key]
-                          ? 'border-[#111111] bg-[#FAF7F2] font-semibold text-[#111111]'
-                          : 'border-[#E5E7EB] bg-white text-[#374151] hover:bg-[#FAFAFA]'
-                      )}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={Boolean(answers[key])}
-                        onChange={(e) => setAnswers((a) => ({ ...a, [key]: e.target.checked }))}
-                        className="size-4 rounded border-[#E5E7EB] accent-[#111111]"
-                      />
-                      <span>{label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Step Navigation Buttons */}
-              <div className="flex items-center justify-between pt-4 border-t border-[#E5E7EB]">
-                <Button variant="ghost" onClick={() => setStep(0)} className="text-xs text-[#6B7280]">
-                  <ChevronLeft className="size-4 mr-1" /> Back
-                </Button>
-                <Button
-                  size="lg"
-                  className="h-11 rounded-xl bg-[#111111] text-white text-xs font-semibold px-6 hover:bg-black min-h-[44px]"
-                  onClick={() => setStep(2)}
-                >
-                  Continue to Selfie Scan <ChevronRight className="size-4 ml-1" />
-                </Button>
               </div>
             </motion.div>
           )}
 
-          {/* STEP 2: SELFIE SCREEN */}
+          {/* STEP 2: VISUAL SKIN CHECK (SELFIE STEP) */}
           {step === 2 && (
             <motion.div
               key="selfie"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 shadow-2xs space-y-6 text-center"
+              exit={{ opacity: 0, y: -12 }}
+              className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-10 shadow-2xs space-y-6 text-center"
             >
               <input
                 type="file"
@@ -475,280 +675,381 @@ export function SkinAnalysisPage() {
                 className="hidden"
               />
 
-              <div>
-                <h2 className="font-serif text-2xl font-normal text-[#111111]">
-                  Facial Skin Scan
+              <div className="space-y-2 max-w-md mx-auto">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+                  OPTIONAL VISUAL SIGNAL
+                </span>
+                <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126]">
+                  Visual Skin Check
                 </h2>
-                <p className="text-xs text-[#6B7280] font-light max-w-md mx-auto mt-1">
-                  Upload a clear facial photo so we can analyze visible skin texture, hydration and tone — or skip for questionnaire-only analysis.
+                <p className="text-xs text-[#52636B] font-light leading-relaxed">
+                  Let's add one visual signal. Your camera image helps us complement your questionnaire with visual telemetry.
                 </p>
               </div>
 
               {error && (
-                <div className="mx-auto max-w-sm rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs font-medium text-rose-700">
-                  {error}
-                </div>
-              )}
-
-              {/* STATE A — NO PHOTO UPLOADED YET */}
-              {!selfie && (
-                <div className="mx-auto max-w-md rounded-3xl border-2 border-dashed border-[#E5E7EB] bg-[#FAFAFA]/70 p-8 space-y-4">
-                  <div
-                    onClick={triggerFileSelect}
-                    className="mx-auto flex size-20 cursor-pointer items-center justify-center rounded-2xl bg-white border border-[#E5E7EB] text-[#111111] shadow-2xs hover:bg-[#FAFAFA] transition-all"
-                  >
-                    <Camera className="size-9 text-[#111111]" />
-                  </div>
-
-                  <div className="space-y-1">
-                    <p className="text-xs font-semibold text-[#111111]">Upload your selfie</p>
-                    <p className="text-[11px] text-[#6B7280] font-light">
-                      JPG · PNG · WEBP · Max 10MB
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
-                    <Button
-                      type="button"
-                      size="sm"
-                      className="rounded-xl bg-[#111111] text-white text-xs font-semibold h-10 px-5 hover:bg-black min-h-[40px]"
-                      onClick={triggerFileSelect}
-                    >
-                      <Upload className="size-3.5 mr-1.5" /> Upload Image
+                <div className="mx-auto max-w-md rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs font-medium text-amber-900 space-y-2 text-center">
+                  <p>{error}</p>
+                  <div className="flex justify-center gap-2 pt-1">
+                    <Button type="button" size="sm" onClick={triggerFileSelect} className="rounded-xl bg-[#172126] text-white text-xs px-4">
+                      UPLOAD PHOTO
                     </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="rounded-xl border-[#E5E7EB] text-xs font-medium h-10 px-4 text-[#111111] hover:bg-[#FAFAFA] min-h-[40px]"
-                      onClick={() => {
-                        setSelfie(avatarImage(2, '#0F766E'))
-                      }}
-                    >
-                      Use Sample Portrait
+                    <Button type="button" size="sm" variant="outline" onClick={() => startQuestionnaireAnalysis()} className="rounded-xl border-[#DCE6E9] text-xs">
+                      CONTINUE WITHOUT PHOTO
                     </Button>
                   </div>
                 </div>
               )}
 
-              {/* STATE B — PHOTO SELECTED PREVIEW */}
-              {selfie && (
-                <div className="mx-auto max-w-md space-y-6">
-                  <div className="relative mx-auto size-52 sm:size-60 overflow-hidden rounded-3xl border border-[#E5E7EB] shadow-xs bg-[#FAF7F2]">
-                    <img src={selfie} alt="Selfie Preview" className="size-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3.5">
-                      <span className="rounded-lg bg-[#047857] text-white text-[11px] font-semibold px-3 py-1 flex items-center gap-1.5 shadow-2xs">
-                        <CheckCircle2 className="size-3.5" /> Photo ready for analysis
-                      </span>
-                    </div>
+              {/* CAMERA STREAM VIEW */}
+              {isCameraActive ? (
+                <div className="mx-auto max-w-sm space-y-4">
+                  <div className="relative mx-auto size-64 overflow-hidden rounded-full border-4 border-[#167C86] bg-black shadow-lg">
+                    <video ref={videoRef} autoPlay playsInline className="size-full object-cover" />
+                    <div className="absolute inset-0 rounded-full border-2 border-dashed border-white/60 pointer-events-none" />
                   </div>
-
-                  {/* Concise 5-metric breakdown */}
-                  <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2] p-4 text-left space-y-2 text-xs">
-                    <p className="font-semibold text-[#111111]">We'll evaluate:</p>
-                    <ul className="grid grid-cols-2 gap-1.5 text-[#6B7280]">
-                      <li className="flex items-center gap-1.5"><span className="size-1 rounded-full bg-[#111111]" /> Hydration</li>
-                      <li className="flex items-center gap-1.5"><span className="size-1 rounded-full bg-[#111111]" /> Oil balance</li>
-                      <li className="flex items-center gap-1.5"><span className="size-1 rounded-full bg-[#111111]" /> Skin sensitivity</li>
-                      <li className="flex items-center gap-1.5"><span className="size-1 rounded-full bg-[#111111]" /> Pigmentation</li>
-                      <li className="flex items-center gap-1.5 col-span-2"><span className="size-1 rounded-full bg-[#111111]" /> Barrier appearance</li>
-                    </ul>
-                  </div>
-
-                  {/* Actions for Photo Mode */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <div className="flex justify-center gap-3">
                     <Button
                       type="button"
                       size="lg"
-                      className="w-full sm:w-auto h-11 rounded-xl bg-[#111111] text-white text-xs font-semibold px-6 hover:bg-black min-h-[44px]"
-                      onClick={startPhotoAnalysis}
+                      className="rounded-xl bg-[#167C86] text-white text-xs font-semibold h-11 px-6 hover:bg-[#13646D]"
+                      onClick={captureCameraPhoto}
                     >
-                      Analyse My Skin <ArrowRight className="size-4 ml-1.5" />
+                      <Camera className="size-4 mr-1.5" /> CAPTURE PHOTO
                     </Button>
                     <Button
                       type="button"
                       variant="outline"
                       size="lg"
-                      className="w-full sm:w-auto h-11 rounded-xl border-[#E5E7EB] text-xs font-medium text-[#111111] hover:bg-[#FAFAFA] min-h-[44px]"
+                      className="rounded-xl border-[#DCE6E9] text-xs font-medium h-11 px-4 text-[#172126]"
+                      onClick={stopCameraStream}
+                    >
+                      CANCEL
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                /* CAMERA / UPLOAD AREA WITH FRAMING GUIDE */
+                <div className="mx-auto max-w-md rounded-3xl border-2 border-dashed border-[#DCE6E9] bg-[#FAF7F2]/60 p-8 space-y-6">
+                  <div className="relative mx-auto flex size-44 items-center justify-center rounded-full border-2 border-[#167C86]/40 bg-white shadow-2xs">
+                    <Camera className="size-10 text-[#167C86]" />
+                    <div className="absolute inset-0 rounded-full border border-dashed border-[#167C86]/60 animate-spin-slow" />
+                  </div>
+
+                  {/* Photo Instructions List */}
+                  <div className="rounded-2xl border border-[#DCE6E9] bg-white p-4 text-left space-y-1.5 text-xs text-[#52636B]">
+                    <p className="font-semibold text-[#172126] mb-1">For optimal visual accuracy:</p>
+                    <p>• FACE THE CAMERA DIRECTLY</p>
+                    <p>• USE NATURAL DAYLIGHT</p>
+                    <p>• REMOVE SUNGLASSES</p>
+                    <p>• KEEP FACE CLEAR</p>
+                  </div>
+
+                  {/* Privacy Guarantee Note */}
+                  <div className="flex items-center justify-center gap-2 text-[11px] text-[#7A8A91] font-light">
+                    <Lock className="size-3.5 text-[#167C86] shrink-0" />
+                    <span>Processed locally for visual analysis. Photos are never stored or uploaded.</span>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                    <Button
+                      type="button"
+                      size="lg"
+                      className="w-full sm:w-auto h-11 rounded-xl bg-[#172126] text-white text-xs font-semibold px-5 hover:bg-[#253239]"
+                      onClick={startCamera}
+                    >
+                      <Camera className="size-4 mr-1.5 text-[#167C86]" /> USE CAMERA
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="lg"
+                      className="w-full sm:w-auto h-11 rounded-xl border-[#DCE6E9] text-xs font-medium px-5 text-[#172126] hover:bg-white"
                       onClick={triggerFileSelect}
                     >
-                      <RefreshCw className="size-3.5 mr-1.5" /> Change Photo
+                      <Upload className="size-4 mr-1.5 text-[#167C86]" /> UPLOAD PHOTO
                     </Button>
                   </div>
                 </div>
               )}
 
-              {/* Privacy Reassurance Banner */}
-              <div className="mx-auto max-w-md rounded-2xl border border-[#E5E7EB] bg-[#FAFAFA] p-3 text-center text-[11px] text-[#6B7280] font-light flex items-center justify-center gap-2">
-                <Lock className="size-3.5 text-[#111111] shrink-0" />
-                <span>
-                  Photos never leave your device. Dermal metrics are processed locally for your session report.
-                </span>
-              </div>
-
-              {/* Step Navigation */}
-              <div className="flex items-center justify-between pt-4 border-t border-[#E5E7EB]">
-                <Button variant="ghost" onClick={() => setStep(1)} className="text-xs text-[#6B7280]">
-                  <ChevronLeft className="size-4 mr-1" /> Back
+              {/* Bottom Navigation */}
+              <div className="flex items-center justify-between pt-4 border-t border-[#DCE6E9]">
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    stopCameraStream()
+                    setStep(1)
+                  }}
+                  className="text-xs text-[#52636B]"
+                >
+                  <ChevronLeft className="size-4 mr-1" /> BACK
                 </Button>
-                {/* Skip Photo Action */}
                 <Button
                   type="button"
-                  variant={selfie ? 'ghost' : 'default'}
-                  className={cn(
-                    'h-11 rounded-xl text-xs font-semibold px-6 min-h-[44px]',
-                    selfie
-                      ? 'text-[#6B7280] hover:text-[#111111] hover:bg-[#FAFAFA]'
-                      : 'bg-[#111111] text-white hover:bg-black'
-                  )}
+                  variant="ghost"
+                  className="text-xs font-semibold text-[#52636B] hover:text-[#172126]"
                   onClick={() => {
+                    stopCameraStream()
                     setSelfie(null)
                     startQuestionnaireAnalysis()
                   }}
                 >
-                  Skip &amp; Analyse <ScanFace className="size-4 ml-1.5" />
+                  SKIP FOR NOW →
                 </Button>
               </div>
             </motion.div>
           )}
 
-          {/* STEP 3: STATE C & D — PHOTO SCANNING ANIMATION & SCORE REVEAL */}
-          {step === 3 && selfie && analysisMode === 'photo' && (
+          {/* STEP 3: IMAGE QUALITY & FACE ELIGIBILITY CHECK */}
+          {step === 3 && selfie && (
+            <motion.div
+              key="quality-check"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-10 shadow-2xs space-y-6 text-center max-w-md mx-auto"
+            >
+              <h2 className="font-serif text-2xl font-normal text-[#172126] tracking-tight">
+                CHECKING YOUR PHOTO
+              </h2>
+
+              <div className="relative mx-auto size-40 overflow-hidden rounded-full border-2 border-[#167C86] shadow-2xs">
+                <img src={selfie} alt="Preview" className="size-full object-cover" />
+              </div>
+
+              {/* Compact 3-Row Validation Summary */}
+              <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 text-left space-y-2.5 text-xs">
+                <div className="flex items-center justify-between text-[#172126]">
+                  <span className="font-normal text-[#52636B]">Image quality</span>
+                  <span className="text-[#167C86] font-semibold text-[11px] flex items-center gap-1">
+                    {imageQuality?.usable !== false ? <CheckCircle className="size-3.5 text-[#167C86]" /> : <XCircle className="size-3.5 text-rose-600" />} {imageQuality?.usable !== false ? 'PASS' : 'NEEDS ATTENTION'}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between text-[#172126]">
+                  <span className="font-normal text-[#52636B]">Human face</span>
+                  {analysisState === 'VALIDATING' ? (
+                    <span className="text-[#167C86] font-semibold text-[11px] flex items-center gap-1">
+                      <RefreshCw className="size-3 animate-spin text-[#167C86]" /> VERIFYING...
+                    </span>
+                  ) : imageEligibility?.reason === 'NO_FACE' || imageEligibility?.eligible === false ? (
+                    <span className="text-rose-700 font-semibold text-[11px] flex items-center gap-1">
+                      <XCircle className="size-3.5 text-rose-600" /> NOT DETECTED
+                    </span>
+                  ) : imageEligibility?.reason === 'MULTIPLE_FACES' ? (
+                    <span className="text-amber-700 font-semibold text-[11px]">MULTIPLE FACES</span>
+                  ) : (
+                    <span className="text-[#167C86] font-semibold text-[11px] flex items-center gap-1">
+                      <CheckCircle className="size-3.5 text-[#167C86]" /> 1 FACE DETECTED
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between text-[#172126]">
+                  <span className="font-normal text-[#52636B]">Face visibility</span>
+                  {analysisState === 'VALIDATING' ? (
+                    <span className="text-[#52636B] font-normal text-[11px]">CHECKING...</span>
+                  ) : imageEligibility?.reason === 'NO_FACE' || imageEligibility?.eligible === false ? (
+                    <span className="text-[#7A8A91] font-normal text-[11px]">
+                      — NOT AVAILABLE
+                    </span>
+                  ) : imageEligibility?.reason === 'FACE_TOO_SMALL' ? (
+                    <span className="text-amber-700 font-semibold text-[11px]">FACE TOO FAR</span>
+                  ) : imageEligibility?.reason === 'FACE_NOT_VISIBLE' ? (
+                    <span className="text-amber-700 font-semibold text-[11px]">FACE OBSTRUCTED</span>
+                  ) : (
+                    <span className="text-[#167C86] font-semibold text-[11px] flex items-center gap-1">
+                      <CheckCircle className="size-3.5 text-[#167C86]" /> OPTIMAL
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* GATE 1: Premium Soft-Tint Invalid Message & Action Gating */}
+              {analysisState === 'VALIDATING' ? (
+                <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 text-center space-y-2">
+                  <RefreshCw className="size-5 text-[#167C86] animate-spin mx-auto" />
+                  <p className="text-xs font-semibold text-[#172126]">Validating photo telemetry...</p>
+                </div>
+              ) : analysisState === 'VALID' && imageEligibility?.eligible === true ? (
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Button
+                    size="lg"
+                    className="w-full h-11 rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239]"
+                    onClick={startPhotoAnalysis}
+                  >
+                    ANALYSE MY SKIN →
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full h-11 rounded-xl border-[#DCE6E9] text-xs font-medium text-[#172126]"
+                    onClick={triggerFileSelect}
+                  >
+                    RETAKE
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-5 text-left pt-1">
+                  {/* Soft Warm-Rose Tint Panel */}
+                  <div className="rounded-2xl border border-rose-100 bg-rose-50/50 p-4 space-y-2 text-xs">
+                    <p className="font-bold text-[#172126] uppercase tracking-wider text-[11px]">
+                      PHOTO NEEDS ANOTHER TRY
+                    </p>
+                    <p className="text-[#52636B] font-normal leading-relaxed">
+                      We couldn't verify a clear human face in this photo. Please upload a well-lit photo with your face clearly visible.
+                    </p>
+                    <p className="text-[#7A8A91] text-[11px] font-light pt-0.5">
+                      Product images, packaging and screenshots aren't supported.
+                    </p>
+                  </div>
+
+                  {/* Compact Horizontal Photo Hints */}
+                  <div className="text-center pt-1 text-[11px] text-[#7A8A91] space-y-1">
+                    <p className="font-medium text-[#52636B]">For best results</p>
+                    <p className="font-light">Face the camera directly &middot; Natural light &middot; Face clearly visible</p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col gap-2.5 pt-1">
+                    <Button
+                      size="lg"
+                      className="w-full h-11 rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239] border border-[#172126]"
+                      onClick={triggerFileSelect}
+                    >
+                      TRY ANOTHER PHOTO →
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full h-11 rounded-xl border-[#DCE6E9] text-xs font-medium text-[#52636B] hover:text-[#172126] hover:bg-[#FAF7F2]"
+                      onClick={() => {
+                        setSelfie(null)
+                        startQuestionnaireAnalysis()
+                      }}
+                    >
+                      CONTINUE WITHOUT PHOTO →
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* STEP 4: SIGNATURE SCANNING EXPERIENCE (3-5s SEQUENCE) */}
+          {step === 4 && (
             <motion.div
               key="scan"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="rounded-3xl border border-[#E5E7EB] bg-white p-8 sm:p-12 text-center space-y-8 shadow-2xs"
+              className="rounded-3xl border border-[#DCE6E9] bg-white p-8 sm:p-12 text-center space-y-8 shadow-2xs max-w-lg mx-auto"
             >
               {!scanComplete ? (
-                /* STATE C — SCANNING BEAM & PROGRESSIVE CHECKLIST */
-                <div className="space-y-6 max-w-md mx-auto">
-                  <div className="relative mx-auto size-52 sm:size-60 overflow-hidden rounded-3xl border-2 border-[#7C3AED]/40 bg-[#FAF7F2] shadow-[0_0_20px_rgba(124,58,237,0.15)] transition-all">
-                    <img src={selfie} alt="Scanning" className="size-full object-cover" />
-                    {/* Laser scanning line */}
-                    {!shouldReduceMotion && (
-                      <motion.div
-                        animate={{ y: ['0%', '100%', '0%'] }}
-                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                        className="absolute inset-x-0 h-1 bg-[#7C3AED] shadow-[0_0_12px_#7C3AED]"
-                      />
-                    )}
-                  </div>
+                <div className="space-y-6">
+                  {/* Facial Telemetry Scanning Beam */}
+                  {selfie ? (
+                    <div className="relative mx-auto size-52 sm:size-60 overflow-hidden rounded-full border-2 border-[#167C86]/40 bg-[#EDF6F8] shadow-[0_0_25px_rgba(22,124,134,0.2)]">
+                      <img src={selfie} alt="Scanning" className="size-full object-cover" />
+                      {!shouldReduceMotion && (
+                        <motion.div
+                          animate={{ y: ['0%', '100%', '0%'] }}
+                          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                          className="absolute inset-x-0 h-1 bg-[#167C86] shadow-[0_0_14px_#167C86]"
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="relative mx-auto flex size-44 items-center justify-center rounded-full border-2 border-[#167C86] bg-[#EDF6F8]">
+                      <Sparkles className="size-10 text-[#167C86] animate-pulse" />
+                    </div>
+                  )}
 
                   <div className="space-y-1">
-                    <h2 className="font-serif text-2xl font-normal text-[#111111]">
-                      {scanPhaseText}
+                    <h2 className="font-serif text-2xl font-normal text-[#172126]">
+                      ANALYZING YOUR SKIN
                     </h2>
-                    <p className="text-xs text-[#6B7280] font-light">
-                      {scanCheckIndex < SCAN_STEPS.length
-                        ? SCAN_STEPS[scanCheckIndex]?.status
-                        : 'Compiling formulation compatibility matrix...'}
+                    <p className="text-xs text-[#52636B] font-light">
+                      {scanPhaseText}
                     </p>
                   </div>
 
-                  {/* Synchronized Progressive Checklist */}
-                  <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAFAFA] p-4 space-y-2 text-left">
-                    {SCAN_STEPS.map((s, idx) => {
-                      const isDone = idx < scanCheckIndex
-                      const isCurrent = idx === scanCheckIndex
+                  {/* Progressive Step Sequence */}
+                  <div className="rounded-2xl border border-[#DCE6E9] bg-[#EDF6F8]/60 p-4 space-y-2.5 text-left">
+                    {SCAN_PROGRESS_STEPS.map((s, idx) => {
+                      const isDone = idx < scanStepIndex
+                      const isCurrent = idx === scanStepIndex
                       return (
-                        <div key={s.label} className="flex items-center justify-between text-xs">
-                          <span
-                            className={cn(
-                              'transition-colors',
-                              isDone
-                                ? 'font-semibold text-[#111111]'
-                                : isCurrent
-                                ? 'font-semibold text-[#7C3AED]'
-                                : 'text-[#9CA3AF]'
-                            )}
-                          >
-                            {s.label}
+                        <div key={s.step} className="flex items-center justify-between text-xs">
+                          <span className={cn('transition-colors', isDone ? 'font-semibold text-[#172126]' : isCurrent ? 'font-semibold text-[#167C86]' : 'text-[#7A8A91]')}>
+                            {s.step} {s.title}
                           </span>
                           {isDone ? (
-                            <span className="text-[#047857] font-bold text-xs">✓</span>
+                            <span className="text-[#167C86] font-bold text-xs">COMPLETE</span>
                           ) : isCurrent ? (
-                            <span className="size-2 rounded-full bg-[#7C3AED] animate-ping" />
+                            <span className="text-[#167C86] font-semibold text-[11px] animate-pulse">ANALYZING</span>
                           ) : (
-                            <span className="size-1.5 rounded-full bg-[#D1D5DB]" />
+                            <span className="text-[#7A8A91] text-[11px]">PENDING</span>
                           )}
                         </div>
                       )
                     })}
                   </div>
-
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#E5E7EB] bg-[#FAF7F2] px-4 py-1 text-xs font-medium text-[#111111]">
-                    <Sparkles className="size-3.5 text-[#7C3AED]" />
-                    <span>
-                      Analysing ({Math.min(scanCheckIndex + 1, 5)} of 5 indicators)
-                    </span>
-                  </div>
                 </div>
               ) : (
-                /* STATE D — ANALYSIS COMPLETE & SCORE REVEAL */
-                <motion.div
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="space-y-6 max-w-md mx-auto py-4"
-                >
-                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#ECFDF5] border border-[#059669]/20 text-[#047857]">
+                /* REVEAL COMPLETE STATE */
+                <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="space-y-6 py-4">
+                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#EDF6F8] text-[#167C86]">
                     <CheckCircle2 className="size-9" />
                   </div>
-
                   <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#047857]">
-                      ✓ Analysis Complete
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[#167C86]">
+                      ✓ Assessment Complete
                     </span>
-                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] mt-1">
-                      Your skin profile is ready.
+                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126] mt-1">
+                      Your skin profile is ready ({animatedScore}/100).
                     </h2>
-                  </div>
-
-                  {/* Score Reveal Box */}
-                  <div className="rounded-3xl border border-[#E5E7EB] bg-[#FAF7F2] p-6 text-center space-y-1 shadow-2xs">
-                    <div className="flex items-baseline justify-center gap-1 font-serif">
-                      <span className="text-5xl font-normal text-[#111111]">
-                        {animatedScore}
-                      </span>
-                      <span className="text-sm font-sans font-medium text-[#6B7280]">/100</span>
-                    </div>
-                    <p className="text-sm font-serif font-semibold text-[#111111]">
-                      {result?.report?.skinScore && result.report.skinScore >= 78
-                        ? 'Healthy Barrier'
-                        : result?.report?.skinScore && result.report.skinScore >= 60
-                        ? 'Balanced Skin'
-                        : 'Requires Focus'}
-                    </p>
                   </div>
                 </motion.div>
               )}
             </motion.div>
           )}
 
-          {/* STEP 4: REPORT PAGE */}
-          {step === 4 && result && (
-            <motion.div key="report" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-              {/* Top Banner Action */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-3xl border border-[#E5E7EB] bg-[#FAF7F2] p-6">
+          {/* STEP 5: FULL REPORT, FORMULATION MATCH & SAVE PROFILE */}
+          {step === 5 && result && (
+            <motion.div key="report" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+              {/* Header Action Bar */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-3xl border border-[#DCE6E9] bg-[#FAF7F2] p-6">
                 <div>
-                  <h3 className="font-serif text-xl font-normal text-[#111111]">
-                    Diagnostic Profile Compiled
+                  <h3 className="font-serif text-xl font-normal text-[#172126]">
+                    YOUR SKIN PROFILE IS READY
                   </h3>
-                  <p className="text-xs text-[#6B7280] font-light mt-0.5">
-                    Your formulation routine has been compiled. You can consult with our AI skin assistant anytime.
+                  <p className="text-xs text-[#52636B] font-light mt-0.5">
+                    Keep this assessment in your BAREO account and use it as your starting point.
                   </p>
                 </div>
-                <div className="flex gap-2 shrink-0">
-                  <Button asChild variant="outline" className="rounded-xl border-[#E5E7EB] text-xs font-medium h-10 text-[#111111] hover:bg-white min-h-[40px]">
-                    <Link to="/skin-analysis/chat"><Sparkles className="size-3.5 text-[#7C3AED] mr-1" /> Ask Follow-up</Link>
+
+                <div className="flex items-center gap-3 shrink-0">
+                  <Button
+                    className="rounded-xl bg-[#172126] text-white text-xs font-semibold h-10 px-5 hover:bg-[#253239]"
+                    onClick={() => setSavedProfileSuccess(true)}
+                  >
+                    <BookmarkPlus className="size-3.5 mr-1.5 text-[#167C86]" />
+                    {savedProfileSuccess ? 'PROFILE SAVED ✓' : 'SAVE MY SKIN PROFILE →'}
                   </Button>
-                  <Button asChild className="rounded-xl bg-[#111111] text-white text-xs font-semibold h-10 hover:bg-black min-h-[40px]">
-                    <Link to="/account/overview">View in Profile</Link>
+                  <Button
+                    variant="outline"
+                    className="rounded-xl border-[#DCE6E9] text-xs font-medium h-10 text-[#172126] hover:bg-white"
+                    onClick={handleResetAnalysis}
+                  >
+                    <RotateCcw className="size-3.5 mr-1.5" /> START AGAIN
                   </Button>
                 </div>
               </div>
 
+              {/* Renders Dermal Report & Recommendations */}
               <AiConsultationReport consultation={result} />
             </motion.div>
           )}

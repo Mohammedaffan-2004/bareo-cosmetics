@@ -347,24 +347,24 @@ export function AdminProductFormPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-24">
       {/* CONTEXT LABEL & EDITORIAL HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#E5E7EB] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE6E9] pb-5">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={handleCancelNavigation}
-            className="flex size-10 items-center justify-center rounded-xl border border-[#E5E7EB] bg-white text-[#111111] hover:bg-[#FAFAFA] transition-colors shadow-2xs shrink-0"
+            className="flex size-10 items-center justify-center rounded-xl border border-[#DCE6E9] bg-white text-[#172126] hover:bg-[#FAF7F2] transition-colors shadow-2xs shrink-0"
             aria-label="Back to Product Catalogue"
           >
             <ChevronLeft className="size-5" />
           </button>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] block">
-              PRODUCT CATALOGUE / FORMULATION
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+              FORMULATION OPERATIONS / SETUP
             </span>
-            <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] tracking-tight mt-0.5">
+            <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126] tracking-tight mt-0.5">
               {isEdit ? 'Edit Formulation' : 'Create New Formulation'}
             </h1>
-            <p className="text-xs text-[#6B7280] font-light mt-0.5">
+            <p className="text-xs text-[#52636B] font-light mt-0.5">
               {isEdit
                 ? 'Update product information, pricing, inventory, and storefront visibility.'
                 : 'Build and publish a new Bareo formulation to the storefront.'}
@@ -377,7 +377,7 @@ export function AdminProductFormPage() {
             type="button"
             variant="outline"
             onClick={handleCancelNavigation}
-            className="rounded-xl border-[#E5E7EB] text-xs font-semibold text-[#374151]"
+            className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2]"
           >
             Cancel
           </Button>
@@ -385,7 +385,7 @@ export function AdminProductFormPage() {
             type="button"
             onClick={() => save.mutate()}
             loading={save.isPending}
-            className="rounded-xl bg-[#111111] text-white text-xs font-semibold hover:bg-black transition-all shadow-2xs"
+            className="rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239] border border-[#172126] transition-all shadow-2xs"
           >
             {isEdit ? 'Save Changes' : 'Publish Formulation'}
           </Button>
@@ -398,19 +398,19 @@ export function AdminProductFormPage() {
       {/* 2-COLUMN RESPONSIVE COMPOSITION (~68% Left / ~32% Right) */}
       <div className="grid gap-8 lg:grid-cols-[1fr_340px] items-start">
         {/* LEFT COLUMN: FOCUSED EDITING SURFACE */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 sm:p-8 shadow-2xs space-y-8">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-6 sm:p-8 shadow-[0_4px_12px_rgba(23,33,38,0.02)] space-y-8">
           {/* STEP 1: BASICS & PRICING */}
           {step === 0 && (
             <div className="space-y-6">
               {/* SECTION A: FORMULATION IDENTITY */}
               <div className="space-y-4">
-                <div className="border-b border-[#F3F4F6] pb-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF]">SECTION A — FORMULATION IDENTITY</h3>
+                <div className="border-b border-[#DCE6E9] pb-2">
+                  <h3 className="text-[10px] font-bold uppercase tracking-wider text-[#167C86]">01 / FORMULATION IDENTITY</h3>
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <Label className="text-xs font-semibold text-[#111111]">Product Name</Label>
+                    <Label className="text-xs font-semibold text-[#172126]">Product Name</Label>
                     <span className="text-[10px] font-medium text-rose-600">Required</span>
                   </div>
                   <AppInput
@@ -434,13 +434,13 @@ export function AdminProductFormPage() {
 
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <Label className="text-xs font-semibold text-[#111111]">SKU Identifier</Label>
+                      <Label className="text-xs font-semibold text-[#172126]">SKU Identifier</Label>
                       <button
                         type="button"
                         onClick={handleGenerateSku}
-                        className="text-[11px] font-semibold text-[#7C3AED] hover:underline inline-flex items-center gap-1"
+                        className="text-[11px] font-semibold text-[#167C86] hover:underline inline-flex items-center gap-1"
                       >
-                        <Wand2 className="size-3" /> Auto-generate
+                        <Wand2 className="size-3 text-[#167C86]" /> Auto-generate
                       </button>
                     </div>
                     <AppInput
@@ -484,9 +484,9 @@ export function AdminProductFormPage() {
               </div>
 
               {/* SECTION B: COMMERCIALS & PRICING */}
-              <div className="space-y-4 pt-4 border-t border-[#F3F4F6]">
-                <div className="border-b border-[#F3F4F6] pb-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF]">SECTION B — COMMERCIALS</h3>
+              <div className="space-y-4 pt-4 border-t border-[#DCE6E9]">
+                <div className="border-b border-[#DCE6E9] pb-2">
+                  <h3 className="text-[10px] font-bold uppercase tracking-wider text-[#167C86]">02 / COMMERCIALS &amp; STOCK</h3>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -525,12 +525,14 @@ export function AdminProductFormPage() {
 
                 {/* PREMIUM CUSTOMER DISCOUNT INFORMATION STRIP */}
                 {computedDiscount > 0 && (
-                  <div className="flex items-center justify-between rounded-xl bg-emerald-50 border border-emerald-200/80 px-4 py-3 text-xs text-emerald-900">
+                  <div className="flex items-center justify-between rounded-xl bg-[#EDF6F8] border border-[#167C86]/30 px-4 py-3 text-xs text-[#167C86]">
                     <div>
-                      <span className="font-semibold block text-[#111111]">Customer Discount</span>
-                      <span className="text-[11px] text-emerald-700 font-light">Automatically calculated from MRP and selling price.</span>
+                      <span className="font-semibold block text-[#172126]">Customer Discount</span>
+                      <span className="text-[11px] text-[#167C86] font-light">Automatically calculated from MRP and selling price.</span>
                     </div>
-                    <span className="font-bold text-emerald-700 text-sm">{computedDiscount}% OFF</span>
+                    <span className="font-bold text-[#167C86] text-xs px-2.5 py-1 bg-white rounded-lg border border-[#167C86]/20 shadow-2xs">
+                      {computedDiscount}% OFF
+                    </span>
                   </div>
                 )}
               </div>
@@ -1032,13 +1034,13 @@ export function AdminProductFormPage() {
           )}
 
           {/* STICKY BOTTOM ACTION FOOTER BAR */}
-          <div className="flex items-center justify-between border-t border-[#F3F4F6] pt-5">
+          <div className="flex items-center justify-between border-t border-[#DCE6E9] pt-5">
             <Button
               type="button"
               variant="outline"
               onClick={() => setStep((s) => Math.max(0, s - 1))}
               disabled={step === 0}
-              className="rounded-xl border-[#E5E7EB] text-xs font-semibold text-[#374151]"
+              className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#52636B] hover:bg-[#FAF7F2]"
             >
               ← Previous
             </Button>
@@ -1052,7 +1054,7 @@ export function AdminProductFormPage() {
                   save.mutate()
                 }}
                 loading={save.isPending}
-                className="rounded-xl border-[#E5E7EB] text-xs font-semibold text-[#374151]"
+                className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2]"
               >
                 Save Draft
               </Button>
@@ -1061,7 +1063,7 @@ export function AdminProductFormPage() {
                 <Button
                   type="button"
                   onClick={handleNextStep}
-                  className="rounded-xl bg-[#111111] text-white text-xs font-semibold hover:bg-black transition-all shadow-2xs"
+                  className="rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239] border border-[#172126] transition-all shadow-2xs"
                 >
                   Next Step <ChevronRight className="size-4 ml-1" />
                 </Button>
@@ -1070,7 +1072,7 @@ export function AdminProductFormPage() {
                   type="button"
                   onClick={() => save.mutate()}
                   loading={save.isPending}
-                  className="rounded-xl bg-[#111111] text-white text-xs font-semibold hover:bg-black transition-all shadow-2xs"
+                  className="rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239] border border-[#172126] transition-all shadow-2xs"
                 >
                   {isEdit ? 'Save Changes' : 'Publish Formulation'}
                 </Button>
@@ -1081,17 +1083,17 @@ export function AdminProductFormPage() {
 
         {/* RIGHT COLUMN: STICKY LIVE STOREFRONT PREVIEW PANEL (~32% Desktop) */}
         <aside className="sticky top-24 hidden lg:block space-y-4">
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-4 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#F3F4F6] pb-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#9CA3AF] flex items-center gap-1.5">
-                <Sparkles className="size-3.5 text-amber-500" /> LIVE STOREFRONT PREVIEW
+          <div className="rounded-2xl border border-[#DCE6E9] bg-white p-5 space-y-4 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+            <div className="flex items-center justify-between border-b border-[#DCE6E9] pb-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#167C86] flex items-center gap-1.5">
+                <Sparkles className="size-3.5 text-[#167C86]" /> LIVE STOREFRONT STAGE
               </span>
-              <span className="text-[10px] font-semibold text-[#6B7280]">Customer View</span>
+              <span className="text-[10px] font-medium text-[#7A8A91]">CUSTOMER VIEW</span>
             </div>
 
             {/* REALISTIC STOREFRONT CARD PREVIEW STAGE */}
-            <div className="rounded-xl border border-[#E5E7EB] bg-[#FAFAFA]/60 p-4 space-y-3">
-              <div className="relative aspect-square overflow-hidden rounded-xl bg-white border border-[#E5E7EB] p-2 flex items-center justify-center">
+            <div className="rounded-xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 space-y-3">
+              <div className="relative aspect-square overflow-hidden rounded-xl bg-white border border-[#DCE6E9] p-2 flex items-center justify-center">
                 <SmartImage
                   src={
                     (typeof form.images[0]?.url === 'string' ? form.images[0].url : (form.images[0] as any)) ||
@@ -1101,43 +1103,50 @@ export function AdminProductFormPage() {
                   className="h-full w-full object-contain"
                 />
                 {computedDiscount > 0 && (
-                  <span className="absolute left-2.5 top-2.5 rounded-md bg-[#111111] px-2 py-0.5 text-[9px] font-bold text-white uppercase tracking-wider">
+                  <span className="absolute left-2.5 top-2.5 rounded-md bg-[#172126] px-2 py-0.5 text-[9px] font-bold text-white uppercase tracking-wider">
                     {computedDiscount}% OFF
                   </span>
                 )}
               </div>
 
               <div className="space-y-1">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#9CA3AF]">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">
                   {form.brand || 'BAREO'}
                 </p>
-                <h4 className="font-serif text-sm font-semibold text-[#111111] line-clamp-1">
+                <h4 className="font-serif text-sm font-semibold text-[#172126] line-clamp-1">
                   {form.name || 'Bareo Active Formulation'}
                 </h4>
-                <p className="text-[11px] text-[#6B7280] font-light line-clamp-2 leading-relaxed">
+                <p className="text-[11px] text-[#52636B] font-light line-clamp-2 leading-relaxed">
                   {form.shortDescription || 'Dermatologically formulated active skincare designed for everyday barrier health.'}
                 </p>
               </div>
 
-              <div className="flex items-baseline justify-between pt-2.5 border-t border-[#E5E7EB]">
+              <div className="flex items-baseline justify-between pt-2.5 border-t border-[#DCE6E9]">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="font-serif text-base font-bold text-[#111111]">
+                  <span className="font-serif text-base font-bold text-[#172126]">
                     {formatINR(Number(form.offerPrice) || 299)}
                   </span>
                   {Number(form.mrp) > Number(form.offerPrice) && (
-                    <span className="text-[10px] text-[#9CA3AF] line-through">
+                    <span className="text-[10px] text-[#7A8A91] line-through font-normal">
                       {formatINR(Number(form.mrp))}
                     </span>
                   )}
                 </div>
-                <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
-                  {form.status === 'active' ? '● Live' : '● Hidden'}
+                <span className={cn(
+                  "text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider border",
+                  form.status === 'active'
+                    ? "text-[#167C86] bg-[#EDF6F8] border-[#167C86]/30"
+                    : form.status === 'out-of-stock'
+                    ? "text-rose-800 bg-rose-50 border-rose-200"
+                    : "text-[#52636B] bg-[#FAF7F2] border-[#DCE6E9]"
+                )}>
+                  {form.status === 'active' ? '● Live' : form.status === 'out-of-stock' ? '● Out of Stock' : '● Hidden'}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-[11px] text-[#6B7280] font-light bg-[#FAFAFA] p-3 rounded-xl border border-[#E5E7EB]">
-              <Info className="size-4 text-[#111111] shrink-0" />
+            <div className="flex items-center gap-2 text-[11px] text-[#52636B] font-light bg-[#FAF7F2] p-3 rounded-xl border border-[#DCE6E9]">
+              <Info className="size-4 text-[#167C86] shrink-0" />
               <span>Preview updates in real-time as formulation parameters are modified.</span>
             </div>
           </div>

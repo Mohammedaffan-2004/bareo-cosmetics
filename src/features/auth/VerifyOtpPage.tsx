@@ -41,14 +41,17 @@ export function VerifyOtpPage() {
   }
 
   return (
-    <div className="space-y-6 text-center">
+    <div className="space-y-5 sm:space-y-6 text-center">
       {/* Editorial Headline */}
-      <div className="space-y-1.5">
-        <h1 className="font-serif text-3xl sm:text-4xl font-medium text-[#111111] tracking-tight">
+      <div className="space-y-1">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+          ACCOUNT RECOVERY
+        </span>
+        <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight">
           Verify Your Identity
         </h1>
-        <p className="text-xs text-[#6B7280] font-light leading-relaxed">
-          Enter the 4-digit security code sent to <strong className="font-mono text-[#111111]">{email}</strong>.
+        <p className="text-xs text-[#52636B] font-light leading-relaxed">
+          Enter the 4-digit security code sent to <strong className="font-mono text-[#172126]">{email}</strong>.
         </p>
       </div>
 
@@ -65,18 +68,18 @@ export function VerifyOtpPage() {
 
       <Button
         disabled={loading}
-        className="h-12 w-full rounded-xl bg-[#111111] text-white text-xs sm:text-sm font-semibold hover:bg-black transition-all shadow-2xs"
+        className="h-12 w-full rounded-xl bg-[#172126] text-white text-xs sm:text-sm font-semibold hover:bg-[#253239] transition-all shadow-2xs border border-[#172126]"
         loading={loading}
         onClick={verify}
       >
-        Verify OTP
+        Verify OTP →
       </Button>
 
-      <div className="text-xs text-[#6B7280] font-light pt-2">
+      <div className="text-xs text-[#52636B] font-light pt-2">
         {countdown.active ? (
           <p>Resend code in {countdown.mm}:{countdown.ss}</p>
         ) : (
-          <button type="button" onClick={resend} className="font-semibold text-[#111111] hover:underline">
+          <button type="button" onClick={resend} className="font-semibold text-[#172126] hover:text-[#167C86] hover:underline">
             Resend OTP Code
           </button>
         )}

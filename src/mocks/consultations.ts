@@ -31,7 +31,7 @@ export const MOCK_CONSULTATIONS: AiConsultation[] = [
       sunExposure: 'moderate',
       hasDarkCircles: true,
     },
-    selfie: undefined,
+    hasPhotoAnalysis: true,
     report: {
       skinScore: 78,
       hydration: { label: 'Hydration', score: 74, status: 'fair', detail: 'Slightly dehydrated on cheeks' },

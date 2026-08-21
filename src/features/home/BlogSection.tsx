@@ -11,16 +11,16 @@ interface BlogSectionProps {
 
 export function BlogSection({ posts }: BlogSectionProps) {
   return (
-    <section className="container-page py-16">
+    <section className="container-page py-16 sm:py-20 border-b border-[#DCE6E9]">
       <div className="space-y-10">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E5E7EB] pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#DCE6E9] pb-6">
           <div className="space-y-1">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#6B7280]">The Bareo Journal</span>
-            <h2 className="font-serif text-3xl font-normal text-[#111111]">Skincare Science & Guides</h2>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">The Bareo Journal</span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight">Skincare Science & Guides</h2>
           </div>
           <Link to="/blog">
-            <Button variant="outline" size="sm" className="rounded-lg text-xs font-medium">
-              View All Articles <ArrowRight className="size-3.5 ml-1" />
+            <Button variant="outline" size="sm" className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126] hover:bg-[#EDF6F8]">
+              View All Articles <ArrowRight className="size-3.5 ml-1 text-[#167C86]" />
             </Button>
           </Link>
         </div>

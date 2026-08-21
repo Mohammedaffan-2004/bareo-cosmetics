@@ -7,16 +7,16 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-[#111111] text-white',
-        secondary: 'bg-[#FAFAFA] text-[#111111] border border-[#E5E7EB]',
-        outline: 'border border-[#E5E7EB] text-[#111111] bg-white',
-        success: 'bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20',
-        destructive: 'bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20',
-        warning: 'bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20',
-        accent: 'bg-[#111111] text-white',
-        soft: 'bg-[#FAFAFA] text-[#111111] border border-[#E5E7EB]',
-        ai: 'bg-[#7C3AED] text-white border border-[#6D28D9]',
-        aiSoft: 'bg-[#FAF5FF] text-[#6D28D9] border border-[#DDD6FE]',
+        default: 'bg-[#172126] text-white',
+        secondary: 'bg-[#EDF6F8] text-[#172126] border border-[#DCE6E9]',
+        outline: 'border border-[#DCE6E9] text-[#172126] bg-white',
+        success: 'bg-[#EDF6F8] text-[#167C86] border border-[#167C86]/20',
+        destructive: 'bg-[#B85C5C]/10 text-[#B85C5C] border border-[#B85C5C]/20',
+        warning: 'bg-[#FEF3C7] text-[#92400E] border border-amber-300',
+        accent: 'bg-[#167C86] text-white',
+        soft: 'bg-[#EDF6F8] text-[#172126] border border-[#DCE6E9]',
+        ai: 'bg-[#EDF6F8] text-[#167C86] border border-[#167C86]/30',
+        aiSoft: 'bg-[#EDF6F8] text-[#167C86] border border-[#167C86]/20',
       },
     },
     defaultVariants: {

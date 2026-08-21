@@ -15,16 +15,16 @@ interface ProductRailProps {
 
 export function ProductRail({ eyebrow, title, subtitle, products, viewAllLink }: ProductRailProps) {
   return (
-    <section className="container-page py-14">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E5E7EB] pb-6 mb-8">
-        <div className="space-y-1">
-          {eyebrow && <span className="text-xs font-semibold uppercase tracking-widest text-[#6B7280]">{eyebrow}</span>}
-          <h2 className="font-serif text-3xl font-normal text-[#111111]">{title}</h2>
-          {subtitle && <p className="text-xs text-[#6B7280]">{subtitle}</p>}
+    <section className="container-page py-16 sm:py-20 border-b border-[#DCE6E9]">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#DCE6E9] pb-6 mb-10">
+        <div className="space-y-1.5">
+          {eyebrow && <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">{eyebrow}</span>}
+          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight">{title}</h2>
+          {subtitle && <p className="text-xs sm:text-sm text-[#52636B] max-w-xl">{subtitle}</p>}
         </div>
         {viewAllLink && (
           <Link to={viewAllLink}>
-            <Button variant="outline" size="sm" className="rounded-lg text-xs font-medium">
+            <Button variant="outline" size="sm" className="rounded-xl border-[#DCE6E9] text-[#172126] hover:bg-[#EDF6F8] text-xs font-semibold">
               View All <ArrowRight className="size-3.5 ml-1" />
             </Button>
           </Link>

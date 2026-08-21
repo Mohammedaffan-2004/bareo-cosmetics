@@ -1,13 +1,17 @@
-import { useMemo } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowLeft, Mail, Phone, ShoppingBag, Calendar, User, ArrowRight, AlertCircle, RefreshCw } from 'lucide-react'
 import { adminService } from '@/services/adminService'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { avatarImage } from '@/utils/images'
 import { formatDate, formatINR, formatNumber, timeAgo, cn } from '@/utils'
+
+function getInitials(name?: string) {
+  if (!name || !name.trim()) return 'BC'
+  const parts = name.trim().split(' ')
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase()
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+}
 
 function getStatusBadge(status: string) {
   switch (status) {
@@ -21,33 +25,33 @@ function getStatusBadge(status: string) {
     case 'out-for-delivery':
       return {
         label: status === 'out-for-delivery' ? 'Out for Delivery' : 'Shipped',
-        className: 'bg-sky-50 text-sky-900 border-sky-200/80',
-        dot: 'bg-sky-500',
+        className: 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30',
+        dot: 'bg-[#167C86]',
       }
     case 'packed':
       return {
         label: 'Processing',
         className: 'bg-amber-50 text-amber-900 border-amber-200/80',
-        dot: 'bg-amber-500',
+        dot: 'bg-amber-600',
       }
     case 'confirmed':
       return {
         label: 'Confirmed',
-        className: 'bg-[#FAF7F2] text-[#111111] border-[#E5E7EB]',
-        dot: 'bg-[#111111]',
+        className: 'bg-[#FAF7F2] text-[#172126] border-[#DCE6E9]',
+        dot: 'bg-[#172126]',
       }
     case 'cancelled':
     case 'refunded':
       return {
         label: status === 'cancelled' ? 'Cancelled' : 'Refunded',
         className: 'bg-rose-50 text-rose-900 border-rose-200/80',
-        dot: 'bg-rose-500',
+        dot: 'bg-rose-600',
       }
     default:
       return {
         label: status,
-        className: 'bg-[#FAFAFA] text-[#6B7280] border-[#E5E7EB]',
-        dot: 'bg-[#9CA3AF]',
+        className: 'bg-[#FAF7F2] text-[#52636B] border-[#DCE6E9]',
+        dot: 'bg-[#7A8A91]',
       }
   }
 }
@@ -68,19 +72,19 @@ export function AdminCustomerDetailPage() {
     enabled: !!id,
   })
 
-  // AOV Computation
-  const aov = useMemo(() => {
-    if (!customer || !customer.orders || customer.orders === 0) return 0
-    return Math.round((customer.lifetimeValue || 0) / customer.orders)
-  }, [customer])
+  // Calculations derived from real customer data (server LTV already excludes cancelled/refunded orders)
+  const totalLtv = customer?.lifetimeValue ?? customer?.totalSpent ?? 0
+  const ordersCount = typeof customer?.orders === 'number' ? customer.orders : customer?.orderHistory?.length ?? 0
+  const aov = ordersCount > 0 ? Math.round(totalLtv / ordersCount) : 0
+  const orderList = Array.isArray(customer?.orderHistory) ? customer.orderHistory : []
 
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <Skeleton className="h-10 w-64 rounded-xl" />
+        <Skeleton className="h-10 w-64 rounded-xl bg-[#FAF7F2]" />
         <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
-          <Skeleton className="h-[480px] rounded-2xl" />
-          <Skeleton className="h-[480px] rounded-2xl" />
+          <Skeleton className="h-[480px] rounded-2xl bg-[#FAF7F2]" />
+          <Skeleton className="h-[480px] rounded-2xl bg-[#FAF7F2]" />
         </div>
       </div>
     )
@@ -90,7 +94,7 @@ export function AdminCustomerDetailPage() {
     return (
       <div className="rounded-2xl border border-rose-200 bg-rose-50/60 p-8 text-center space-y-3">
         <AlertCircle className="size-8 text-rose-600 mx-auto" />
-        <p className="font-serif text-lg font-semibold text-rose-900">Failed to load customer profile</p>
+        <p className="font-serif text-lg font-normal text-rose-900">Failed to load customer profile</p>
         <p className="text-xs text-rose-700">{(error as Error)?.message || 'Server error occurred'}</p>
         <div className="flex items-center justify-center gap-3 pt-2">
           <Button asChild variant="outline" size="sm" className="rounded-xl border-rose-300 text-rose-900">
@@ -111,21 +115,23 @@ export function AdminCustomerDetailPage() {
 
   if (!customer) {
     return (
-      <div className="rounded-2xl border border-[#E5E7EB] bg-white p-12 text-center space-y-3">
-        <p className="font-serif text-lg font-semibold text-[#111111]">Customer profile not found</p>
-        <p className="text-xs text-[#6B7280]">We couldn't find a user account matching identifier "{id}".</p>
-        <Button asChild variant="outline" size="sm" className="rounded-xl border-[#E5E7EB] text-xs">
-          <Link to="/admin/customers">Back to Customers</Link>
+      <div className="rounded-2xl border border-[#DCE6E9] bg-white p-12 text-center space-y-3 shadow-2xs">
+        <p className="font-serif text-lg font-normal text-[#172126]">Customer profile not found</p>
+        <p className="text-xs text-[#52636B] font-light">We couldn't find a user account matching identifier "{id}".</p>
+        <Button asChild variant="outline" size="sm" className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126]">
+          <Link to="/admin/customers">Back to Customers Register</Link>
         </Button>
       </div>
     )
   }
 
+  const custName = customer.name || 'Customer'
+
   return (
     <div className="space-y-6">
-      {/* 1. EXECUTIVE HEADER */}
-      <div className="space-y-3 border-b border-[#E5E7EB] pb-6">
-        <Button asChild variant="ghost" size="sm" className="rounded-xl text-xs text-[#6B7280] hover:text-[#111111] -ml-2">
+      {/* 1. EDITORIAL DOSSIER HEADER */}
+      <div className="space-y-3 border-b border-[#DCE6E9] pb-6">
+        <Button asChild variant="ghost" size="sm" className="rounded-xl text-xs font-medium text-[#52636B] hover:text-[#167C86] hover:bg-[#FAF7F2] -ml-2">
           <Link to="/admin/customers">
             <ArrowLeft className="size-3.5 mr-1.5" /> Back to Customers
           </Link>
@@ -133,28 +139,28 @@ export function AdminCustomerDetailPage() {
 
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <Avatar className="size-14 border border-[#E5E7EB] bg-[#FAFAFA]">
-              <AvatarImage src={avatarImage(customer.name.length + (customer.orders || 0), '#111111')} />
-              <AvatarFallback className="bg-[#FAF7F2] font-serif text-xl font-normal text-[#111111]">
-                {customer.name ? customer.name.charAt(0).toUpperCase() : 'U'}
-              </AvatarFallback>
-            </Avatar>
+            <div className="size-12 rounded-full bg-[#FAF7F2] border border-[#DCE6E9] flex items-center justify-center font-bold text-sm text-[#172126] shrink-0">
+              {getInitials(custName)}
+            </div>
             <div>
-              <div className="flex items-center gap-3">
-                <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] tracking-tight">
-                  {customer.name}
+              <span className="text-[10px] font-bold tracking-widest text-[#167C86] uppercase block">
+                CUSTOMER PROFILE
+              </span>
+              <div className="flex items-center gap-3 mt-0.5">
+                <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126] tracking-tight">
+                  {custName}
                 </h1>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200/80 bg-emerald-50 px-3 py-0.5 text-xs font-semibold text-emerald-900">
-                  <span className="size-1.5 rounded-full bg-emerald-600" />
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#167C86]/30 bg-[#EDF6F8] px-3 py-0.5 text-[10px] font-bold uppercase text-[#167C86] tracking-wider">
+                  <span className="size-1.5 rounded-full bg-[#167C86]" />
                   Active Customer
                 </span>
               </div>
-              <p className="text-xs text-[#6B7280] font-light mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+              <p className="text-xs text-[#52636B] font-light mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span>Joined {customer.joinedAt ? formatDate(customer.joinedAt) : 'N/A'}</span>
                 <span>•</span>
-                <span>Email: <strong className="font-medium text-[#111111]">{customer.email}</strong></span>
+                <span>Email: <strong className="font-medium text-[#172126]">{customer.email}</strong></span>
                 <span>•</span>
-                <span>Phone: <strong className="font-medium text-[#111111]">{customer.phone}</strong></span>
+                <span>Phone: <strong className="font-medium text-[#172126]">{customer.phone}</strong></span>
               </p>
             </div>
           </div>
@@ -165,68 +171,71 @@ export function AdminCustomerDetailPage() {
       <div className="grid gap-6 lg:grid-cols-[1fr_340px] items-start">
         {/* PRIMARY COLUMN (68%) */}
         <div className="space-y-6 min-w-0">
-          {/* A. COMMERCE OVERVIEW CARDS */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1 shadow-2xs">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+          {/* A. PERFORMANCE BRIEFING CARDS */}
+          <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-2xl border border-[#DCE6E9] bg-white p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                 TOTAL ORDERS
               </span>
-              <p className="font-mono text-2xl font-bold text-[#111111]">
-                {formatNumber(customer.orders || 0)}
+              <p className="font-serif text-3xl font-bold text-[#172126]">
+                {formatNumber(ordersCount)}
               </p>
-              <p className="text-[11px] text-[#6B7280] font-light">Lifetime checkouts</p>
+              <p className="text-[11px] text-[#52636B] font-light">Lifetime checkouts</p>
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2]/60 p-5 space-y-1 shadow-2xs">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+            <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                 LIFETIME SPEND
               </span>
-              <p className="font-serif text-2xl font-normal text-[#111111]">
-                {formatINR(customer.lifetimeValue || 0)}
+              <p className="font-serif text-3xl font-bold text-[#172126]">
+                {formatINR(totalLtv)}
               </p>
-              <p className="text-[11px] text-[#6B7280] font-light">Gross revenue</p>
+              <p className="text-[11px] text-[#52636B] font-light">Valid net customer spend</p>
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1 shadow-2xs">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+            <div className="rounded-2xl border border-[#DCE6E9] bg-white p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                 AVG ORDER VALUE
               </span>
-              <p className="font-serif text-2xl font-normal text-[#111111]">
+              <p className="font-serif text-3xl font-bold text-[#172126]">
                 {formatINR(aov)}
               </p>
-              <p className="text-[11px] text-[#6B7280] font-light">Mean spend per cart</p>
+              <p className="text-[11px] text-[#52636B] font-light">Mean spend per cart</p>
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1 shadow-2xs">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+            <div className="rounded-2xl border border-[#DCE6E9] bg-white p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                 LATEST PURCHASE
               </span>
-              <p className="font-mono text-base font-semibold text-[#111111] truncate">
-                {customer.lastOrder ? timeAgo(customer.lastOrder) : '—'}
+              <p className="font-mono text-base font-semibold text-[#172126] truncate">
+                {customer.lastOrder ? timeAgo(customer.lastOrder) : customer.lastOrderAt ? timeAgo(customer.lastOrderAt) : '—'}
               </p>
-              <p className="text-[11px] text-[#6B7280] font-light">Recent transaction</p>
+              <p className="text-[11px] text-[#52636B] font-light">Recent transaction</p>
             </div>
           </div>
 
           {/* B. ITEMISED CUSTOMER ORDER HISTORY TABLE */}
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
-              <h2 className="font-serif text-lg font-normal text-[#111111]">
-                Order History ({customer.orderHistory?.length || 0})
+          <div className="rounded-2xl border border-[#DCE6E9] bg-white p-6 space-y-4 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+            <div className="border-b border-[#DCE6E9] pb-4">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#167C86] block">
+                ORDER HISTORY
+              </span>
+              <h2 className="font-serif text-lg font-normal text-[#172126] mt-0.5">
+                Customer Purchase Record ({orderList.length})
               </h2>
             </div>
 
-            {!customer.orderHistory || customer.orderHistory.length === 0 ? (
-              <div className="p-8 text-center text-xs text-[#6B7280] space-y-1">
-                <ShoppingBag className="size-6 text-[#9CA3AF] mx-auto mb-2" />
-                <p className="font-medium text-[#111111]">No purchases recorded yet</p>
-                <p className="text-[11px]">This customer has not completed any store checkouts.</p>
+            {orderList.length === 0 ? (
+              <div className="p-8 text-center text-xs text-[#52636B] space-y-2">
+                <ShoppingBag className="size-7 text-[#167C86] mx-auto mb-2" />
+                <p className="font-serif text-base text-[#172126]">No purchases recorded yet</p>
+                <p className="text-xs text-[#52636B] font-light">This customer has not completed any store checkouts.</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[620px] text-xs text-left">
                   <thead>
-                    <tr className="border-b border-[#E5E7EB] bg-[#FAF7F2] text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
+                    <tr className="border-b border-[#DCE6E9] bg-[#FAF7F2] text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">
                       <th className="px-4 py-3">Order ID</th>
                       <th className="px-4 py-3">Placed Date</th>
                       <th className="px-4 py-3">Items</th>
@@ -236,34 +245,35 @@ export function AdminCustomerDetailPage() {
                       <th className="px-4 py-3 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E5E7EB]">
-                    {customer.orderHistory.map((o) => {
+                  <tbody className="divide-y divide-[#DCE6E9]">
+                    {orderList.map((o: any) => {
                       const badge = getStatusBadge(o.status)
+                      const orderCode = o.orderId || o.id
 
                       return (
-                        <tr key={o.id} className="transition-colors hover:bg-[#FAF7F2]/40">
+                        <tr key={o.id} className="transition-colors hover:bg-[#FAF7F2]/60">
                           <td className="px-4 py-3.5">
                             <button
                               type="button"
-                              onClick={() => navigate(`/admin/orders/${o.orderId}`)}
-                              className="font-mono font-bold text-[#111111] hover:underline block text-left"
+                              onClick={() => navigate(`/admin/orders/${orderCode}`)}
+                              className="font-mono font-bold text-[#172126] hover:text-[#167C86] hover:underline block text-left"
                             >
-                              {o.orderId}
+                              {orderCode}
                             </button>
                           </td>
-                          <td className="px-4 py-3.5 text-[11px] text-[#6B7280]">
-                            {formatDate(o.placedAt)}
+                          <td className="px-4 py-3.5 text-[11px] text-[#7A8A91] font-light">
+                            {formatDate(o.placedAt || o.createdAt)}
                           </td>
-                          <td className="px-4 py-3.5 text-[#374151] font-medium">
-                            {o.itemCount} item{o.itemCount !== 1 ? 's' : ''}
+                          <td className="px-4 py-3.5 text-[#52636B] font-medium">
+                            {o.itemCount || (o.items?.length ?? 1)} item{(o.itemCount || (o.items?.length ?? 1)) !== 1 ? 's' : ''}
                           </td>
                           <td className="px-4 py-3.5">
                             <span
                               className={cn(
-                                'inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
+                                'inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider',
                                 o.paymentStatus === 'paid'
-                                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200/80'
-                                  : 'bg-[#FAF7F2] text-[#111111] border-[#E5E7EB]'
+                                  ? 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30'
+                                  : 'bg-[#FAF7F2] text-[#52636B] border-[#DCE6E9]'
                               )}
                             >
                               {o.paymentStatus || 'pending'}
@@ -272,7 +282,7 @@ export function AdminCustomerDetailPage() {
                           <td className="px-4 py-3.5">
                             <span
                               className={cn(
-                                'inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold tracking-wide',
+                                'inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider',
                                 badge.className
                               )}
                             >
@@ -280,7 +290,7 @@ export function AdminCustomerDetailPage() {
                               {badge.label}
                             </span>
                           </td>
-                          <td className="px-4 py-3.5 font-mono font-bold text-[#111111]">
+                          <td className="px-4 py-3.5 font-serif font-bold text-[#172126]">
                             {formatINR(o.total)}
                           </td>
                           <td className="px-4 py-3.5 text-right">
@@ -288,8 +298,8 @@ export function AdminCustomerDetailPage() {
                               type="button"
                               variant="ghost"
                               size="sm"
-                              onClick={() => navigate(`/admin/orders/${o.orderId}`)}
-                              className="h-7 px-2.5 text-[11px] font-medium text-[#111111] hover:bg-[#FAF7F2]"
+                              onClick={() => navigate(`/admin/orders/${orderCode}`)}
+                              className="h-7 px-2.5 text-[11px] font-semibold text-[#172126] hover:bg-[#FAF7F2] hover:text-[#167C86]"
                             >
                               View <ArrowRight className="size-3 ml-1" />
                             </Button>
@@ -304,39 +314,44 @@ export function AdminCustomerDetailPage() {
           </div>
 
           {/* C. CUSTOMER CONTACT DETAILS */}
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
-            <h2 className="flex items-center gap-2 font-serif text-lg font-normal text-[#111111] border-b border-[#E5E7EB] pb-3">
-              <User className="size-4 text-[#111111]" /> Contact Information
-            </h2>
+          <div className="rounded-2xl border border-[#DCE6E9] bg-white p-6 space-y-4 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+            <div className="border-b border-[#DCE6E9] pb-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#167C86] block">
+                CONTACT INFORMATION
+              </span>
+              <h2 className="flex items-center gap-2 font-serif text-lg font-normal text-[#172126] mt-0.5">
+                <User className="size-4 text-[#167C86]" /> Customer Identity &amp; Reachability
+              </h2>
+            </div>
             <div className="grid gap-4 sm:grid-cols-2 text-xs">
               <div className="space-y-1">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                   FULL NAME
                 </span>
-                <p className="font-semibold text-[#111111] text-sm">{customer.name}</p>
+                <p className="font-semibold text-[#172126] text-sm">{custName}</p>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                   EMAIL ADDRESS
                 </span>
-                <p className="font-medium text-[#111111] flex items-center gap-1.5">
-                  <Mail className="size-3.5 text-[#6B7280]" /> {customer.email}
+                <p className="font-medium text-[#172126] flex items-center gap-1.5">
+                  <Mail className="size-3.5 text-[#167C86]" /> {customer.email}
                 </p>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                   PHONE NUMBER
                 </span>
-                <p className="font-medium text-[#111111] flex items-center gap-1.5">
-                  <Phone className="size-3.5 text-[#6B7280]" /> {customer.phone}
+                <p className="font-medium text-[#172126] flex items-center gap-1.5">
+                  <Phone className="size-3.5 text-[#167C86]" /> {customer.phone}
                 </p>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
                   ACCOUNT REGISTRATION
                 </span>
-                <p className="font-medium text-[#111111] flex items-center gap-1.5">
-                  <Calendar className="size-3.5 text-[#6B7280]" />{' '}
+                <p className="font-medium text-[#172126] flex items-center gap-1.5">
+                  <Calendar className="size-3.5 text-[#167C86]" />{' '}
                   {customer.joinedAt ? formatDate(customer.joinedAt) : 'N/A'}
                 </p>
               </div>
@@ -347,59 +362,76 @@ export function AdminCustomerDetailPage() {
         {/* OPERATIONAL SIDEBAR COLUMN (32%) */}
         <div className="space-y-6 min-w-0">
           {/* A. ACCOUNT OVERVIEW CARD */}
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
+          <div className="rounded-2xl border border-[#DCE6E9] bg-white p-6 space-y-4 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#167C86] block">
                 ACCOUNT OVERVIEW
               </span>
-              <h3 className="font-serif text-lg font-normal text-[#111111] mt-0.5">
-                Status & Standing
+              <h3 className="font-serif text-lg font-normal text-[#172126] mt-0.5">
+                Status &amp; Standing
               </h3>
             </div>
 
-            <div className="space-y-3 text-xs border-y border-[#E5E7EB] py-4">
+            <div className="space-y-3 text-xs border-y border-[#DCE6E9] py-4">
               <div className="flex items-center justify-between">
-                <span className="text-[#6B7280]">Account Standing</span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800">
+                <span className="text-[#52636B]">Account Standing</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#167C86]/30 bg-[#EDF6F8] px-2.5 py-0.5 text-[10px] font-bold text-[#167C86] uppercase tracking-wider">
                   Active
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#6B7280]">Account Type</span>
-                <span className="font-medium text-[#111111]">Registered Customer</span>
+                <span className="text-[#52636B]">Account Type</span>
+                <span className="font-semibold text-[#172126]">Registered Customer</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#6B7280]">Database Identifier</span>
-                <span className="font-mono text-[10px] bg-[#FAF7F2] border border-[#E5E7EB] px-2 py-0.5 rounded-md font-semibold text-[#111111]">
+                <span className="text-[#52636B]">Database Identifier</span>
+                <span className="font-mono text-[10px] bg-[#FAF7F2] border border-[#DCE6E9] px-2 py-0.5 rounded-md font-semibold text-[#172126]">
                   {customer.id ? customer.id.slice(-8).toUpperCase() : 'USER-ID'}
                 </span>
               </div>
             </div>
 
-            <p className="text-[11px] text-[#9CA3AF] font-light leading-relaxed">
+            <p className="text-[11px] text-[#7A8A91] font-light leading-relaxed">
               Customer identity and transaction summaries are computed dynamically from MongoDB collections.
             </p>
           </div>
 
           {/* B. ENGAGEMENT SUMMARY CARD */}
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
-            <h3 className="font-serif text-lg font-normal text-[#111111] border-b border-[#E5E7EB] pb-3">
-              Account Activity Log
-            </h3>
+          <div className="rounded-2xl border border-[#DCE6E9] bg-white p-6 space-y-4 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#167C86] block">
+                ACCOUNT ACTIVITY LOG
+              </span>
+              <h3 className="font-serif text-lg font-normal text-[#172126] border-b border-[#DCE6E9] pb-3 mt-0.5">
+                Engagement History
+              </h3>
+            </div>
 
             <div className="space-y-3 text-xs">
-              {!customer.activity || customer.activity.length === 0 ? (
-                <p className="text-[#9CA3AF] text-[11px]">No activity logged.</p>
+              {(!customer.activity || customer.activity.length === 0) && orderList.length === 0 ? (
+                <p className="text-[#7A8A91] text-[11px]">No activity logged.</p>
               ) : (
-                customer.activity.map((a, i) => (
-                  <div key={i} className="flex items-start gap-2.5">
-                    <span className="size-1.5 rounded-full bg-[#111111] mt-1.5 shrink-0" />
+                <>
+                  <div className="flex items-start gap-2.5">
+                    <span className="size-1.5 rounded-full bg-[#167C86] mt-1.5 shrink-0" />
                     <div className="min-w-0">
-                      <p className="font-medium text-[#111111] leading-tight">{a.action}</p>
-                      <p className="text-[10px] text-[#9CA3AF] mt-0.5">{timeAgo(a.date)}</p>
+                      <p className="font-semibold text-[#172126] leading-tight">Account Registered</p>
+                      <p className="text-[10px] text-[#7A8A91] mt-0.5">{customer.joinedAt ? formatDate(customer.joinedAt) : 'N/A'}</p>
                     </div>
                   </div>
-                ))
+
+                  {orderList.slice(0, 4).map((a: any, i: number) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <span className="size-1.5 rounded-full bg-[#172126] mt-1.5 shrink-0" />
+                      <div className="min-w-0">
+                        <p className="font-semibold text-[#172126] leading-tight">
+                          Order Placed ({a.orderId || a.id})
+                        </p>
+                        <p className="text-[10px] text-[#7A8A91] mt-0.5">{timeAgo(a.placedAt || a.createdAt)}</p>
+                      </div>
+                    </div>
+                  ))}
+                </>
               )}
             </div>
           </div>

@@ -23,6 +23,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/hooks/useToast'
 import { formatINR, formatDate, cn } from '@/utils'
 import { getProductImage } from '@/utils/productImages'
+import { printInvoiceDocument } from '@/utils/invoiceGenerator'
 import type { Order } from '@/types'
 
 const TIMELINE_STEPS = [
@@ -59,36 +60,36 @@ function getStatusBadgeConfig(status: string) {
     case 'delivered':
       return {
         label: 'Delivered',
-        badgeClass: 'bg-[#ECFDF5] text-[#047857] border-[#059669]/20',
-        dotClass: 'bg-[#059669]',
+        badgeClass: 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30',
+        dotClass: 'bg-[#167C86]',
       }
     case 'confirmed':
     case 'packed':
     case 'shipped':
       return {
         label: status === 'confirmed' ? 'Processing' : status.replace('-', ' '),
-        badgeClass: 'bg-sky-50 text-sky-800 border-sky-200/80',
-        dotClass: 'bg-sky-500',
+        badgeClass: 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30',
+        dotClass: 'bg-[#167C86]',
       }
     case 'pending':
     case 'out-for-delivery':
       return {
         label: status === 'pending' ? 'Pending' : 'Out for Delivery',
-        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
-        dotClass: 'bg-amber-500',
+        badgeClass: 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30',
+        dotClass: 'bg-[#167C86]',
       }
     case 'cancelled':
     case 'refunded':
       return {
         label: status === 'cancelled' ? 'Cancelled' : 'Refunded',
-        badgeClass: 'bg-rose-50 text-rose-800 border-rose-200/80',
-        dotClass: 'bg-rose-500',
+        badgeClass: 'bg-rose-50 text-rose-700 border-rose-200',
+        dotClass: 'bg-rose-600',
       }
     default:
       return {
         label: status,
-        badgeClass: 'bg-[#FAFAFA] text-[#6B7280] border-[#E5E7EB]',
-        dotClass: 'bg-[#9CA3AF]',
+        badgeClass: 'bg-[#FAF7F2] text-[#7A8A91] border-[#DCE6E9]',
+        dotClass: 'bg-[#7A8A91]',
       }
   }
 }
@@ -123,58 +124,9 @@ export function OrdersPage() {
 
   const handleViewInvoice = async (order: Order) => {
     try {
-      toast.info('Generating invoice...', 'Please wait')
+      toast.info('Opening invoice...', 'Please wait')
       await orderService().generateInvoice(order)
-      toast.success('Invoice generated', `Invoice for order ${order.orderId}`)
-      const win = window.open('', '_blank')
-      if (win) {
-        win.document.write(`
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <title>Invoice ${order.orderId} - Bareo Cosmetics</title>
-              <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 40px; color: #111; max-w: 680px; margin: 0 auto; line-height: 1.5; }
-                h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
-                .meta { color: #666; font-size: 14px; margin-bottom: 24px; }
-                table { width: 100%; border-collapse: collapse; margin: 24px 0; }
-                th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
-                th { color: #666; font-weight: 600; text-transform: uppercase; font-size: 12px; }
-                .total { text-align: right; font-size: 18px; font-weight: 700; margin-top: 16px; }
-                .footer { margin-top: 40px; font-size: 12px; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
-              </style>
-            </head>
-            <body>
-              <h1>Bareo Cosmetics — Official Invoice</h1>
-              <p class="meta">Order Ref: <strong>${order.orderId}</strong> &bull; Placed: ${formatDate(order.placedAt)} &bull; Payment: ${order.paymentMethod}</p>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th style="text-align:right;">Subtotal</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${order.items.map((i) => `
-                    <tr>
-                      <td>${i.name}</td>
-                      <td>${i.quantity}</td>
-                      <td>₹${i.price}</td>
-                      <td style="text-align:right;">₹${i.price * i.quantity}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-              <div class="total">Total Paid: ${formatINR(order.total)}</div>
-              <div class="footer">Thank you for choosing Bareo Cosmetics. Science for Everyday Skin.</div>
-              <script>window.print();</script>
-            </body>
-          </html>
-        `)
-        win.document.close()
-      }
+      printInvoiceDocument(order)
     } catch {
       toast.error('Could not generate invoice')
     }
@@ -187,19 +139,22 @@ export function OrdersPage() {
   })
 
   return (
-    <div className="container-page py-8 sm:py-12 space-y-6">
+    <div className="container-page py-8 sm:py-12 max-w-5xl mx-auto space-y-6">
       {/* 1. PAGE HEADER */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#DCE6E9] pb-6">
         <div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] tracking-tight">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+            ORDER HISTORY
+          </span>
+          <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight mt-0.5">
             My Orders
           </h1>
-          <p className="mt-1 text-xs text-[#6B7280] font-light">
-            Track dispatches, view invoices, rate formulations and re-order past favorites.
+          <p className="mt-1 text-xs text-[#52636B] font-medium">
+            Track your formulations, delivery progress and past purchases.
           </p>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full bg-[#FAF7F2] border border-[#E5E7EB] px-3 py-1 text-[11px] text-[#6B7280]">
-          <ShieldCheck className="size-3.5 text-[#059669]" />
+        <div className="flex items-center gap-1.5 rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-3.5 py-1.5 text-[11px] font-medium text-[#172126]">
+          <ShieldCheck className="size-3.5 text-[#167C86]" />
           <span>100% Authentic Formulations</span>
         </div>
       </div>
@@ -221,8 +176,8 @@ export function OrdersPage() {
             className={cn(
               'shrink-0 rounded-xl border px-4 py-2 text-xs font-medium transition-all duration-200 min-h-[36px]',
               filter === t.key
-                ? 'border-[#111111] bg-[#111111] text-white shadow-2xs font-semibold'
-                : 'border-[#E5E7EB] bg-white text-[#6B7280] hover:bg-[#FAFAFA] hover:text-[#111111]'
+                ? 'border-[#172126] bg-[#172126] text-white shadow-2xs font-semibold'
+                : 'border-[#DCE6E9] bg-white text-[#52636B] hover:bg-[#FAF7F2] hover:text-[#172126]'
             )}
           >
             {t.label}
@@ -234,23 +189,23 @@ export function OrdersPage() {
       {isLoading ? (
         <div className="space-y-5">
           {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-60 rounded-2xl bg-[#FAFAFA]" />
+            <Skeleton key={i} className="h-60 rounded-2xl bg-[#FAF7F2]" />
           ))}
         </div>
       ) : !filtered || filtered.length === 0 ? (
         <div className="py-12">
           <EmptyState
-            icon={<PackageSearch className="size-8 text-[#111111]" />}
+            icon={<PackageSearch className="size-8 text-[#167C86]" />}
             title={filter === 'all' ? 'No orders yet' : `No ${filter} orders yet`}
             description={
               filter === 'all'
-                ? "You haven't placed any skincare orders yet."
+                ? "Your saved formulations will appear here once you place your first order."
                 : `Your ${filter} orders will appear here once an order has reached this stage.`
             }
             action={
-              <Button asChild className="rounded-xl bg-[#111111] text-white text-xs px-5 hover:bg-black min-h-[44px]">
+              <Button asChild className="rounded-xl bg-[#172126] text-white text-xs px-6 hover:bg-[#253239] min-h-[44px] border border-[#172126]">
                 <Link to="/shop">
-                  Continue Shopping <ArrowRight className="size-4 ml-1.5" />
+                  Explore Formulations <ArrowRight className="size-4 ml-1.5" />
                 </Link>
               </Button>
             }
@@ -274,34 +229,34 @@ export function OrdersPage() {
             return (
               <div
                 key={order.id}
-                className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-2xs transition-all duration-200 hover:border-[#111111]/30"
+                className="overflow-hidden rounded-2xl border border-[#DCE6E9] bg-white shadow-2xs transition-all duration-200 hover:border-[#172126]/30"
               >
                 {/* 1. ORDER CARD HEADER METADATA BAR */}
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] bg-[#FAF7F2] px-5 py-3.5">
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#DCE6E9] bg-[#FAF7F2] px-5 py-3.5">
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs">
                     <div>
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280] block">
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#7A8A91] block">
                         ORDER ID
                       </span>
-                      <span className="font-mono font-bold text-[#111111] text-xs sm:text-sm">
+                      <span className="font-mono font-bold text-[#172126] text-xs sm:text-sm">
                         {order.orderId}
                       </span>
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280] block">
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#7A8A91] block">
                         ORDER DATE
                       </span>
-                      <span className="font-medium text-[#111111]">
+                      <span className="font-medium text-[#172126]">
                         {formatDate(order.placedAt)}
                       </span>
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280] block">
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#7A8A91] block">
                         TOTAL AMOUNT
                       </span>
-                      <span className="font-serif font-bold text-[#111111] text-xs sm:text-sm whitespace-nowrap">
+                      <span className="font-serif font-bold text-[#172126] text-xs sm:text-sm whitespace-nowrap">
                         {formatINR(order.total)}
                       </span>
                     </div>
@@ -311,7 +266,7 @@ export function OrdersPage() {
                   <div className="flex items-center gap-2">
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider',
+                        'inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 text-[11px] font-semibold uppercase tracking-wider',
                         statusConfig.badgeClass
                       )}
                     >
@@ -326,7 +281,7 @@ export function OrdersPage() {
                   <div className="flex flex-col sm:flex-row items-start justify-between gap-5">
                     {/* Product Image & Title Details */}
                     <div className="flex gap-4 min-w-0 flex-1">
-                      <div className="size-20 sm:size-24 shrink-0 rounded-2xl bg-[#FAFAFA] border border-[#E5E7EB] p-2 flex items-center justify-center overflow-hidden">
+                      <div className="size-20 sm:size-22 shrink-0 rounded-xl bg-[#FAF7F2] border border-[#DCE6E9] p-1.5 flex items-center justify-center overflow-hidden">
                         <img
                           src={leadItemImageUrl || undefined}
                           alt={leadItem?.name || 'Bareo Product'}
@@ -340,23 +295,23 @@ export function OrdersPage() {
                       <div className="space-y-1.5 min-w-0 flex-1">
                         <Link
                           to={`/product/${leadItem?.productId}`}
-                          className="font-serif text-base sm:text-lg font-semibold text-[#111111] hover:underline line-clamp-2 leading-snug"
+                          className="font-serif text-base sm:text-lg font-medium text-[#172126] hover:underline line-clamp-2 leading-snug"
                         >
                           {leadItem?.name || 'Bareo Formulation'}
                         </Link>
 
-                        <div className="flex items-center gap-2 text-xs text-[#6B7280]">
-                          <span className="font-medium text-[#111111]">
+                        <div className="flex items-center gap-2 text-xs text-[#52636B]">
+                          <span className="font-medium text-[#172126]">
                             Qty: {leadItem?.quantity || 1}
                           </span>
                           <span>•</span>
-                          <span className="font-semibold text-[#111111]">
+                          <span className="font-semibold text-[#172126]">
                             {formatINR((leadItem?.price || 0) * (leadItem?.quantity || 1))}
                           </span>
                           {remainingCount > 0 && (
                             <>
                               <span>•</span>
-                              <span className="text-[#047857] font-semibold bg-[#ECFDF5] border border-[#059669]/20 px-2 py-0.5 rounded-md text-[11px]">
+                              <span className="text-[#167C86] font-semibold bg-[#EDF6F8] border border-[#167C86]/20 px-2 py-0.5 rounded-md text-[11px]">
                                 +{remainingCount} more item{remainingCount > 1 ? 's' : ''}
                               </span>
                             </>
@@ -364,19 +319,19 @@ export function OrdersPage() {
                         </div>
 
                         {/* Expected Delivery Accent */}
-                        <div className="pt-1 flex items-center gap-1.5 text-xs text-[#6B7280]">
-                          <Clock className="size-3.5 text-[#059669] shrink-0" />
+                        <div className="pt-1 flex items-center gap-1.5 text-xs text-[#52636B]">
+                          <Clock className="size-3.5 text-[#167C86] shrink-0" />
                           <span>
                             {order.status === 'delivered' ? (
-                              <strong className="text-[#047857] font-semibold">
+                              <strong className="text-[#167C86] font-semibold">
                                 Delivered on {formatDate(order.placedAt)}
                               </strong>
                             ) : isCancelled ? (
-                              <span className="text-[#EF4444] font-medium">Order Cancelled</span>
+                              <span className="text-rose-700 font-medium">Order Cancelled</span>
                             ) : (
                               <span>
                                 Expected delivery:{' '}
-                                <strong className="font-semibold text-[#111111]">
+                                <strong className="font-semibold text-[#172126]">
                                   {order.eta || '3 – 5 business days'}
                                 </strong>
                               </span>
@@ -388,14 +343,14 @@ export function OrdersPage() {
 
                     {/* Multi-item Thumbnail Preview */}
                     {remainingCount > 0 && (
-                      <div className="hidden lg:flex items-center gap-2 border-l border-[#E5E7EB] pl-5 shrink-0">
+                      <div className="hidden lg:flex items-center gap-2 border-l border-[#DCE6E9] pl-5 shrink-0">
                         {order.items.slice(1, 4).map((it, idx) => {
                           const subImg = getProductImage({
                             name: it.name,
                             images: it.image ? [{ id: '1', url: it.image }] : [],
                           })
                           return (
-                            <div key={idx} className="size-12 rounded-xl bg-[#FAFAFA] border border-[#E5E7EB] p-1 flex items-center justify-center overflow-hidden">
+                            <div key={idx} className="size-12 rounded-xl bg-[#FAF7F2] border border-[#DCE6E9] p-1 flex items-center justify-center overflow-hidden">
                               <img
                                 src={subImg || undefined}
                                 alt={it.name}
@@ -414,13 +369,13 @@ export function OrdersPage() {
 
                   {/* 3. INTEGRATED ORDER PROGRESS TRACKER */}
                   {!isCancelled ? (
-                    <div className="border-t border-[#E5E7EB] pt-4 space-y-3">
-                      <div className="flex items-center justify-between text-xs text-[#6B7280]">
-                        <span className="flex items-center gap-1.5 font-medium text-[#111111]">
-                          <Truck className="size-3.5 text-[#059669]" />
-                          <span>Order Progress Tracker</span>
+                    <div className="border-t border-[#DCE6E9] pt-4 space-y-2.5">
+                      <div className="flex items-center justify-between text-xs text-[#7A8A91]">
+                        <span className="flex items-center gap-1.5 font-semibold text-[#172126] uppercase text-[10px] tracking-wider">
+                          <Truck className="size-3.5 text-[#167C86]" />
+                          <span>ORDER PROGRESS</span>
                         </span>
-                        <span className="text-[10px] font-mono text-[#9CA3AF]">
+                        <span className="text-[10px] font-mono text-[#7A8A91]">
                           Step {Math.max(1, currentStepIdx + 1)} of 5
                         </span>
                       </div>
@@ -436,16 +391,18 @@ export function OrdersPage() {
                               <div key={stepItem.key} className="flex flex-col items-center text-center space-y-1.5">
                                 <div
                                   className={cn(
-                                    'flex size-6 items-center justify-center rounded-full transition-all duration-200 font-bold text-xs',
-                                    isCompleted
-                                      ? 'bg-[#111111] text-white shadow-2xs'
-                                      : 'bg-white border border-[#E5E7EB] text-transparent'
+                                    'flex size-5 sm:size-6 items-center justify-center rounded-full transition-all duration-200 text-xs',
+                                    isCurrent
+                                      ? 'bg-[#172126] text-white shadow-2xs font-bold'
+                                      : isCompleted
+                                      ? 'bg-[#EDF6F8] text-[#167C86] border border-[#167C86]/30'
+                                      : 'bg-white border border-[#DCE6E9] text-transparent'
                                   )}
                                 >
                                   {isCompleted ? (
                                     <Check className="size-3 stroke-[2.5]" />
                                   ) : (
-                                    <span className="size-1.5 rounded-full bg-[#D1D5DB]" />
+                                    <span className="size-1.5 rounded-full bg-[#DCE6E9]" />
                                   )}
                                 </div>
 
@@ -453,10 +410,10 @@ export function OrdersPage() {
                                   className={cn(
                                     'text-[10px] font-medium leading-tight',
                                     isCurrent
-                                      ? 'text-[#111111] font-bold'
+                                      ? 'text-[#172126] font-bold'
                                       : isCompleted
-                                      ? 'text-[#374151]'
-                                      : 'text-[#9CA3AF]'
+                                      ? 'text-[#167C86]'
+                                      : 'text-[#7A8A91]'
                                   )}
                                 >
                                   {stepItem.label}
@@ -467,9 +424,9 @@ export function OrdersPage() {
                         </div>
 
                         {/* Connecting Line */}
-                        <div className="absolute top-[20px] left-[10%] right-[10%] h-0.5 bg-[#E5E7EB] -z-0">
+                        <div className="absolute top-[18px] sm:top-[20px] left-[10%] right-[10%] h-0.5 bg-[#DCE6E9] -z-0">
                           <div
-                            className="h-full bg-[#111111] transition-all duration-300 rounded-full"
+                            className="h-full bg-[#167C86] transition-all duration-300 rounded-full"
                             style={{
                               width: `${Math.min(100, Math.max(0, (currentStepIdx / (TIMELINE_STEPS.length - 1)) * 100))}%`,
                             }}
@@ -488,13 +445,13 @@ export function OrdersPage() {
                 </div>
 
                 {/* 4. ACTION BAR */}
-                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E5E7EB] bg-[#FAFAFA] px-5 py-3.5">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#DCE6E9] bg-white px-5 py-3">
                   <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
                     {/* Primary: Track Order */}
                     <Button
                       asChild
                       size="sm"
-                      className="rounded-xl bg-[#111111] text-white text-xs font-semibold px-4 hover:bg-black transition-colors min-h-[36px]"
+                      className="rounded-xl bg-[#172126] text-white text-xs font-semibold px-4 hover:bg-[#253239] transition-colors min-h-[36px] shadow-2xs border border-[#172126]"
                     >
                       <Link to={`/orders/tracking?order=${order.orderId}`}>
                         <Truck className="size-3.5 mr-1.5" /> Track Order
@@ -507,9 +464,9 @@ export function OrdersPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleViewInvoice(order)}
-                      className="rounded-xl border-[#E5E7EB] bg-white text-xs font-medium text-[#111111] hover:bg-[#FAFAFA] transition-colors min-h-[36px]"
+                      className="rounded-xl border-[#DCE6E9] bg-white text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2] transition-colors min-h-[36px]"
                     >
-                      <FileText className="size-3.5 mr-1.5" /> View Invoice
+                      <FileText className="size-3.5 mr-1.5 text-[#167C86]" /> View Invoice
                     </Button>
 
                     {/* Secondary: Buy Again */}
@@ -519,22 +476,18 @@ export function OrdersPage() {
                       size="sm"
                       loading={reorderMutation.isPending}
                       onClick={() => reorderMutation.mutate(order.orderId)}
-                      className="rounded-xl border-[#E5E7EB] bg-white text-xs font-medium text-[#111111] hover:bg-[#FAFAFA] transition-colors min-h-[36px]"
+                      className="rounded-xl border-[#DCE6E9] bg-white text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2] transition-colors min-h-[36px]"
                     >
-                      <RotateCcw className="size-3.5 mr-1.5" /> Buy Again
+                      <RotateCcw className="size-3.5 mr-1.5 text-[#167C86]" /> Buy Again
                     </Button>
 
-                    {/* Tertiary: Need Help */}
-                    <Button
-                      asChild
-                      variant="ghost"
-                      size="sm"
-                      className="rounded-xl text-xs text-[#6B7280] hover:text-[#111111] min-h-[36px]"
+                    {/* Quiet: Need Help */}
+                    <a
+                      href={`mailto:care@bareo.in?subject=Help%20with%20Order%20${order.orderId}`}
+                      className="text-xs font-normal text-[#52636B] hover:text-[#172126] hover:underline flex items-center gap-1 ml-1"
                     >
-                      <a href={`mailto:care@bareo.in?subject=Help%20with%20Order%20${order.orderId}`}>
-                        <HelpCircle className="size-3.5 mr-1" /> Need Help
-                      </a>
-                    </Button>
+                      <HelpCircle className="size-3.5 text-[#7A8A91]" /> Need Help
+                    </a>
                   </div>
 
                   {/* Cancel Order (Only if Pending) */}

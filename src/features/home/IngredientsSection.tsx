@@ -21,12 +21,12 @@ export function IngredientsSection() {
   ]
 
   return (
-    <section className="container-page py-16">
+    <section className="container-page py-16 sm:py-20 border-b border-[#DCE6E9]">
       <div className="space-y-12">
-        <div className="text-center space-y-2 max-w-xl mx-auto">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#6B7280]">The Bareo Standard</span>
-          <h2 className="font-serif text-3xl font-normal text-[#111111] sm:text-4xl">Why Choose Bareo?</h2>
-          <p className="text-sm text-[#6B7280]">Calculated simplicity for your everyday skin and hair routine.</p>
+        <div className="text-center space-y-1.5 max-w-xl mx-auto">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">The Bareo Standard</span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight">Why Choose BAREO?</h2>
+          <p className="text-xs sm:text-sm text-[#52636B] font-normal">Calculated simplicity for your everyday skin and hair routine.</p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -37,13 +37,13 @@ export function IngredientsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="rounded-xl border border-[#E5E7EB] bg-white p-8 shadow-xs flex flex-col gap-4 text-center items-center"
+              className="rounded-2xl border border-[#DCE6E9] bg-white p-8 shadow-2xs flex flex-col gap-4 text-center items-center hover:border-[#167C86]/40 transition-colors"
             >
-              <div className="flex size-12 items-center justify-center rounded-xl bg-[#FAFAFA] border border-[#E5E7EB] text-[#111111]">
+              <div className="flex size-12 items-center justify-center rounded-xl bg-[#EDF6F8] border border-[#DCE6E9] text-[#167C86]">
                 <Icon className="size-6" />
               </div>
-              <h3 className="font-serif text-lg font-semibold text-[#111111]">{title}</h3>
-              <p className="text-sm text-[#6B7280] leading-relaxed font-normal">{description}</p>
+              <h3 className="font-serif text-lg font-normal text-[#172126]">{title}</h3>
+              <p className="text-xs text-[#52636B] leading-relaxed font-normal">{description}</p>
             </motion.div>
           ))}
         </div>

@@ -120,41 +120,38 @@ export function ProductCard({
   if (activeMatchPercent !== null) {
     primaryBadge = {
       label: `${activeMatchPercent}% AI Match`,
-      style: 'bg-[#7C3AED] text-white',
-      icon: <Sparkles className="size-3 text-amber-200" />,
+      style: 'bg-[#EDF6F8] text-[#167C86] border border-[#167C86]/30',
+      icon: <Sparkles className="size-3 text-[#167C86]" />,
     }
   } else if (product.isBestSeller) {
     primaryBadge = {
       label: 'BESTSELLER',
-      style: 'bg-[#FEF3C7] text-[#92400E] border border-amber-300',
+      style: 'bg-[#172126] text-white border border-[#172126]',
     }
   } else if (product.isDoctorRecommended) {
     primaryBadge = {
       label: 'DERM APPROVED',
-      style: 'bg-[#ECFDF5] text-[#047857] border border-[#059669]/20',
+      style: 'bg-[#EDF6F8] text-[#167C86] border border-[#167C86]/30',
     }
   } else if (product.isNew || product.isNewProduct) {
     primaryBadge = {
       label: 'NEW',
-      style: 'bg-[#111111] text-white',
+      style: 'bg-[#172126] text-white',
     }
   } else if (isLowStock) {
     primaryBadge = {
       label: 'LOW STOCK',
-      style: 'bg-amber-100 text-amber-900 border border-amber-300',
+      style: 'bg-[#FEF3C7] text-[#92400E] border border-amber-300',
     }
   }
 
   // Clean customer-facing benefit copy (no internal slugs)
   const benefitText = getCleanBenefitText(product)
 
-  // Skin/hair suitability formatting
-  const suitabilityText =
-    product.skinTypes && product.skinTypes.length > 0
-      ? product.skinTypes.map((st) => st.charAt(0).toUpperCase() + st.slice(1)).slice(0, 2).join(' · ')
-      : product.concerns && product.concerns.length > 0
-        ? `Best for ${product.concerns[0]}`
-        : 'All Skin Types'
+  // Real product category classification or fallback catalogue label
+  const categoryMetaLabel = product.categoryName
+    ? product.categoryName.toUpperCase()
+    : 'SKINCARE'
 
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -179,7 +176,7 @@ export function ProductCard({
       whileHover={prefersReducedMotion ? {} : { y: -3 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-2xs transition-all duration-300 hover:shadow-md hover:border-[#111111]/30 focus-within:ring-2 focus-within:ring-[#111111] h-full justify-between',
+        'group relative flex flex-col overflow-hidden rounded-2xl border border-[#DCE6E9] bg-white shadow-2xs transition-all duration-300 hover:shadow-md hover:border-[#172126]/30 focus-within:ring-2 focus-within:ring-[#167C86] h-full justify-between',
         className
       )}
     >
@@ -196,7 +193,7 @@ export function ProductCard({
             <div className="absolute left-3 top-3 z-10 flex flex-col gap-1 items-start">
               <span
                 className={cn(
-                  'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase shadow-2xs',
+                  'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-bold tracking-wider uppercase shadow-2xs',
                   primaryBadge.style
                 )}
               >
@@ -213,18 +210,18 @@ export function ProductCard({
               onClick={handleWishlist}
               aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
               className={cn(
-                'absolute right-3 top-3 flex size-9 items-center justify-center rounded-full bg-white/90 shadow-2xs backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95 z-10 border border-[#E5E7EB] min-h-[36px] min-w-[36px]',
-                inWishlist ? 'text-[#EF4444]' : 'text-[#6B7280] hover:text-[#111111]'
+                'absolute right-3 top-3 flex size-9 items-center justify-center rounded-full bg-white/90 shadow-2xs backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95 z-10 border border-[#DCE6E9] min-h-[36px] min-w-[36px]',
+                inWishlist ? 'text-[#B85C5C]' : 'text-[#7A8A91] hover:text-[#172126]'
               )}
             >
-              <Heart className={cn('size-4 transition-transform duration-200', inWishlist && 'fill-[#EF4444] text-[#EF4444] scale-110')} />
+              <Heart className={cn('size-4 transition-transform duration-200', inWishlist && 'fill-[#B85C5C] text-[#B85C5C] scale-110')} />
             </button>
           )}
 
           {/* Out of Stock Overlay */}
           {isOutOfStock && (
             <div className="absolute inset-0 flex items-center justify-center bg-white/85 backdrop-blur-xs z-10">
-              <span className="rounded-full bg-[#111111] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
+              <span className="rounded-full bg-[#172126] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
                 Out of Stock
               </span>
             </div>
@@ -234,55 +231,50 @@ export function ProductCard({
         {/* 2. Product Details Stage */}
         <div className="flex flex-1 flex-col justify-between p-4 space-y-2.5">
           <div className="space-y-1.5">
-            {/* Brand Header */}
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF] block">
-              {product.brand || 'BAREO ACTIVE'}
+            {/* Catalogue Micro Label Header */}
+            <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#7A8A91] block">
+              {categoryMetaLabel}
             </span>
 
             {/* Product Title (2 Visual Lines Fixed Minimum Height) */}
-            <h3 className="line-clamp-2 font-serif text-base font-medium leading-snug text-[#111111] transition-colors group-hover:underline min-h-[2.75rem] flex items-center">
+            <h3 className="line-clamp-2 font-serif text-base font-medium leading-snug text-[#172126] transition-colors group-hover:underline min-h-[2.75rem] flex items-center">
               {product.name}
             </h3>
 
             {/* Rating & Reviews */}
-            <div className="flex items-center gap-1.5 pt-0.5 text-xs text-[#4B5563]">
-              <Star className="size-3.5 fill-amber-400 text-amber-400 shrink-0" />
-              <span className="font-semibold text-[#111111]">
+            <div className="flex items-center gap-1.5 pt-0.5 text-xs text-[#52636B]">
+              <Star className="size-3.5 fill-[#167C86] text-[#167C86] shrink-0" />
+              <span className="font-semibold text-[#172126]">
                 {product.rating > 0 ? product.rating.toFixed(1) : '4.8'}
               </span>
-              <span className="text-[#9CA3AF] text-[11px]">
+              <span className="text-[#7A8A91] text-[11px]">
                 ({formatNumber(product.ratingCount > 0 ? product.ratingCount : 124)})
               </span>
             </div>
 
-            {/* Suitability & Clean Benefit Line */}
-            <div className="space-y-0.5 pt-0.5">
-              <p className="text-xs font-medium text-[#111111] truncate">
-                {suitabilityText}
+            {/* Product-Specific Descriptor (Only when meaningful ingredient/benefit data exists) */}
+            {benefitText && (
+              <p className="text-[11px] text-[#7A8A91] font-normal truncate pt-0.5">
+                {benefitText}
               </p>
-              {benefitText && (
-                <p className="text-[11px] text-[#6B7280] font-light truncate">
-                  {benefitText}
-                </p>
-              )}
-            </div>
+            )}
           </div>
 
           {/* 3. Price Hierarchy & Full-Width Add to Cart Footer */}
-          <div className="pt-2.5 border-t border-[#E5E7EB] space-y-2.5">
+          <div className="pt-2.5 border-t border-[#DCE6E9] space-y-2.5">
             <div className="flex items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-2">
-                <span className="font-serif text-lg font-bold text-[#111111] leading-none">
+                <span className="font-serif text-lg font-bold text-[#172126] leading-none">
                   {formatINR(price)}
                 </span>
                 {mrp > price && (
-                  <span className="text-xs text-[#9CA3AF] line-through font-normal">
+                  <span className="text-xs text-[#7A8A91] line-through font-normal">
                     {formatINR(mrp)}
                   </span>
                 )}
               </div>
               {savings > 0 && (
-                <span className="text-[10px] font-semibold text-[#047857] bg-[#ECFDF5] px-2 py-0.5 rounded-md border border-[#059669]/20">
+                <span className="text-[10px] font-semibold text-[#167C86] bg-[#EDF6F8] px-2 py-0.5 rounded-md border border-[#167C86]/20">
                   Save {formatINR(savings)}
                 </span>
               )}
@@ -296,8 +288,8 @@ export function ProductCard({
                 disabled={isOutOfStock}
                 aria-label={`Add ${product.name} to cart`}
                 className={cn(
-                  'w-full flex min-h-[40px] h-10 items-center justify-center gap-2 rounded-xl bg-[#111111] px-4 py-2 text-xs font-semibold text-white shadow-2xs transition-all duration-200 hover:bg-black active:scale-98 disabled:opacity-40 border border-[#111111]',
-                  added && 'bg-[#047857] hover:bg-[#047857] border-[#047857]'
+                  'w-full flex min-h-[40px] h-10 items-center justify-center gap-2 rounded-xl bg-[#172126] px-4 py-2 text-xs font-semibold text-white shadow-2xs transition-all duration-200 hover:bg-[#253239] active:scale-98 disabled:opacity-40 border border-[#172126]',
+                  added && 'bg-[#167C86] hover:bg-[#126872] border-[#167C86]'
                 )}
               >
                 <ShoppingBag className="size-3.5" />

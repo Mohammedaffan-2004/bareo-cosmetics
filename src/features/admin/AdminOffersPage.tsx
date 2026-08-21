@@ -12,6 +12,9 @@ import {
   RefreshCw,
   Tag,
   Copy,
+  Zap,
+  Clock,
+  Ban,
 } from 'lucide-react'
 import { adminService } from '@/services/adminService'
 import { useToast } from '@/hooks/useToast'
@@ -38,23 +41,23 @@ function getCouponStatusBadge(coupon: Coupon) {
   if (!isActive) {
     return {
       label: 'Disabled',
-      className: 'bg-rose-50 text-rose-900 border-rose-200/80',
-      dot: 'bg-rose-500',
+      className: 'bg-[#FAF7F2] text-[#52636B] border-[#DCE6E9]',
+      dot: 'bg-[#7A8A91]',
     }
   }
 
   if (isExpired) {
     return {
       label: 'Expired',
-      className: 'bg-[#FAFAFA] text-[#6B7280] border-[#E5E7EB]',
-      dot: 'bg-[#9CA3AF]',
+      className: 'bg-rose-50 text-rose-900 border-rose-200/80',
+      dot: 'bg-rose-500',
     }
   }
 
   return {
     label: 'Active',
-    className: 'bg-emerald-50 text-emerald-900 border-emerald-200/80',
-    dot: 'bg-emerald-600',
+    className: 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30',
+    dot: 'bg-[#167C86]',
   }
 }
 
@@ -173,11 +176,11 @@ export function AdminOffersPage() {
     },
     onSuccess: (newCoupon) => {
       qc.invalidateQueries({ queryKey: ['admin-coupons'] })
-      toast.success('Coupon created', `${newCoupon.code} is active and ready for checkout.`)
+      toast.success('Promotion Created', `${newCoupon.code} is active and ready for storefront checkout.`)
       closeModal()
     },
     onError: (err: any) => {
-      toast.error('Failed to create coupon', err.message || 'Validation error or duplicate code.')
+      toast.error('Failed to create promotion', err.message || 'Validation error or duplicate code.')
     },
   })
 
@@ -186,7 +189,7 @@ export function AdminOffersPage() {
       adminService().updateCoupon(id, updates),
     onSuccess: (updated) => {
       qc.invalidateQueries({ queryKey: ['admin-coupons'] })
-      toast.success('Coupon updated', `${updated.code} settings saved successfully.`)
+      toast.success('Promotion Updated', `${updated.code} governance settings saved successfully.`)
       closeModal()
     },
     onError: (err: any) => {
@@ -198,7 +201,7 @@ export function AdminOffersPage() {
     mutationFn: (id: string) => adminService().deleteCoupon(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin-coupons'] })
-      toast.info('Coupon deleted', 'Promotional code removed from system.')
+      toast.info('Promotion Deleted', 'Promotional code removed from campaign system.')
       setDeletingId(null)
     },
     onError: (err: any) => {
@@ -212,8 +215,8 @@ export function AdminOffersPage() {
     onSuccess: (_, variables) => {
       qc.invalidateQueries({ queryKey: ['admin-coupons'] })
       toast.success(
-        variables.active ? 'Coupon enabled' : 'Coupon disabled',
-        `Coupon status updated successfully.`
+        variables.active ? 'Promotion Enabled' : 'Promotion Deactivated',
+        `Campaign status updated successfully.`
       )
     },
     onError: (err: any) => {
@@ -327,76 +330,99 @@ export function AdminOffersPage() {
   const previewCode = form.code.trim().toUpperCase() || 'PROMO20'
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* 1. PAGE HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <span className="text-[10px] font-semibold tracking-widest text-[#9CA3AF] uppercase block">
-            PROMOTIONS
+        <div className="space-y-0.5">
+          <span className="text-[10px] font-bold tracking-widest text-[#167C86] uppercase block">
+            PROMOTIONS &amp; COMMERCIALS
           </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] tracking-tight mt-0.5">
-            Offers & Coupons
+          <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126] tracking-tight">
+            Promotions &amp; Commercials
           </h1>
-          <p className="text-xs text-[#6B7280] font-light mt-1">
-            Create and manage customer promotions, discount codes and storefront incentives.
+          <p className="text-xs text-[#52636B] font-light">
+            Commercial governance, discount incentives and storefront promotional controls.
           </p>
         </div>
 
         <Button
           type="button"
           onClick={handleOpenCreate}
-          className="rounded-xl bg-[#111111] text-white text-xs font-semibold px-4 h-10 hover:bg-black shadow-2xs self-start sm:self-auto"
+          className="rounded-xl bg-[#172126] text-white text-xs font-semibold px-4 h-10 hover:bg-[#172126]/90 shadow-2xs self-start sm:self-auto border border-[#172126]"
         >
-          <Plus className="size-4 mr-1.5" /> Create Coupon
+          <Plus className="size-4 mr-1.5" /> Create Promotion
         </Button>
       </div>
 
-      {/* 2. OPERATIONAL KPI METRIC CARDS */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            TOTAL COUPONS
-          </span>
-          <p className="font-mono text-2xl font-bold text-[#111111]">
+      {/* 2. OPERATIONAL KPI METRIC CARDS WITH RESTRAINED CONTEXT ICONS */}
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-4 sm:p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">
+              TOTAL PROMOTIONS
+            </span>
+            <Tag className="size-4 text-[#167C86]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {kpis.total}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Configured promo codes</p>
+          <p className="text-[11px] text-[#52636B] font-light">Configured promotional codes</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2]/60 p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            ACTIVE COUPONS
-          </span>
-          <p className="font-mono text-2xl font-bold text-[#111111]">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 sm:p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">
+              ACTIVE CAMPAIGNS
+            </span>
+            <Zap className="size-4 text-[#167C86]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {kpis.active}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Ready for customer checkout</p>
+          <p className="text-[11px] text-[#52636B] font-light">Currently available at checkout</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            EXPIRING SOON
-          </span>
-          <p className="font-mono text-2xl font-bold text-[#111111]">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-4 sm:p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">EXPIRING SOON</span>
+            <Clock className="size-4 text-[#167C86]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {kpis.expiringSoon}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Expiring within 7 days</p>
+          <p className="text-[11px] text-[#52636B] font-light">Ending within 7 days</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            DISABLED
-          </span>
-          <p className="font-mono text-2xl font-bold text-[#111111]">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-4 sm:p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">
+              DEACTIVATED
+            </span>
+            <Ban className="size-4 text-[#7A8A91]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {kpis.disabled}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Deactivated campaigns</p>
+          <p className="text-[11px] text-[#52636B] font-light">Currently unavailable</p>
         </div>
       </div>
 
-      {/* 3. STATUS FILTER TABS & SEARCH BAR */}
-      <div className="space-y-4">
-        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar border-b border-[#E5E7EB]">
+      {/* 3. SEGMENTED OPERATIONAL FILTER PILLS & SEARCH TOOLBAR */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-[#DCE6E9] bg-white p-3 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+        {/* Search Input */}
+        <div className="relative flex-1 max-w-lg">
+          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#7A8A91]" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search promotion code or description..."
+            className="h-10 w-full rounded-xl border border-[#DCE6E9] bg-[#FAF7F2]/40 pl-10 pr-4 text-xs text-[#172126] placeholder-[#7A8A91] outline-none focus:bg-white focus:border-[#167C86] transition-all"
+          />
+        </div>
+
+        {/* Filter Pills */}
+        <div className="flex flex-wrap items-center gap-1.5">
           {FILTER_TABS.map((tab) => {
             const count = (counts as any)[tab.key] ?? 0
             const isActive = statusFilter === tab.key
@@ -406,17 +432,17 @@ export function AdminOffersPage() {
                 type="button"
                 onClick={() => setStatusFilter(tab.key)}
                 className={cn(
-                  'shrink-0 flex items-center gap-2 rounded-t-xl border-b-2 px-4 py-2.5 text-xs transition-all duration-200 min-h-[40px]',
+                  'rounded-xl px-3 py-1.5 text-xs font-semibold transition-all border flex items-center gap-1.5',
                   isActive
-                    ? 'border-[#111111] bg-white font-semibold text-[#111111]'
-                    : 'border-transparent text-[#6B7280] hover:text-[#111111]'
+                    ? 'bg-[#172126] text-white border-[#172126] shadow-2xs'
+                    : 'bg-white text-[#52636B] border-[#DCE6E9] hover:bg-[#FAF7F2] hover:text-[#172126]'
                 )}
               >
                 <span>{tab.label}</span>
                 <span
                   className={cn(
-                    'rounded-full px-2 py-0.5 text-[10px] font-mono font-medium',
-                    isActive ? 'bg-[#111111] text-white' : 'bg-[#FAFAFA] text-[#6B7280] border border-[#E5E7EB]'
+                    'rounded-md px-1.5 py-0.2 text-[10px] font-mono font-medium',
+                    isActive ? 'bg-[#167C86] text-white' : 'bg-[#FAF7F2] text-[#7A8A91] border border-[#DCE6E9]'
                   )}
                 >
                   {count}
@@ -425,23 +451,18 @@ export function AdminOffersPage() {
             )
           })}
         </div>
-
-        <div className="relative max-w-md">
-          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#9CA3AF]" />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search promo code or description..."
-            className="h-10 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-4 text-xs text-[#111111] placeholder-[#9CA3AF] outline-none focus:border-[#111111] transition-all shadow-2xs"
-          />
-        </div>
       </div>
 
-      {/* 4. COUPONS TABLE / STATES */}
+      {/* 4. PROMOTION REGISTER TABLE & COMPACT BALANCED EMPTY STATE */}
       {loadingCoupons ? (
-        <div className="space-y-3">
+        <div className="overflow-hidden rounded-2xl border border-[#DCE6E9] bg-white p-4 space-y-3 shadow-2xs">
           {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-16 rounded-2xl bg-[#FAFAFA]" />
+            <div key={i} className="flex items-center justify-between gap-4 py-3 border-b border-[#DCE6E9] last:border-0">
+              <Skeleton className="h-6 w-32 rounded-lg bg-[#FAF7F2]" />
+              <Skeleton className="h-5 w-24 rounded-md bg-[#FAF7F2]" />
+              <Skeleton className="h-5 w-20 rounded-md bg-[#FAF7F2]" />
+              <Skeleton className="h-5 w-28 rounded-md bg-[#FAF7F2]" />
+            </div>
           ))}
         </div>
       ) : isError ? (
@@ -460,42 +481,58 @@ export function AdminOffersPage() {
           </Button>
         </div>
       ) : filteredCoupons.length === 0 ? (
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-12 text-center space-y-3">
-          <TicketPercent className="size-8 text-[#9CA3AF] mx-auto" />
-          <p className="font-serif text-base font-semibold text-[#111111]">No coupons found</p>
-          <p className="text-xs text-[#6B7280]">
-            No promotional codes match your current filter parameters.
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-7 sm:p-8 text-center space-y-2.5 max-w-2xl mx-auto shadow-2xs my-4">
+          <TicketPercent className="size-7 text-[#167C86] mx-auto" />
+          <p className="font-serif text-base font-normal text-[#172126]">
+            {coupons && coupons.length === 0 ? 'No promotional codes configured yet.' : 'No promotions match this view'}
           </p>
-          {(search || statusFilter !== 'all') && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setSearch('')
-                setStatusFilter('all')
-              }}
-              className="rounded-xl border-[#E5E7EB] text-xs text-[#111111]"
-            >
-              Reset Filters
-            </Button>
-          )}
+          <p className="text-xs text-[#52636B] font-light leading-relaxed max-w-md mx-auto">
+            {coupons && coupons.length === 0
+              ? 'Create your first promotional code to introduce a controlled customer incentive at storefront checkout.'
+              : 'No promotional codes match your active search or selected segment filter. Try resetting search filters.'}
+          </p>
+          <div className="pt-1">
+            {coupons && coupons.length === 0 ? (
+              <Button
+                type="button"
+                onClick={handleOpenCreate}
+                className="rounded-xl bg-[#172126] text-white text-xs font-semibold px-4 h-9 hover:bg-[#172126]/90 shadow-2xs border border-[#172126]"
+              >
+                <Plus className="size-4 mr-1.5" /> Create Promotion
+              </Button>
+            ) : (
+              (search || statusFilter !== 'all') && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setSearch('')
+                    setStatusFilter('all')
+                  }}
+                  className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2]"
+                >
+                  Reset Search Filters
+                </Button>
+              )
+            )}
+          </div>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-2xs">
+        <div className="overflow-hidden rounded-2xl border border-[#DCE6E9] bg-white shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-xs text-left">
               <thead>
-                <tr className="border-b border-[#E5E7EB] bg-[#FAF7F2] text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
-                  <th className="px-5 py-3.5">Coupon</th>
-                  <th className="px-4 py-3.5">Discount</th>
+                <tr className="border-b border-[#DCE6E9] bg-[#FAF7F2] text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">
+                  <th className="px-5 py-3.5">Promotion</th>
+                  <th className="px-4 py-3.5">Offer</th>
                   <th className="px-4 py-3.5">Minimum Order</th>
                   <th className="px-4 py-3.5">Validity</th>
                   <th className="px-4 py-3.5">Status</th>
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E7EB]">
+              <tbody className="divide-y divide-[#DCE6E9]">
                 {filteredCoupons.map((coupon) => {
                   const badge = getCouponStatusBadge(coupon)
                   const discountLabel =
@@ -503,12 +540,16 @@ export function AdminOffersPage() {
                       ? `${coupon.value}% OFF`
                       : `${formatINR(coupon.value)} FLAT OFF`
 
+                  const expDate = coupon.validTill ? new Date(coupon.validTill) : null
+                  const now = new Date()
+                  const isExpiringSoon = expDate ? expDate > now && expDate.getTime() <= now.getTime() + 7 * 86400000 : false
+
                   return (
-                    <tr key={coupon.id} className="transition-colors hover:bg-[#FAF7F2]/40">
-                      {/* COUPON CODE */}
+                    <tr key={coupon.id} className="transition-colors hover:bg-[#FAF7F2]/60">
+                      {/* PROMOTION CODE */}
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-xs text-[#111111] bg-[#FAF7F2] border border-[#E5E7EB] px-2.5 py-1 rounded-lg">
+                          <span className="font-mono font-bold text-xs text-[#172126] bg-[#FAF7F2] border border-[#DCE6E9] px-2.5 py-1 rounded-lg">
                             {coupon.code}
                           </span>
                           <button
@@ -517,42 +558,47 @@ export function AdminOffersPage() {
                               navigator.clipboard.writeText(coupon.code)
                               toast.success('Copied to clipboard', coupon.code)
                             }}
-                            className="text-[#9CA3AF] hover:text-[#111111] transition-colors p-1"
+                            className="text-[#7A8A91] hover:text-[#167C86] transition-colors p-1"
                             title="Copy Coupon Code"
                           >
                             <Copy className="size-3.5" />
                           </button>
                         </div>
-                        <p className="text-[11px] text-[#6B7280] font-light mt-1 line-clamp-1">
-                          {coupon.description || 'Promotional discount code'}
+                        <p className="text-[11px] text-[#52636B] font-light mt-1 line-clamp-1">
+                          {coupon.description || 'Promotional discount incentive'}
                         </p>
                       </td>
 
-                      {/* DISCOUNT */}
+                      {/* OFFER VALUE */}
                       <td className="px-4 py-4">
-                        <span className="font-semibold text-[#111111] block">
+                        <span className="font-serif font-bold text-sm text-[#172126] block">
                           {discountLabel}
                         </span>
-                        <span className="text-[10px] text-[#9CA3AF]">
-                          {coupon.maxDiscount ? `Cap: ${formatINR(coupon.maxDiscount)}` : 'No max cap'}
+                        <span className="text-[10px] text-[#7A8A91] font-light">
+                          {coupon.maxDiscount ? `Max saving: ${formatINR(coupon.maxDiscount)}` : 'No max discount cap'}
                         </span>
                       </td>
 
-                      {/* MIN ORDER */}
-                      <td className="px-4 py-4 font-mono font-medium text-[#111111]">
-                        {formatINR(coupon.minOrder || 0)}
+                      {/* MINIMUM ORDER */}
+                      <td className="px-4 py-4 font-mono font-semibold text-[#172126]">
+                        {coupon.minOrder ? `${formatINR(coupon.minOrder)} min` : 'No minimum'}
                       </td>
 
                       {/* VALIDITY */}
-                      <td className="px-4 py-4 text-[11px] text-[#6B7280] whitespace-nowrap">
-                        {coupon.validTill ? `Expires ${formatDate(coupon.validTill)}` : 'No Expiry'}
+                      <td className="px-4 py-4 text-[11px] text-[#7A8A91] whitespace-nowrap font-light space-y-1">
+                        <p>{coupon.validTill ? `Until ${formatDate(coupon.validTill)}` : 'No expiry date'}</p>
+                        {isExpiringSoon && (
+                          <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-200/80 px-2 py-0.2 rounded-full">
+                            EXPIRING SOON
+                          </span>
+                        )}
                       </td>
 
                       {/* STATUS */}
                       <td className="px-4 py-4">
                         <span
                           className={cn(
-                            'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide',
+                            'inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider',
                             badge.className
                           )}
                         >
@@ -563,7 +609,7 @@ export function AdminOffersPage() {
 
                       {/* ACTIONS */}
                       <td className="px-5 py-4 text-right">
-                        <div className="flex items-center justify-end gap-2">
+                        <div className="flex items-center justify-end gap-1.5">
                           <Button
                             type="button"
                             variant="ghost"
@@ -574,7 +620,7 @@ export function AdminOffersPage() {
                                 active: coupon.active === false,
                               })
                             }
-                            className="h-8 px-2.5 text-xs text-[#6B7280] hover:text-[#111111]"
+                            className="h-8 px-2.5 text-xs text-[#52636B] hover:text-[#172126] hover:bg-[#FAF7F2]"
                           >
                             <Power className="size-3.5 mr-1" />
                             {coupon.active === false ? 'Enable' : 'Disable'}
@@ -585,7 +631,7 @@ export function AdminOffersPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleOpenEdit(coupon)}
-                            className="h-8 px-2.5 text-xs font-semibold text-[#111111] hover:bg-[#FAF7F2]"
+                            className="h-8 px-2.5 text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2] hover:text-[#167C86]"
                           >
                             <Edit3 className="size-3.5 mr-1" /> Edit
                           </Button>
@@ -610,26 +656,40 @@ export function AdminOffersPage() {
         </div>
       )}
 
-      {/* 5. CREATE / EDIT COUPON BUILDER DIALOG WITH LIVE CUSTOMER PREVIEW */}
+      {/* 5. CREATE / EDIT PROMOTION BUILDER DIALOG WITH REFINED SECTION HIERARCHY */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-3xl rounded-3xl p-6 overflow-y-auto max-h-[90vh]">
-          <DialogHeader className="border-b border-[#E5E7EB] pb-4">
-            <DialogTitle className="font-serif text-2xl font-normal text-[#111111]">
-              {editingCoupon ? `Edit Coupon: ${editingCoupon.code}` : 'Create Promo Code'}
+          <DialogHeader className="border-b border-[#DCE6E9] pb-4">
+            <span className="text-[10px] font-bold tracking-widest text-[#167C86] uppercase block">
+              PROMOTION BUILDER
+            </span>
+            <DialogTitle className="font-serif text-2xl font-normal text-[#172126] mt-0.5">
+              {editingCoupon ? `Edit Promotion: ${editingCoupon.code}` : 'Create Promotion'}
             </DialogTitle>
+            <p className="text-xs text-[#52636B] font-light">
+              Configure a controlled customer incentive for storefront checkout.
+            </p>
           </DialogHeader>
 
           <div className="grid gap-6 lg:grid-cols-[1fr_300px] pt-4 items-start">
             {/* FORM COLUMN */}
-            <form onSubmit={handleSubmit} className="space-y-4 min-w-0">
-              {/* Section 1: Identity */}
+            <form onSubmit={handleSubmit} className="space-y-5 min-w-0">
+              {/* SECTION A: PROMOTION IDENTITY */}
               <div className="space-y-3">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+                    SECTION A
+                  </span>
+                  <h4 className="text-xs font-bold text-[#172126] uppercase tracking-wider mt-0.5">
+                    PROMOTION IDENTITY
+                  </h4>
+                </div>
                 <AppInput
                   label="Coupon Code *"
                   placeholder="e.g. GLOW20"
                   value={form.code}
                   onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
-                  className="h-10 rounded-xl uppercase font-mono font-bold text-xs"
+                  className="h-10 rounded-xl uppercase font-mono font-bold text-xs border-[#DCE6E9] focus:border-[#167C86]"
                 />
 
                 <AppInput
@@ -637,12 +697,20 @@ export function AdminOffersPage() {
                   placeholder="e.g. 20% off on all orders above ₹499"
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  className="h-10 rounded-xl text-xs"
+                  className="h-10 rounded-xl text-xs border-[#DCE6E9] focus:border-[#167C86]"
                 />
               </div>
 
-              {/* Section 2: Discount */}
-              <div className="space-y-3 border-t border-[#E5E7EB] pt-3">
+              {/* SECTION B: DISCOUNT STRUCTURE */}
+              <div className="space-y-3 border-t border-[#DCE6E9] pt-4">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+                    SECTION B
+                  </span>
+                  <h4 className="text-xs font-bold text-[#172126] uppercase tracking-wider mt-0.5">
+                    DISCOUNT STRUCTURE
+                  </h4>
+                </div>
                 <AppSelect
                   label="Discount Type *"
                   value={form.discountType}
@@ -661,22 +729,32 @@ export function AdminOffersPage() {
                     placeholder={form.discountType === 'percent' ? '20' : '150'}
                     value={form.value}
                     onChange={(e) => setForm({ ...form, value: e.target.value })}
-                    className="h-10 rounded-xl text-xs"
+                    className="h-10 rounded-xl text-xs border-[#DCE6E9] focus:border-[#167C86]"
                   />
 
-                  <AppInput
-                    label="Max Cap (₹, Optional)"
-                    type="number"
-                    placeholder="No cap"
-                    value={form.maxDiscount}
-                    onChange={(e) => setForm({ ...form, maxDiscount: e.target.value })}
-                    className="h-10 rounded-xl text-xs"
-                  />
+                  {form.discountType === 'percent' && (
+                    <AppInput
+                      label="Max Cap (₹, Optional)"
+                      type="number"
+                      placeholder="No max cap"
+                      value={form.maxDiscount}
+                      onChange={(e) => setForm({ ...form, maxDiscount: e.target.value })}
+                      className="h-10 rounded-xl text-xs border-[#DCE6E9] focus:border-[#167C86]"
+                    />
+                  )}
                 </div>
               </div>
 
-              {/* Section 3: Eligibility & Expiry */}
-              <div className="space-y-3 border-t border-[#E5E7EB] pt-3">
+              {/* SECTION C: ELIGIBILITY & VALIDITY */}
+              <div className="space-y-3 border-t border-[#DCE6E9] pt-4">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+                    SECTION C
+                  </span>
+                  <h4 className="text-xs font-bold text-[#172126] uppercase tracking-wider mt-0.5">
+                    ELIGIBILITY &amp; VALIDITY
+                  </h4>
+                </div>
                 <div className="grid grid-cols-2 gap-3">
                   <AppInput
                     label="Min Order Amount (₹)"
@@ -684,99 +762,102 @@ export function AdminOffersPage() {
                     placeholder="0"
                     value={form.minOrder}
                     onChange={(e) => setForm({ ...form, minOrder: e.target.value })}
-                    className="h-10 rounded-xl text-xs"
+                    className="h-10 rounded-xl text-xs border-[#DCE6E9] focus:border-[#167C86]"
                   />
 
                   <div>
-                    <label className="text-xs font-semibold text-[#111111] block mb-1.5">
+                    <label className="text-xs font-semibold text-[#172126] block mb-1.5">
                       Expiry Date *
                     </label>
                     <input
                       type="date"
                       value={form.validTill}
                       onChange={(e) => setForm({ ...form, validTill: e.target.value })}
-                      className="h-10 w-full rounded-xl border border-[#E5E7EB] bg-white px-3 text-xs text-[#111111] outline-none focus:border-[#111111] transition-all"
+                      className="h-10 w-full rounded-xl border border-[#DCE6E9] bg-white px-3 text-xs text-[#172126] outline-none focus:border-[#167C86] transition-all"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Section 4: Status */}
-              <div className="pt-2">
-                <label className="flex items-center gap-2 cursor-pointer text-xs text-[#111111] font-semibold">
+              {/* SECTION D: ACTIVATION */}
+              <div className="space-y-2 border-t border-[#DCE6E9] pt-4">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+                  SECTION D
+                </span>
+                <label className="flex items-center gap-2 cursor-pointer text-xs text-[#172126] font-semibold">
                   <input
                     type="checkbox"
                     checked={form.active}
                     onChange={(e) => setForm({ ...form, active: e.target.checked })}
-                    className="size-4 accent-[#111111]"
+                    className="size-4 accent-[#167C86]"
                   />
                   Activate promo code immediately upon creation
                 </label>
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 flex justify-end gap-2 border-t border-[#E5E7EB]">
+              <div className="pt-4 flex justify-end gap-2 border-t border-[#DCE6E9]">
                 <Button
                   type="button"
                   variant="ghost"
                   onClick={closeModal}
-                  className="rounded-xl text-xs"
+                  className="rounded-xl text-xs font-semibold text-[#52636B] hover:text-[#172126] hover:bg-[#FAF7F2]"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={createMutation.isPending || updateMutation.isPending}
-                  className="rounded-xl bg-[#111111] text-white text-xs font-semibold px-6 h-10 hover:bg-black"
+                  className="rounded-xl bg-[#172126] text-white text-xs font-semibold px-6 h-10 hover:bg-[#172126]/90 border border-[#172126]"
                 >
                   {createMutation.isPending || updateMutation.isPending
                     ? 'Saving...'
                     : editingCoupon
-                    ? 'Save Changes'
-                    : 'Create Coupon'}
+                    ? 'Save Promotion'
+                    : 'Create Promotion'}
                 </Button>
               </div>
             </form>
 
             {/* LIVE CUSTOMER CHECKOUT PREVIEW PANEL */}
-            <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2]/80 p-4 space-y-3">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-                CUSTOMER VIEW (CHECKOUT PREVIEW)
+            <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 space-y-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#167C86] block">
+                LIVE CHECKOUT PREVIEW
               </span>
 
-              <div className="rounded-xl border border-[#E5E7EB] bg-white p-3 space-y-2 text-xs shadow-2xs">
-                <div className="flex items-center justify-between text-[#6B7280]">
-                  <span>Have a promo code?</span>
-                  <Tag className="size-3.5 text-[#111111]" />
+              <div className="rounded-xl border border-[#DCE6E9] bg-white p-3 space-y-2.5 text-xs shadow-2xs">
+                <div className="flex items-center justify-between text-[#52636B]">
+                  <span className="font-medium">Have a promo code?</span>
+                  <Tag className="size-3.5 text-[#167C86]" />
                 </div>
 
-                <div className="flex gap-2 pt-1">
-                  <div className="flex-1 h-8 rounded-lg border border-[#E5E7EB] bg-[#FAFAFA] px-2.5 text-[11px] font-mono font-bold text-[#111111] flex items-center">
+                <div className="flex gap-2 pt-0.5">
+                  <div className="flex-1 h-8 rounded-lg border border-[#DCE6E9] bg-[#FAF7F2] px-2.5 text-[11px] font-mono font-bold text-[#172126] flex items-center">
                     {previewCode}
                   </div>
-                  <div className="h-8 rounded-lg bg-[#111111] text-white text-[11px] font-semibold px-3 flex items-center">
+                  <div className="h-8 rounded-lg bg-[#172126] text-white text-[11px] font-semibold px-3 flex items-center">
                     Apply
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#E5E7EB] space-y-1 text-[11px]">
-                  <div className="flex items-center gap-1 text-emerald-800 font-semibold">
-                    <CheckCircle2 className="size-3" />
+                <div className="pt-2 border-t border-[#DCE6E9] space-y-1 text-[11px]">
+                  <div className="flex items-center gap-1 text-[#167C86] font-semibold">
+                    <CheckCircle2 className="size-3 text-[#167C86]" />
                     <span>{previewDiscountText}</span>
                   </div>
-                  <p className="text-[10px] text-[#6B7280] font-light">
+                  <p className="text-[10px] text-[#7A8A91] font-light">
                     Minimum order: {formatINR(Number(form.minOrder) || 0)}
                   </p>
                   {form.maxDiscount && (
-                    <p className="text-[10px] text-[#6B7280] font-light">
+                    <p className="text-[10px] text-[#7A8A91] font-light">
                       Maximum saving: {formatINR(Number(form.maxDiscount))}
                     </p>
                   )}
                 </div>
               </div>
 
-              <p className="text-[10px] text-[#9CA3AF] font-light leading-snug">
-                Visual preview of how customer carts apply this code at checkout.
+              <p className="text-[10px] text-[#7A8A91] font-light leading-snug">
+                Visual preview of how customer carts calculate this code at storefront checkout.
               </p>
             </div>
           </div>
@@ -789,16 +870,16 @@ export function AdminOffersPage() {
         onClose={() => setDeletingId(null)}
         title="Delete Promo Code?"
       >
-        <div className="space-y-4 pt-2 text-xs text-[#6B7280]">
+        <div className="space-y-4 pt-2 text-xs text-[#52636B]">
           <p>
-            Are you sure you want to delete this coupon? Customers will no longer be able to apply it at checkout.
+            Are you sure you want to delete this promotional code? Customers will no longer be able to apply it at checkout.
           </p>
-          <div className="pt-4 flex justify-end gap-2 border-t border-[#E5E7EB]">
+          <div className="pt-4 flex justify-end gap-2 border-t border-[#DCE6E9]">
             <Button
               type="button"
               variant="outline"
               onClick={() => setDeletingId(null)}
-              className="text-xs rounded-xl"
+              className="text-xs rounded-xl border-[#DCE6E9] text-[#172126]"
             >
               Cancel
             </Button>
@@ -808,7 +889,7 @@ export function AdminOffersPage() {
               onClick={() => deletingId && deleteMutation.mutate(deletingId)}
               className="rounded-xl bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700"
             >
-              {deleteMutation.isPending ? 'Deleting...' : 'Delete Coupon'}
+              {deleteMutation.isPending ? 'Deleting...' : 'Delete Promotion'}
             </Button>
           </div>
         </div>
@@ -816,4 +897,3 @@ export function AdminOffersPage() {
     </div>
   )
 }
-

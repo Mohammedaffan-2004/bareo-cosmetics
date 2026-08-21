@@ -9,8 +9,8 @@ interface TestimonialsSectionProps {
 
 export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
   return (
-    <section className="bg-secondary py-12">
-      <div className="container-page">
+    <section className="bg-[#F6FAFB] py-16 sm:py-20 border-b border-[#DCE6E9]">
+      <div className="container-page space-y-10 sm:space-y-12">
         <SectionHeading
           eyebrow="18,000+ happy skin stories"
           title="Loved by real skin"

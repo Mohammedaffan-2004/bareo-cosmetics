@@ -57,19 +57,22 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* Editorial Heading */}
-      <div className="space-y-1.5">
-        <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#111111] tracking-tight">
+      <div className="space-y-1">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+          BAREO MEMBER ACCESS
+        </span>
+        <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] tracking-tight">
           Create your Bareo account.
         </h1>
-        <p className="text-xs text-[#6B7280] font-light leading-relaxed">
-          Enter your details to create a profile.
+        <p className="text-xs text-[#52636B] font-light leading-relaxed">
+          Build your personalized skincare profile and keep your formulations in one place.
         </p>
       </div>
 
       {done && (
-        <div className="rounded-xl border border-[#059669]/30 bg-[#ECFDF5] px-4 py-3 text-xs font-semibold text-[#047857] flex items-center gap-2">
+        <div className="rounded-xl border border-[#167C86]/30 bg-[#EDF6F8] px-4 py-3 text-xs font-semibold text-[#167C86] flex items-center gap-2">
           <Check className="size-4 shrink-0" />
           <span>Account created successfully! Redirecting to store…</span>
         </div>
@@ -82,7 +85,7 @@ export function RegisterPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5 sm:space-y-4">
         <AppInput
           label="Full name *"
           placeholder="Aarav Malhotra"
@@ -132,12 +135,12 @@ export function RegisterPage() {
           {...register('confirm')}
         />
 
-        <div className="pt-1">
-          <label className="flex cursor-pointer items-start gap-2.5 text-xs text-[#374151]">
+        <div className="pt-0.5">
+          <label className="flex cursor-pointer items-start gap-2.5 text-xs text-[#52636B]">
             <Checkbox defaultChecked onCheckedChange={(c) => setValue('terms', !!c)} className="mt-0.5" />
-            <span className="text-[#6B7280] font-light leading-relaxed">
-              I agree to the <a href="#" className="font-semibold text-[#111111] hover:underline">Terms of Service</a> and{' '}
-              <a href="#" className="font-semibold text-[#111111] hover:underline">Privacy Policy</a>
+            <span className="text-[#52636B] font-light leading-relaxed">
+              I agree to the <a href="#" className="font-semibold text-[#172126] hover:text-[#167C86] hover:underline">Terms of Service</a> and{' '}
+              <a href="#" className="font-semibold text-[#172126] hover:text-[#167C86] hover:underline">Privacy Policy</a>
             </span>
           </label>
           {errors.terms && <p className="text-xs font-medium text-rose-600 mt-1">{errors.terms.message}</p>}
@@ -146,17 +149,17 @@ export function RegisterPage() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-12 w-full rounded-xl bg-[#111111] text-white text-xs sm:text-sm font-semibold hover:bg-black transition-all shadow-2xs mt-2"
+          className="h-12 w-full rounded-xl bg-[#172126] text-white text-xs sm:text-sm font-semibold hover:bg-[#253239] transition-all shadow-2xs mt-2 border border-[#172126]"
           loading={isLoading}
         >
-          Create Account
+          Create Account →
         </Button>
       </form>
 
-      <p className="text-center text-xs text-[#6B7280] font-light pt-2">
+      <p className="text-center text-xs text-[#52636B] font-light pt-2">
         Already have an account?{' '}
-        <Link to="/login" className="font-semibold text-[#111111] hover:underline">
-          Sign in
+        <Link to="/login" className="font-semibold text-[#172126] hover:text-[#167C86] hover:underline">
+          Sign in →
         </Link>
       </p>
     </div>

@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { homeService } from '@/services/homeService'
 import { Hero } from './Hero'
-import { TrustStrip } from './TrustStrip'
+import { BrandManifesto } from './BrandManifesto'
 import { ProductRail } from './ProductRail'
 import { ShopByConcern } from './ShopByConcern'
 import { IngredientsSection } from './IngredientsSection'
 import { AiTeaser } from './AiTeaser'
 import { TestimonialsSection } from './TestimonialsSection'
 import { BlogSection } from './BlogSection'
+import { PreFooterStatement } from './PreFooterStatement'
 import { CategorySection } from './CategorySection'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -44,39 +45,42 @@ export function HomePage() {
   }
 
   return (
-    <div className="bg-white text-[#111111]">
+    <div className="bg-[#F6FAFB] text-[#172126] min-h-screen">
       {/* Hero */}
       <Hero banner={data.banners[0]} />
 
-      {/* Trust Strip */}
-      <TrustStrip />
+      {/* 01 — THE PHILOSOPHY */}
+      <BrandManifesto />
 
-      {/* Shop by Category */}
+      {/* 02 — THE FORMULATIONS */}
       <CategorySection categories={data.categories} />
 
-      {/* Best Sellers */}
+      {/* 03 — DERMAL INTELLIGENCE */}
+      <AiTeaser />
+
+      {/* CURATED ROUTINES — Best Sellers */}
       <ProductRail
         eyebrow="Curated Routines"
         title="Best Sellers"
-        subtitle="Our most loved, dermatologist-tested active formulations starting from ₹199."
+        subtitle="Considered formulations for the priorities your skin actually needs."
         products={data.bestSellers.slice(0, 8)}
         viewAllLink="/shop?sort=popular"
       />
 
-      {/* AI Skin Assessment */}
-      <AiTeaser />
+      {/* Why Bareo — Science & Formulations */}
+      <IngredientsSection />
 
       {/* Shop by Concern */}
       <ShopByConcern />
-
-      {/* Why Bareo */}
-      <IngredientsSection />
 
       {/* Customer Reviews */}
       <TestimonialsSection testimonials={data.testimonials} />
 
       {/* Journal */}
       <BlogSection posts={data.blogPosts || data.blogs || []} />
+
+      {/* 10 — PRE-FOOTER BRAND STATEMENT */}
+      <PreFooterStatement />
     </div>
   )
 }

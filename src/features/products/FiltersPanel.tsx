@@ -229,7 +229,7 @@ export function FiltersPanel({
     <div className={cn('space-y-1', className)}>
       {/* 1. Panel Top Action Bar */}
       <div className="pb-3 border-b border-[#E5E7EB] flex items-center justify-between">
-        <h2 className="font-serif text-xs font-semibold tracking-widest uppercase text-[#111111]">
+        <h2 className="font-serif text-xs font-semibold tracking-widest uppercase text-[#172126]">
           FILTERS
         </h2>
         {activeCount > 0 && (

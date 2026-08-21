@@ -427,7 +427,9 @@ export const getAllCustomersAdmin = async (req: AuthenticatedRequest, res: Respo
 
   const formatted = customers.map((c: any) => {
     const userOrders = orders.filter((o: any) => o.userId === c._id.toString())
-    const lifetimeValue = userOrders.reduce((acc: number, curr: any) => acc + (curr.total || 0), 0)
+    // LTV DATA INTEGRITY FIX: Exclude cancelled & refunded orders
+    const validOrders = userOrders.filter((o: any) => o.status !== 'cancelled' && o.status !== 'refunded')
+    const lifetimeValue = validOrders.reduce((acc: number, curr: any) => acc + (curr.total || 0), 0)
     const lastOrder = userOrders.length > 0 && userOrders[0].placedAt ? new Date(userOrders[0].placedAt).toISOString() : undefined
 
     return {
@@ -465,7 +467,9 @@ export const getCustomerByIdAdmin = async (req: AuthenticatedRequest, res: Respo
   const userId = customer._id.toString()
   const orders = await Order.find({ userId }).sort({ placedAt: -1 }).lean()
 
-  const totalSpent = orders.reduce((sum, o) => sum + (o.total || 0), 0)
+  // LTV DATA INTEGRITY FIX: Exclude cancelled & refunded orders
+  const validOrders = orders.filter((o: any) => o.status !== 'cancelled' && o.status !== 'refunded')
+  const totalSpent = validOrders.reduce((sum, o) => sum + (o.total || 0), 0)
   const lastOrderAt = orders.length > 0 ? orders[0].createdAt : null
 
   const result = {

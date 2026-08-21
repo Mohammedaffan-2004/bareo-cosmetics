@@ -331,12 +331,33 @@ export interface Customer {
 
 export interface AiMetric {
   label: string
-  score: number
-  status: 'good' | 'fair' | 'low'
+  score: number | null
+  level?: 'good' | 'fair' | 'low' | 'insufficient-data'
+  evidence?: 'measured' | 'inferred' | 'insufficient-data'
+  status?: 'good' | 'fair' | 'low' | 'measured' | 'inferred' | 'insufficient-data'
+  confidence?: number
+  source?: ('questionnaire' | 'selfie')[]
   detail: string
 }
 
+export interface AiFocusArea {
+  key: string
+  label: string
+  reasoning: string
+}
+
+export interface AiDataQuality {
+  questionnaireScore: number
+  selfieScore: number
+  overallConfidence: number
+  imageQualityReason?: string
+}
+
 export interface AiReport {
+  analysisVersion?: '1.0' | '2.0'
+  primaryFocus?: AiFocusArea
+  secondaryFocus?: AiFocusArea
+  dataQuality?: AiDataQuality
   skinScore: number | null
   confidence?: number
   analysisSource?: 'questionnaire+selfie' | 'questionnaire' | 'selfie' | 'insufficient-data'
@@ -376,7 +397,8 @@ export interface AiConsultation {
   userId?: string
   date: string
   answers: AiConsultationAnswers
-  selfie?: string
+  hasPhotoAnalysis?: boolean
+  dermalMetrics?: Record<string, any> | null
   report: AiReport
   routine: {
     morning: AiRoutineStep

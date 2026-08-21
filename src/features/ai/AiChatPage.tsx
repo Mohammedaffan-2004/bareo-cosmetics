@@ -37,14 +37,19 @@ export function AiChatPage() {
 
   const consultations = useAppSelector((s) => s.ai.consultations)
   const latest = consultations[0]
+  const latestScore = latest?.report?.skinScore
+
+  const welcomeText = latest
+    ? latestScore != null && !isNaN(Number(latestScore))
+      ? `Hi again! Based on your analysis with a ${latestScore}/100 skin score, I can help with follow-up questions. What would you like to know?`
+      : `Hi again! Based on your latest skin assessment, I can help with follow-up questions. What would you like to know?`
+    : 'Hi, I\'m the Bareo skin assistant. Ask me anything about skincare — concerns, ingredients, SPF, routines.'
 
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
     {
       id: 'welcome',
       role: 'assistant',
-      text: latest
-        ? `Hi again! Based on your analysis from ${latest.report.skinScore} skin score, I can help with follow-up questions. What would you like to know?`
-        : 'Hi, I\'m the Bareo skin assistant. Ask me anything about skincare — concerns, ingredients, SPF, routines.',
+      text: welcomeText,
       timestamp: new Date().toISOString(),
     },
   ])
@@ -114,15 +119,29 @@ export function AiChatPage() {
         <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {messages.map((msg) => (
             <ChatBubble key={msg.id} role={msg.role} text={msg.text}>
-              {msg.products && (
+              {msg.products && Array.isArray(msg.products) && (
                 <div className="grid gap-2 pt-1 sm:grid-cols-3">
-                  {msg.products.map((p) => (
-                    <Link key={p.id} to={`/product/${p.slug}`} className="rounded-lg border border-border p-2 transition-colors hover:border-primary/40">
-                      <img src={p.images[0].url} alt="" className="h-14 w-full rounded-md object-cover" />
-                      <p className="mt-1.5 line-clamp-2 text-xs font-medium leading-tight">{p.name}</p>
-                      <p className="mt-0.5 text-xs font-bold text-primary">₹{p.offerPrice}</p>
-                    </Link>
-                  ))}
+                  {msg.products.filter(Boolean).map((p) => {
+                    const imgUrl =
+                      Array.isArray(p.images) && p.images[0]
+                        ? typeof p.images[0] === 'string'
+                          ? p.images[0]
+                          : p.images[0].url || ''
+                        : ''
+                    return (
+                      <Link key={p.id || p.slug} to={`/product/${p.slug || p.id}`} className="rounded-lg border border-border p-2 transition-colors hover:border-primary/40">
+                        {imgUrl ? (
+                          <img src={imgUrl} alt={p.name || ''} className="h-14 w-full rounded-md object-cover" />
+                        ) : (
+                          <div className="h-14 w-full rounded-md bg-secondary/60 flex items-center justify-center text-[10px] text-muted-foreground font-semibold">
+                            BAREO
+                          </div>
+                        )}
+                        <p className="mt-1.5 line-clamp-2 text-xs font-medium leading-tight">{p.name || 'Formulation'}</p>
+                        <p className="mt-0.5 text-xs font-bold text-primary">₹{p.offerPrice || p.mrp || 0}</p>
+                      </Link>
+                    )
+                  })}
                 </div>
               )}
             </ChatBubble>

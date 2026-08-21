@@ -216,42 +216,42 @@ export function ProfilePage() {
   const aiConsultationCount = 2
 
   return (
-    <div className="container-page py-8 sm:py-10 space-y-8 sm:space-y-10">
+    <div className="container-page py-8 sm:py-10 max-w-5xl mx-auto space-y-8 sm:space-y-10">
       {/* 1. EDITORIAL PROFILE HEADER */}
-      <section className="rounded-3xl border border-[#E5E7EB] bg-[#FAF7F2] p-6 sm:p-10 shadow-2xs">
+      <section className="rounded-3xl border border-[#DCE6E9] bg-[#FAF7F2] p-6 sm:p-8 shadow-2xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             {/* Avatar Circle */}
             <div className="relative shrink-0">
-              <div className="flex size-20 sm:size-24 items-center justify-center rounded-full bg-[#111111] text-white font-serif text-2xl sm:text-3xl font-bold shadow-sm ring-4 ring-white">
+              <div className="flex size-18 sm:size-20 items-center justify-center rounded-full bg-[#172126] text-white font-serif text-2xl font-bold shadow-2xs ring-4 ring-white">
                 {initials}
               </div>
             </div>
 
             {/* Profile Credentials & Hierarchy */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2.5">
-                <h1 className="font-serif text-2xl sm:text-3xl font-medium text-[#111111] tracking-tight">
+                <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126] tracking-tight">
                   {user?.name || 'Aarav Malhotra'}
                 </h1>
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#ECFDF5] border border-[#059669]/20 px-2.5 py-0.5 text-[11px] font-semibold text-[#047857]">
-                  <ShieldCheck className="size-3 text-[#047857]" /> Verified Member
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#EDF6F8] border border-[#167C86]/30 px-2.5 py-0.5 text-[11px] font-semibold text-[#167C86]">
+                  <ShieldCheck className="size-3 text-[#167C86]" /> Verified Member
                 </span>
               </div>
 
-              <p className="text-xs text-[#6B7280] font-light flex flex-wrap items-center gap-2">
+              <p className="text-xs text-[#52636B] font-light flex flex-wrap items-center gap-2">
                 <span>{user?.email || 'aarav@bareo.in'}</span>
-                <span className="text-[#9CA3AF]">•</span>
+                <span className="text-[#7A8A91]">•</span>
                 <span>Member since {user?.joinedAt ? formatDate(user.joinedAt) : 'Aug 2026'}</span>
               </p>
 
-              <div className="pt-1 flex flex-wrap gap-2.5 text-xs text-[#374151]">
-                <span className="inline-flex items-center gap-1.5 font-semibold text-[#111111]">
-                  <Award className="size-3.5 text-amber-500" /> Bareo Gold Member · 1,250 Glow Points
+              <div className="pt-1 flex flex-wrap gap-2.5 text-xs text-[#172126]">
+                <span className="inline-flex items-center gap-1.5 font-semibold text-[#172126]">
+                  <Award className="size-3.5 text-[#167C86]" /> BAREO GOLD · 1,250 GLOW POINTS
                 </span>
-                <span className="text-[#9CA3AF]">•</span>
-                <span className="inline-flex items-center gap-1.5 font-medium text-[#374151]">
-                  <Sparkles className="size-3.5 text-[#7C3AED]" /> Combination · Sensitive Skin
+                <span className="text-[#7A8A91]">•</span>
+                <span className="inline-flex items-center gap-1.5 font-medium text-[#52636B]">
+                  <Sparkles className="size-3.5 text-[#167C86]" /> Combination · Sensitive Skin
                 </span>
               </div>
             </div>
@@ -263,7 +263,7 @@ export function ProfilePage() {
               setIsEditingPersonal(true)
             }}
             variant="outline"
-            className="rounded-xl border-[#E5E7EB] bg-white text-xs font-semibold text-[#111111] hover:bg-[#111111] hover:text-white transition-all shadow-2xs self-start md:self-center"
+            className="rounded-xl border-[#DCE6E9] bg-white text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2] transition-all shadow-2xs self-start md:self-center"
           >
             <Edit3 className="size-3.5 mr-1.5" /> Edit Profile
           </Button>
@@ -272,28 +272,28 @@ export function ProfilePage() {
 
       {/* 2. MY BAREO — PRIMARY COMMAND CENTER OVERVIEW */}
       <section className="space-y-4">
-        <div className="border-b border-[#E5E7EB] pb-3 flex items-center justify-between">
-          <h2 className="font-serif text-xl font-normal text-[#111111]">MY BAREO</h2>
-          <span className="text-xs text-[#6B7280] font-light">Account Activity & Overview</span>
+        <div className="border-b border-[#DCE6E9] pb-3 flex items-center justify-between">
+          <h2 className="font-serif text-xl font-normal text-[#172126]">MY BAREO</h2>
+          <span className="text-xs text-[#52636B] font-light">Account Activity &amp; Overview</span>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3">
           {/* My Orders */}
           <Link
             to="/orders"
-            className="group rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-2xs transition-all duration-200 hover:shadow-md hover:border-[#111111]/30 flex flex-col justify-between space-y-4"
+            className="group rounded-2xl border border-[#DCE6E9] bg-white p-5 shadow-2xs transition-all duration-200 hover:border-[#172126]/30 flex flex-col justify-between space-y-4"
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">My Orders</span>
-              <div className="flex size-9 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#7A8A91]">My Orders</span>
+              <div className="flex size-9 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#172126] group-hover:bg-[#172126] group-hover:text-white transition-colors">
                 <Package className="size-4" />
               </div>
             </div>
             <div>
-              <p className="font-serif text-3xl font-bold text-[#111111]">{orderCount}</p>
-              <p className="text-xs text-[#6B7280] font-light mt-1 flex items-center gap-1">
+              <p className="font-serif text-3xl font-bold text-[#172126]">{orderCount}</p>
+              <p className="text-xs text-[#52636B] font-medium mt-1 flex items-center gap-1 group-hover:text-[#172126]">
                 <span>View order history</span>
-                <ChevronRight className="size-3.5 text-[#9CA3AF] group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="size-3.5 text-[#7A8A91] group-hover:translate-x-0.5 transition-transform" />
               </p>
             </div>
           </Link>
@@ -301,19 +301,19 @@ export function ProfilePage() {
           {/* Saved Items */}
           <Link
             to="/wishlist"
-            className="group rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-2xs transition-all duration-200 hover:shadow-md hover:border-[#111111]/30 flex flex-col justify-between space-y-4"
+            className="group rounded-2xl border border-[#DCE6E9] bg-white p-5 shadow-2xs transition-all duration-200 hover:border-[#172126]/30 flex flex-col justify-between space-y-4"
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">Saved Items</span>
-              <div className="flex size-9 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#7A8A91]">Saved Items</span>
+              <div className="flex size-9 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#172126] group-hover:bg-[#172126] group-hover:text-white transition-colors">
                 <Heart className="size-4" />
               </div>
             </div>
             <div>
-              <p className="font-serif text-3xl font-bold text-[#111111]">{wishlistCount}</p>
-              <p className="text-xs text-[#6B7280] font-light mt-1 flex items-center gap-1">
+              <p className="font-serif text-3xl font-bold text-[#172126]">{wishlistCount}</p>
+              <p className="text-xs text-[#52636B] font-medium mt-1 flex items-center gap-1 group-hover:text-[#172126]">
                 <span>View wishlist</span>
-                <ChevronRight className="size-3.5 text-[#9CA3AF] group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="size-3.5 text-[#7A8A91] group-hover:translate-x-0.5 transition-transform" />
               </p>
             </div>
           </Link>
@@ -321,19 +321,19 @@ export function ProfilePage() {
           {/* AI Consultations */}
           <Link
             to="/consultations"
-            className="group rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-2xs transition-all duration-200 hover:shadow-md hover:border-[#7C3AED]/40 flex flex-col justify-between space-y-4"
+            className="group rounded-2xl border border-[#DCE6E9] bg-white p-5 shadow-2xs transition-all duration-200 hover:border-[#167C86]/50 flex flex-col justify-between space-y-4"
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#7C3AED]">AI Consultations</span>
-              <div className="flex size-9 items-center justify-center rounded-xl bg-[#F5F3FF] text-[#7C3AED] group-hover:bg-[#7C3AED] group-hover:text-white transition-colors">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#167C86]">AI Consultations</span>
+              <div className="flex size-9 items-center justify-center rounded-xl bg-[#EDF6F8] text-[#167C86] group-hover:bg-[#167C86] group-hover:text-white transition-colors">
                 <Sparkles className="size-4" />
               </div>
             </div>
             <div>
-              <p className="font-serif text-3xl font-bold text-[#111111]">{aiConsultationCount}</p>
-              <p className="text-xs text-[#6B7280] font-light mt-1 flex items-center gap-1">
+              <p className="font-serif text-3xl font-bold text-[#172126]">{aiConsultationCount}</p>
+              <p className="text-xs text-[#52636B] font-medium mt-1 flex items-center gap-1 group-hover:text-[#167C86]">
                 <span>View skin analysis</span>
-                <ChevronRight className="size-3.5 text-[#9CA3AF] group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="size-3.5 text-[#7A8A91] group-hover:translate-x-0.5 transition-transform" />
               </p>
             </div>
           </Link>
@@ -343,57 +343,57 @@ export function ProfilePage() {
       {/* 3. LOYALTY & LIFETIME SAVINGS STRIP */}
       <section className="grid gap-4 sm:grid-cols-2">
         {/* Glow Points Loyalty Block */}
-        <div className="rounded-3xl border border-[#E5E7EB] bg-[#FAF7F2] p-6 space-y-3 shadow-2xs flex flex-col justify-between">
+        <div className="rounded-3xl border border-[#DCE6E9] bg-[#FAF7F2] p-6 space-y-3 shadow-2xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#111111] flex items-center gap-1.5">
-              <Award className="size-4 text-amber-500" /> BAREO GOLD
+            <span className="text-xs font-bold uppercase tracking-widest text-[#167C86] flex items-center gap-1.5">
+              <Award className="size-4 text-[#167C86]" /> BAREO GOLD
             </span>
-            <span className="text-[11px] font-semibold text-[#047857] bg-[#ECFDF5] px-2.5 py-0.5 rounded-md border border-[#059669]/20">
+            <span className="text-[11px] font-semibold text-[#167C86] bg-[#EDF6F8] px-2.5 py-0.5 rounded-md border border-[#167C86]/30">
               ₹125 store credit value
             </span>
           </div>
 
           <div>
-            <p className="font-serif text-3xl font-bold text-[#111111]">1,250</p>
-            <p className="text-xs font-semibold text-[#6B7280] tracking-wider uppercase mt-0.5">GLOW POINTS</p>
+            <p className="font-serif text-3xl font-bold text-[#172126]">1,250</p>
+            <p className="text-xs font-semibold text-[#7A8A91] tracking-wider uppercase mt-0.5">GLOW POINTS</p>
           </div>
 
-          <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-between text-xs">
-            <span className="text-[#6B7280] font-light">Earn 10 points per ₹100 spent</span>
-            <Link to="/shop" className="font-semibold text-[#111111] hover:underline flex items-center gap-1">
+          <div className="pt-2 border-t border-[#DCE6E9] flex items-center justify-between text-xs">
+            <span className="text-[#52636B] font-light">Earn 10 points per ₹100 spent</span>
+            <Link to="/shop" className="font-semibold text-[#172126] hover:underline flex items-center gap-1">
               Redeem rewards →
             </Link>
           </div>
         </div>
 
         {/* Lifetime Savings Block */}
-        <div className="rounded-3xl border border-[#E5E7EB] bg-white p-6 space-y-3 shadow-2xs flex flex-col justify-between">
+        <div className="rounded-3xl border border-[#DCE6E9] bg-white p-6 space-y-3 shadow-2xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#9CA3AF] flex items-center gap-1.5">
-              <TrendingUp className="size-4 text-[#047857]" /> YOU'VE SAVED
+            <span className="text-xs font-bold uppercase tracking-widest text-[#167C86] flex items-center gap-1.5">
+              <TrendingUp className="size-4 text-[#167C86]" /> YOU'VE SAVED
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">
               TOTAL BENEFIT
             </span>
           </div>
 
           <div>
-            <p className="font-serif text-3xl font-bold text-[#111111]">{formatINR(1480)}</p>
-            <p className="text-xs text-[#6B7280] font-light mt-0.5">with Bareo offers &amp; formulation combos</p>
+            <p className="font-serif text-3xl font-bold text-[#172126]">{formatINR(1480)}</p>
+            <p className="text-xs text-[#52636B] font-light mt-0.5">with Bareo offers &amp; formulation combos</p>
           </div>
 
-          <div className="pt-2 border-t border-[#E5E7EB] text-xs text-[#047857] font-medium flex items-center gap-1.5">
+          <div className="pt-2 border-t border-[#DCE6E9] text-xs text-[#167C86] font-medium flex items-center gap-1.5">
             <Check className="size-3.5" /> Applied automatically at checkout
           </div>
         </div>
       </section>
 
       {/* 4. PROMINENT SKIN PROFILE SECTION */}
-      <section className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 space-y-5 shadow-2xs">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#E5E7EB] pb-4">
+      <section className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-8 space-y-5 shadow-2xs">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE6E9] pb-4">
           <div className="space-y-1">
-            <h2 className="font-serif text-xl font-normal text-[#111111]">YOUR SKIN PROFILE</h2>
-            <p className="text-xs text-[#6B7280] font-light">
+            <h2 className="font-serif text-xl font-normal text-[#172126]">YOUR SKIN PROFILE</h2>
+            <p className="text-xs text-[#52636B] font-light">
               Your active skin traits help Bareo personalize formulation recommendations and AI skin diagnosis.
             </p>
           </div>
@@ -403,49 +403,49 @@ export function ProfilePage() {
               setIsEditingPersonal(true)
             }}
             variant="outline"
-            className="rounded-xl border-[#E5E7EB] text-xs font-semibold shrink-0"
+            className="rounded-xl border-[#DCE6E9] text-xs font-semibold shrink-0 text-[#172126] hover:bg-[#FAF7F2]"
           >
             <Edit3 className="size-3.5 mr-1.5" /> View / Edit Skin Profile
           </Button>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2] p-4 space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Skin Type</span>
-            <p className="font-serif text-base font-medium text-[#111111] capitalize">
+          <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 space-y-1">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Skin Type</span>
+            <p className="font-serif text-base font-medium text-[#172126] capitalize">
               {personalForm.skinType} Skin
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2] p-4 space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Primary Concerns</span>
+          <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 space-y-1">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Primary Concerns</span>
             <div className="flex flex-wrap gap-1.5 pt-0.5">
               {personalForm.selectedConcerns.map((c) => (
-                <span key={c} className="rounded-full bg-white border border-[#E5E7EB] px-2.5 py-0.5 text-[11px] font-medium text-[#111111]">
+                <span key={c} className="rounded-full bg-white border border-[#DCE6E9] px-2.5 py-0.5 text-[11px] font-medium text-[#172126]">
                   {c}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2] p-4 space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Formulation Preferences</span>
-            <p className="text-xs text-[#374151] font-medium pt-1">
+          <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4 space-y-1">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Formulation Preferences</span>
+            <p className="text-xs text-[#52636B] font-medium pt-1">
               Dermatologist Tested · Sulphate-Free · Fragrance-Free
             </p>
           </div>
         </div>
       </section>
 
-      {/* 5. DEDICATED AI SKIN JOURNEY */}
-      <section className="rounded-3xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-6 sm:p-8 space-y-4 shadow-2xs">
+      {/* 5. DEDICATED AI SKIN JOURNEY (Restrained Bareo Treatment) */}
+      <section className="rounded-3xl border border-[#DCE6E9] bg-[#FAF7F2] p-6 sm:p-8 space-y-4 shadow-2xs">
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#7C3AED]">
-            <Sparkles className="size-4" /> YOUR AI SKIN JOURNEY
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#167C86]">
+            <Sparkles className="size-4 text-[#167C86]" /> YOUR AI SKIN JOURNEY
           </div>
           <Link
             to="/skin-analysis"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-[#111111] px-4 py-2 text-xs font-semibold text-white hover:bg-black transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#172126] px-4 py-2 text-xs font-semibold text-white hover:bg-[#253239] border border-[#172126] transition-colors"
           >
             Start New AI Assessment <ArrowRight className="size-3.5" />
           </Link>
@@ -453,10 +453,10 @@ export function ProfilePage() {
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
           <div className="space-y-1 max-w-xl">
-            <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#111111]">
+            <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#172126]">
               Personalized Skincare Intelligence
             </h3>
-            <p className="text-xs text-[#4B5563] font-light leading-relaxed">
+            <p className="text-xs text-[#52636B] font-light leading-relaxed">
               2 AI consultation reports saved in your diagnostic profile. Retake the assessment anytime to track skin score progression over time.
             </p>
           </div>
@@ -464,7 +464,7 @@ export function ProfilePage() {
           <Button
             variant="outline"
             onClick={() => navigate('/consultations')}
-            className="rounded-xl border-[#7C3AED]/30 bg-white text-xs font-semibold text-[#7C3AED] hover:bg-[#7C3AED] hover:text-white shrink-0"
+            className="rounded-xl border-[#DCE6E9] bg-white text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2] shrink-0"
           >
             View Skin Analysis Reports →
           </Button>
@@ -473,7 +473,7 @@ export function ProfilePage() {
 
       {/* 6. ACCOUNT MANAGEMENT TABS (HORIZONTAL NAVIGATION RAIL) */}
       <section className="space-y-6 pt-2">
-        <div className="border-b border-[#E5E7EB] overflow-x-auto no-scrollbar flex gap-4">
+        <div className="border-b border-[#DCE6E9] overflow-x-auto no-scrollbar flex gap-4">
           {[
             { key: 'personal', label: 'Personal Information', icon: User },
             { key: 'addresses', label: 'Saved Addresses', icon: MapPin },
@@ -488,10 +488,10 @@ export function ProfilePage() {
                 type="button"
                 onClick={() => setActiveTab(tab.key as any)}
                 className={cn(
-                  'flex items-center gap-2 border-b-2 px-4 py-3 text-xs font-semibold transition-all shrink-0',
+                  'flex items-center gap-2 border-b-2 px-4 py-3 text-xs transition-all shrink-0',
                   isActive
-                    ? 'border-[#111111] text-[#111111] font-bold'
-                    : 'border-transparent text-[#6B7280] hover:text-[#111111]'
+                    ? 'border-[#172126] text-[#172126] font-bold'
+                    : 'border-transparent text-[#52636B] hover:text-[#172126] font-medium'
                 )}
               >
                 <Icon className="size-4" />
@@ -503,18 +503,18 @@ export function ProfilePage() {
 
         {/* TAB 1: Personal Information */}
         {activeTab === 'personal' && (
-          <div className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 space-y-6 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
+          <div className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-8 space-y-6 shadow-2xs">
+            <div className="flex items-center justify-between border-b border-[#DCE6E9] pb-4">
               <div>
-                <h2 className="font-serif text-xl font-normal text-[#111111]">Personal Information</h2>
-                <p className="text-xs text-[#6B7280] font-light mt-0.5">Manage your personal identity credentials.</p>
+                <h2 className="font-serif text-xl font-normal text-[#172126]">Personal Information</h2>
+                <p className="text-xs text-[#52636B] font-light mt-0.5">Manage your personal identity credentials.</p>
               </div>
               {!isEditingPersonal && (
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setIsEditingPersonal(true)}
-                  className="rounded-xl border-[#E5E7EB] text-xs font-semibold"
+                  className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2]"
                 >
                   <Edit3 className="size-3.5 mr-1.5" /> Edit Details
                 </Button>
@@ -524,33 +524,33 @@ export function ProfilePage() {
             {!isEditingPersonal ? (
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Full Name</span>
-                  <p className="text-sm font-semibold text-[#111111]">{personalForm.fullName}</p>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Full Name</span>
+                  <p className="text-sm font-semibold text-[#172126]">{personalForm.fullName}</p>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Email Address</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Email Address</span>
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-[#111111]">{personalForm.email}</p>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    <p className="text-sm font-semibold text-[#172126]">{personalForm.email}</p>
+                    <span className="text-[10px] font-bold text-[#167C86] bg-[#EDF6F8] px-2 py-0.5 rounded-full border border-[#167C86]/30">
                       Verified ✓
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Mobile Phone</span>
-                  <p className="text-sm font-semibold text-[#111111]">{personalForm.phone}</p>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Mobile Phone</span>
+                  <p className="text-sm font-semibold text-[#172126]">{personalForm.phone}</p>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Gender</span>
-                  <p className="text-sm font-semibold text-[#111111] capitalize">{personalForm.gender}</p>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Gender</span>
+                  <p className="text-sm font-semibold text-[#172126] capitalize">{personalForm.gender}</p>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">Date of Birth</span>
-                  <p className="text-sm font-semibold text-[#111111]">14 August 1996</p>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#7A8A91]">Date of Birth</span>
+                  <p className="text-sm font-semibold text-[#172126]">14 August 1996</p>
                 </div>
               </div>
             ) : (
@@ -563,14 +563,14 @@ export function ProfilePage() {
                   />
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#111111]">Email Address</label>
+                    <label className="text-xs font-semibold text-[#172126]">Email Address</label>
                     <div className="relative">
                       <AppInput
                         value={personalForm.email}
                         disabled
-                        className="bg-[#FAF7F2] pr-20 text-[#6B7280]"
+                        className="bg-[#FAF7F2] pr-20 text-[#52636B]"
                       />
-                      <span className="absolute right-3 top-3 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      <span className="absolute right-3 top-3 text-[10px] font-bold text-[#167C86] bg-[#EDF6F8] px-2 py-0.5 rounded-full border border-[#167C86]/30">
                         Verified ✓
                       </span>
                     </div>
@@ -616,8 +616,8 @@ export function ProfilePage() {
                 </div>
 
                 {/* Skin Concerns Selector */}
-                <div className="space-y-3 pt-4 border-t border-[#E5E7EB]">
-                  <label className="text-xs font-semibold text-[#111111]">Primary Skin Concerns</label>
+                <div className="space-y-3 pt-4 border-t border-[#DCE6E9]">
+                  <label className="text-xs font-semibold text-[#172126]">Primary Skin Concerns</label>
                   <div className="flex flex-wrap gap-2">
                     {SKIN_CONCERNS_LIST.map((concern) => {
                       const isSelected = personalForm.selectedConcerns.includes(concern)
@@ -629,8 +629,8 @@ export function ProfilePage() {
                           className={cn(
                             'rounded-full border px-4 py-1.5 text-xs font-medium transition-all duration-200',
                             isSelected
-                              ? 'border-[#111111] bg-[#111111] text-white shadow-2xs'
-                              : 'border-[#E5E7EB] bg-white text-[#6B7280] hover:border-slate-300 hover:text-[#111111]'
+                              ? 'border-[#172126] bg-[#172126] text-white shadow-2xs'
+                              : 'border-[#DCE6E9] bg-white text-[#52636B] hover:border-[#172126] hover:text-[#172126]'
                           )}
                         >
                           {isSelected ? `✓ ${concern}` : `+ ${concern}`}
@@ -640,7 +640,7 @@ export function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="pt-4 flex justify-end gap-3 border-t border-[#E5E7EB]">
+                <div className="pt-4 flex justify-end gap-3 border-t border-[#DCE6E9]">
                   <Button
                     type="button"
                     variant="outline"
@@ -652,7 +652,7 @@ export function ProfilePage() {
                   <Button
                     type="submit"
                     loading={savingPersonal}
-                    className="rounded-xl bg-[#111111] text-white text-xs font-semibold px-6 h-11 hover:bg-black"
+                    className="rounded-xl bg-[#172126] text-white text-xs font-semibold px-6 h-11 hover:bg-[#253239] border border-[#172126]"
                   >
                     Save Changes
                   </Button>
@@ -664,18 +664,18 @@ export function ProfilePage() {
 
         {/* TAB 2: Saved Addresses */}
         {activeTab === 'addresses' && (
-          <div className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 space-y-6 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
+          <div className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-8 space-y-6 shadow-2xs">
+            <div className="flex items-center justify-between border-b border-[#DCE6E9] pb-4">
               <div>
-                <h2 className="font-serif text-xl font-normal text-[#111111]">Saved Shipping Addresses</h2>
-                <p className="text-xs text-[#6B7280] font-light mt-0.5">Manage delivery addresses for seamless checkout.</p>
+                <h2 className="font-serif text-xl font-normal text-[#172126]">Saved Shipping Addresses</h2>
+                <p className="text-xs text-[#52636B] font-light mt-0.5">Manage delivery addresses for seamless checkout.</p>
               </div>
               <Button
                 onClick={() => {
                   resetAddrForm()
                   setIsAddressModalOpen(true)
                 }}
-                className="rounded-xl bg-[#111111] text-white text-xs font-semibold px-4 h-10 hover:bg-black"
+                className="rounded-xl bg-[#172126] text-white text-xs font-semibold px-4 h-10 hover:bg-[#253239] border border-[#172126]"
               >
                 <Plus className="size-4 mr-1.5" /> Add New Address
               </Button>
@@ -687,7 +687,7 @@ export function ProfilePage() {
                 <div className="h-40 rounded-2xl bg-[#FAF7F2] animate-pulse" />
               </div>
             ) : !addresses || addresses.length === 0 ? (
-              <div className="py-10 text-center text-xs text-[#6B7280]">
+              <div className="py-10 text-center text-xs text-[#52636B]">
                 No saved addresses found. Add a new address above for quick checkout.
               </div>
             ) : (
@@ -697,35 +697,35 @@ export function ProfilePage() {
                     key={addr.id}
                     className={cn(
                       'relative flex flex-col justify-between rounded-2xl border p-5 transition-all space-y-4',
-                      addr.isDefault ? 'border-[#111111] bg-[#FAF7F2] shadow-2xs' : 'border-[#E5E7EB] bg-white hover:border-slate-300'
+                      addr.isDefault ? 'border-[#172126] bg-[#FAF7F2] shadow-2xs' : 'border-[#DCE6E9] bg-white hover:border-[#172126]/40'
                     )}
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="inline-flex items-center rounded-full bg-white border border-[#E5E7EB] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#111111]">
+                        <span className="inline-flex items-center rounded-full bg-white border border-[#DCE6E9] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#172126]">
                           {addr.label}
                         </span>
                         {addr.isDefault && (
-                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                          <span className="text-[10px] font-bold text-[#167C86] bg-[#EDF6F8] px-2 py-0.5 rounded-full border border-[#167C86]/30">
                             Default Address
                           </span>
                         )}
                       </div>
 
-                      <h3 className="font-semibold text-sm text-[#111111]">{addr.fullName}</h3>
-                      <p className="text-xs text-[#6B7280] font-light leading-relaxed">
+                      <h3 className="font-semibold text-sm text-[#172126]">{addr.fullName}</h3>
+                      <p className="text-xs text-[#52636B] font-light leading-relaxed">
                         {addr.line1}{addr.line2 ? `, ${addr.line2}` : ''}<br />
-                        {addr.city}, {addr.state} — <strong className="font-mono text-[#111111]">{addr.pincode}</strong>
+                        {addr.city}, {addr.state} — <strong className="font-mono text-[#172126]">{addr.pincode}</strong>
                       </p>
-                      <p className="text-xs text-[#6B7280] font-light">Phone: {addr.phone}</p>
+                      <p className="text-xs text-[#52636B] font-light">Phone: {addr.phone}</p>
                     </div>
 
-                    <div className="pt-3 border-t border-[#E5E7EB] flex items-center justify-between text-xs">
+                    <div className="pt-3 border-t border-[#DCE6E9] flex items-center justify-between text-xs">
                       {!addr.isDefault && (
                         <button
                           type="button"
                           onClick={() => setDefaultAddressMutation.mutate(addr.id)}
-                          className="font-semibold text-[#111111] hover:underline"
+                          className="font-semibold text-[#172126] hover:underline"
                         >
                           Set as Default
                         </button>
@@ -751,10 +751,10 @@ export function ProfilePage() {
         {activeTab === 'security' && (
           <div className="grid gap-6 lg:grid-cols-12">
             {/* Password Change Form */}
-            <form onSubmit={handleUpdatePassword} className="lg:col-span-7 rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 space-y-6 shadow-2xs">
+            <form onSubmit={handleUpdatePassword} className="lg:col-span-7 rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-8 space-y-6 shadow-2xs">
               <div>
-                <h2 className="font-serif text-xl font-normal text-[#111111]">Account Security</h2>
-                <p className="text-xs text-[#6B7280] font-light mt-0.5">Update your password and authentication settings.</p>
+                <h2 className="font-serif text-xl font-normal text-[#172126]">Account Security</h2>
+                <p className="text-xs text-[#52636B] font-light mt-0.5">Update your password and authentication settings.</p>
               </div>
 
               {/* Field group container with clean spacing */}
@@ -785,12 +785,12 @@ export function ProfilePage() {
               </div>
 
               {/* 2FA Toggle Card with clear breathing room */}
-              <div className="mt-8 mb-6 rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2] p-4.5 flex items-center justify-between gap-4">
+              <div className="mt-8 mb-6 rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-4.5 flex items-center justify-between gap-4">
                 <div className="space-y-0.5">
-                  <p className="text-xs font-semibold text-[#111111] flex items-center gap-1.5">
-                    <Key className="size-3.5 text-emerald-600" /> Two-Factor Authentication (2FA)
+                  <p className="text-xs font-semibold text-[#172126] flex items-center gap-1.5">
+                    <Key className="size-3.5 text-[#167C86]" /> Two-Factor Authentication (2FA)
                   </p>
-                  <p className="text-[11px] text-[#6B7280] font-light">Require a security code on new device sign-ins.</p>
+                  <p className="text-[11px] text-[#52636B] font-light">Require a security code on new device sign-ins.</p>
                 </div>
                 <button
                   type="button"
@@ -800,48 +800,48 @@ export function ProfilePage() {
                   }}
                   className={cn(
                     'h-6 w-11 rounded-full transition-colors relative p-0.5 shrink-0',
-                    twoFactorEnabled ? 'bg-[#111111]' : 'bg-[#D1D5DB]'
+                    twoFactorEnabled ? 'bg-[#172126]' : 'bg-[#DCE6E9]'
                   )}
                 >
                   <span className={cn('block size-5 rounded-full bg-white transition-transform', twoFactorEnabled ? 'translate-x-5' : 'translate-x-0')} />
                 </button>
               </div>
 
-              <Button type="submit" loading={updatingPass} className="w-full h-11 rounded-xl bg-[#111111] text-white text-xs font-semibold hover:bg-black">
+              <Button type="submit" loading={updatingPass} className="w-full h-11 rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239] border border-[#172126]">
                 Update Password
               </Button>
             </form>
 
             {/* Active Devices & Session Log */}
-            <div className="lg:col-span-5 rounded-3xl border border-[#E5E7EB] bg-white p-6 space-y-5 shadow-2xs">
+            <div className="lg:col-span-5 rounded-3xl border border-[#DCE6E9] bg-white p-6 space-y-5 shadow-2xs">
               <div>
-                <h3 className="font-serif text-lg font-normal text-[#111111]">Active Devices &amp; Sessions</h3>
-                <p className="text-xs text-[#6B7280] font-light mt-0.5">Logged-in devices accessing your account.</p>
+                <h3 className="font-serif text-lg font-normal text-[#172126]">Active Devices &amp; Sessions</h3>
+                <p className="text-xs text-[#52636B] font-light mt-0.5">Logged-in devices accessing your account.</p>
               </div>
 
               <div className="space-y-3 text-xs">
                 {/* Current Device */}
-                <div className="rounded-2xl border border-[#111111] bg-[#FAF7F2] p-3.5 space-y-1">
+                <div className="rounded-2xl border border-[#172126] bg-[#FAF7F2] p-3.5 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 font-semibold text-[#111111]">
-                      <Laptop className="size-4 text-[#111111]" /> MacBook Pro 16" (macOS)
+                    <span className="flex items-center gap-1.5 font-semibold text-[#172126]">
+                      <Laptop className="size-4 text-[#172126]" /> MacBook Pro 16" (macOS)
                     </span>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    <span className="text-[10px] font-bold text-[#167C86] bg-[#EDF6F8] px-2 py-0.5 rounded-full border border-[#167C86]/30">
                       Active Now
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#6B7280]">Chrome 128 • Bengaluru, IN</p>
+                  <p className="text-[11px] text-[#52636B]">Chrome 128 • Bengaluru, IN</p>
                 </div>
 
                 {/* Secondary Devices */}
-                <div className="rounded-2xl border border-[#E5E7EB] bg-white p-3.5 space-y-1">
+                <div className="rounded-2xl border border-[#DCE6E9] bg-white p-3.5 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 font-semibold text-[#111111]">
-                      <Smartphone className="size-4 text-[#6B7280]" /> iPhone 15 Pro (iOS)
+                    <span className="flex items-center gap-1.5 font-semibold text-[#172126]">
+                      <Smartphone className="size-4 text-[#7A8A91]" /> iPhone 15 Pro (iOS)
                     </span>
-                    <span className="text-[10px] text-[#9CA3AF]">2 hours ago</span>
+                    <span className="text-[10px] text-[#7A8A91]">2 hours ago</span>
                   </div>
-                  <p className="text-[11px] text-[#6B7280]">Bareo Mobile App • Bengaluru, IN</p>
+                  <p className="text-[11px] text-[#52636B]">Bareo Mobile App • Bengaluru, IN</p>
                 </div>
               </div>
 
@@ -860,49 +860,49 @@ export function ProfilePage() {
 
         {/* TAB 4: Preferences & Danger Zone */}
         {activeTab === 'preferences' && (
-          <div className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 space-y-8 shadow-2xs">
+          <div className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-8 space-y-8 shadow-2xs">
             <div>
-              <h2 className="font-serif text-xl font-normal text-[#111111]">Account Preferences &amp; Settings</h2>
-              <p className="text-xs text-[#6B7280] font-light mt-0.5">Customize your communications, language, and account state.</p>
+              <h2 className="font-serif text-xl font-normal text-[#172126]">Account Preferences &amp; Settings</h2>
+              <p className="text-xs text-[#52636B] font-light mt-0.5">Customize your communications, language, and account state.</p>
             </div>
 
             {/* Notifications */}
-            <div className="space-y-4 pt-2 border-t border-[#E5E7EB]">
-              <h3 className="text-sm font-semibold text-[#111111] flex items-center gap-2">
-                <Bell className="size-4 text-[#111111]" /> Notification Preferences
+            <div className="space-y-4 pt-2 border-t border-[#DCE6E9]">
+              <h3 className="text-sm font-semibold text-[#172126] flex items-center gap-2">
+                <Bell className="size-4 text-[#167C86]" /> Notification Preferences
               </h3>
 
               <div className="space-y-3">
-                <label className="flex items-center justify-between cursor-pointer rounded-2xl border border-[#E5E7EB] p-4 bg-[#FAF7F2]/50 hover:bg-[#FAF7F2]">
+                <label className="flex items-center justify-between cursor-pointer rounded-2xl border border-[#DCE6E9] p-4 bg-[#FAF7F2]/50 hover:bg-[#FAF7F2]">
                   <div>
-                    <p className="text-xs font-semibold text-[#111111]">Order &amp; Shipping Status</p>
-                    <p className="text-[11px] text-[#6B7280] font-light">Real-time dispatch, tracking and delivery updates via Email &amp; SMS.</p>
+                    <p className="text-xs font-semibold text-[#172126]">Order &amp; Shipping Status</p>
+                    <p className="text-[11px] text-[#52636B] font-light">Real-time dispatch, tracking and delivery updates via Email &amp; SMS.</p>
                   </div>
                   <input
                     type="checkbox"
                     checked={notifications.orders}
                     onChange={(e) => setNotifications({ ...notifications, orders: e.target.checked })}
-                    className="size-4 accent-[#111111]"
+                    className="size-4 accent-[#172126]"
                   />
                 </label>
 
-                <label className="flex items-center justify-between cursor-pointer rounded-2xl border border-[#E5E7EB] p-4 bg-[#FAF7F2]/50 hover:bg-[#FAF7F2]">
+                <label className="flex items-center justify-between cursor-pointer rounded-2xl border border-[#DCE6E9] p-4 bg-[#FAF7F2]/50 hover:bg-[#FAF7F2]">
                   <div>
-                    <p className="text-xs font-semibold text-[#111111]">Personalized Skincare Advice</p>
-                    <p className="text-[11px] text-[#6B7280] font-light">AI routine tips, seasonal skincare advice, and ingredient breakdowns.</p>
+                    <p className="text-xs font-semibold text-[#172126]">Personalized Skincare Advice</p>
+                    <p className="text-[11px] text-[#52636B] font-light">AI routine tips, seasonal skincare advice, and ingredient breakdowns.</p>
                   </div>
                   <input
                     type="checkbox"
                     checked={notifications.advice}
                     onChange={(e) => setNotifications({ ...notifications, advice: e.target.checked })}
-                    className="size-4 accent-[#111111]"
+                    className="size-4 accent-[#172126]"
                   />
                 </label>
               </div>
             </div>
 
             {/* Language & Theme */}
-            <div className="grid gap-6 sm:grid-cols-2 pt-2 border-t border-[#E5E7EB]">
+            <div className="grid gap-6 sm:grid-cols-2 pt-2 border-t border-[#DCE6E9]">
               <AppSelect
                 label="Language"
                 value={language}
@@ -964,38 +964,38 @@ export function ProfilePage() {
       </section>
 
       {/* 7. RECENT ACTIVITY TIMELINE */}
-      <section className="rounded-3xl border border-[#E5E7EB] bg-white p-6 sm:p-8 space-y-4 shadow-2xs">
-        <div className="border-b border-[#E5E7EB] pb-3 flex items-center justify-between">
-          <h3 className="font-serif text-xl font-normal text-[#111111]">RECENT ACTIVITY</h3>
-          <span className="text-xs text-[#6B7280] font-light flex items-center gap-1">
-            <Clock className="size-3.5" /> Real Account History
+      <section className="rounded-3xl border border-[#DCE6E9] bg-[#FAF7F2]/30 p-6 sm:p-8 space-y-6 shadow-none">
+        <div className="flex items-center justify-between">
+          <h3 className="font-serif text-lg font-normal text-[#172126]">Recent Activity</h3>
+          <span className="text-[11px] uppercase tracking-widest text-[#52636B] font-semibold flex items-center gap-1.5">
+            <Clock className="size-3.5 text-[#167C86]" /> Account Timeline
           </span>
         </div>
 
-        <div className="space-y-3 pt-1">
-          <div className="flex items-start gap-3.5 text-xs">
-            <div className="flex size-7 items-center justify-center rounded-full bg-[#F5F3FF] text-[#7C3AED] border border-[#7C3AED]/20 shrink-0 mt-0.5">
+        <div className="space-y-6">
+          <div className="flex items-start gap-4 text-xs">
+            <div className="flex size-8 items-center justify-center rounded-full bg-white border border-[#DCE6E9] text-[#167C86] shrink-0">
               <Sparkles className="size-3.5" />
             </div>
-            <div className="space-y-0.5 flex-1">
+            <div className="space-y-0.5 flex-1 pt-1">
               <div className="flex items-center justify-between">
-                <p className="font-semibold text-[#111111]">Completed AI Dermal Skin Assessment</p>
-                <span className="text-[11px] text-[#9CA3AF]">2 days ago</span>
+                <p className="font-semibold text-[#172126]">Completed AI Dermal Skin Assessment</p>
+                <span className="text-[10px] text-[#7A8A91] uppercase tracking-wide">2 days ago</span>
               </div>
-              <p className="text-[#6B7280] font-light">Analyzed erythema and barrier sensitivity profile.</p>
+              <p className="text-[#52636B] font-light leading-relaxed">Analyzed erythema and barrier sensitivity profile.</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3.5 text-xs pt-2 border-t border-[#E5E7EB]">
-            <div className="flex size-7 items-center justify-center rounded-full bg-[#ECFDF5] text-[#047857] border border-[#059669]/20 shrink-0 mt-0.5">
+          <div className="flex items-start gap-4 text-xs">
+            <div className="flex size-8 items-center justify-center rounded-full bg-white border border-[#DCE6E9] text-[#167C86] shrink-0">
               <Package className="size-3.5" />
             </div>
-            <div className="space-y-0.5 flex-1">
+            <div className="space-y-0.5 flex-1 pt-1">
               <div className="flex items-center justify-between">
-                <p className="font-semibold text-[#111111]">Delivered Order #BAR-8942</p>
-                <span className="text-[11px] text-[#9CA3AF]">1 week ago</span>
+                <p className="font-semibold text-[#172126]">Delivered Order #BAR-8942</p>
+                <span className="text-[10px] text-[#7A8A91] uppercase tracking-wide">1 week ago</span>
               </div>
-              <p className="text-[#6B7280] font-light">Bareo Cica Calming Serum delivered to Bengaluru.</p>
+              <p className="text-[#52636B] font-light leading-relaxed">Bareo Cica Calming Serum delivered to Bengaluru.</p>
             </div>
           </div>
         </div>

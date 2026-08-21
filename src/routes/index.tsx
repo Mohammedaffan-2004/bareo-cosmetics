@@ -25,6 +25,7 @@ const ConsultationsPage = lazy(() => import('@/features/ai/ConsultationsPage').t
 const SkinAnalysisPage = lazy(() => import('@/features/ai/SkinAnalysisPage').then((m) => ({ default: m.SkinAnalysisPage })))
 const AiChatPage = lazy(() => import('@/features/ai/AiChatPage').then((m) => ({ default: m.AiChatPage })))
 const BlogPage = lazy(() => import('@/features/home/BlogPage').then((m) => ({ default: m.BlogPage })))
+const BlogPostDetailPage = lazy(() => import('@/features/home/BlogPostDetailPage').then((m) => ({ default: m.BlogPostDetailPage })))
 
 const LoginPage = lazy(() => import('@/features/auth/LoginPage').then((m) => ({ default: m.LoginPage })))
 const RegisterPage = lazy(() => import('@/features/auth/RegisterPage').then((m) => ({ default: m.RegisterPage })))
@@ -72,8 +73,8 @@ export const router = createBrowserRouter([
       { path: 'skin-analysis', element: <Suspense fallback={<PageLoader />}><SkinAnalysisPage /></Suspense> },
       { path: 'skin-analysis/chat', element: <Suspense fallback={<PageLoader />}><AiChatPage /></Suspense> },
       { path: 'blog', element: <Suspense fallback={<PageLoader />}><BlogPage /></Suspense> },
+      { path: 'blog/:slug', element: <Suspense fallback={<PageLoader />}><BlogPostDetailPage /></Suspense> },
       { path: 'journal', element: <Navigate to="/blog" replace /> },
-      { path: 'journal/:slug', element: <Navigate to="/blog" replace /> },
       { path: 'profile', element: <RequireAuth><Suspense fallback={<PageLoader />}><ProfilePage /></Suspense></RequireAuth> },
       {
         path: 'account',

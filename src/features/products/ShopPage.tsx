@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams, useNavigate, Link } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { LayoutGrid, List, SlidersHorizontal, Search, X, Sparkles, ChevronRight } from 'lucide-react'
+import { LayoutGrid, List, SlidersHorizontal, Search, X, Sparkles } from 'lucide-react'
 import type { ProductQuery } from '@/services/productService'
 import { productService } from '@/services/productService'
 import { useDebounce } from '@/hooks/useDebounce'
@@ -107,12 +107,13 @@ export function ShopPage() {
     })
     setSearchInput('')
     const next = new URLSearchParams()
-    if (category) next.set('category', category)
-    if (sort) next.set('sort', sort)
+    if (sort && sort !== 'popular') next.set('sort', sort)
     setSearchParams(next)
   }
 
   const activeFilterCount =
+    (category ? 1 : 0) +
+    (debouncedSearch ? 1 : 0) +
     filters.concern.length +
     filters.skinType.length +
     (filters.productType?.length ?? 0) +
@@ -121,33 +122,67 @@ export function ShopPage() {
     (filters.inStockOnly ? 1 : 0) +
     (filters.price[0] > 0 || filters.price[1] < 4000 ? 1 : 0)
 
-  const formattedCategoryName = category
-    ? category
-        .split('-')
-        .map((w) => w[0].toUpperCase() + w.slice(1))
-        .join(' ')
-    : 'All Formulations'
+  // Dynamic Category Copy & Eyebrow Metadata Mapping
+  const categoryHeroInfo = useMemo(() => {
+    const totalCount = data ? data.total : 0
+    switch (category) {
+      case 'skincare':
+        return {
+          eyebrow: 'SKINCARE / FORMULATION INDEX',
+          title: 'Skincare',
+          description: 'Dermatologist-formulated essentials for hydration, barrier care and everyday protection.',
+          meta: `${totalCount} formulations · Targeted care · Dermatologist-led`,
+        }
+      case 'haircare':
+      case 'hair-care':
+        return {
+          eyebrow: 'HAIR CARE / FORMULATION INDEX',
+          title: 'Hair Care',
+          description: 'Dermatologist-formulated hair and scalp essentials for stronger, healthier-looking hair.',
+          meta: `${totalCount} formulations · Scalp balance · Dermatologist-led`,
+        }
+      case 'bodycare':
+      case 'body-care':
+        return {
+          eyebrow: 'BODY CARE / FORMULATION INDEX',
+          title: 'Body Care',
+          description: 'Targeted body care formulated for hydration, texture, comfort and barrier support.',
+          meta: `${totalCount} formulations · Lipid support · Dermatologist-led`,
+        }
+      case 'babycare':
+      case 'baby-care':
+        return {
+          eyebrow: 'BABY CARE / FORMULATION INDEX',
+          title: 'Baby Care',
+          description: 'Gentle care for delicate skin, every day.',
+          meta: `${totalCount} formulations · Ultra-gentle · Barrier focused`,
+        }
+      default:
+        return {
+          eyebrow: 'BAREO FORMULATION INDEX',
+          title: 'All Formulations',
+          description: 'Explore dermatologist-formulated care for skin, hair, body and baby.',
+          meta: `${totalCount} formulations · Targeted care · Dermatologist-led`,
+        }
+    }
+  }, [category, data])
 
   return (
     <div className="container-page py-6 sm:py-8 space-y-6 sm:space-y-8">
-      {/* 1. SPACIOUS PAGE HERO HEADER (No Duplicate Product Count) */}
-      <header className="rounded-3xl border border-[#E5E7EB] bg-[#FAF7F2] p-6 sm:p-10 space-y-4">
-        <nav className="flex items-center gap-1.5 text-xs text-[#9CA3AF] font-light">
-          <Link to="/" className="hover:text-[#111111] transition-colors">
-            Home
-          </Link>
-          <ChevronRight className="size-3.5" />
-          <span className="text-[#111111] font-normal">{formattedCategoryName}</span>
-        </nav>
-
-        <div className="space-y-1.5 max-w-2xl pt-1">
-          <h1 className="font-serif text-3xl font-normal text-[#111111] sm:text-4xl tracking-tight">
-            {formattedCategoryName}
-          </h1>
-          <p className="text-xs text-[#6B7280] font-light leading-relaxed">
-            Professional dermatologist-formulated skincare and body essentials designed for everyday skin health.
-          </p>
-        </div>
+      {/* 1. COMPACT EDITORIAL CATEGORY HERO (No Duplicate Nav) */}
+      <header className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-5 sm:p-7 space-y-2 shadow-2xs">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+          {categoryHeroInfo.eyebrow}
+        </span>
+        <h1 className="font-serif text-2xl font-normal text-[#172126] sm:text-3xl lg:text-4xl tracking-tight">
+          {categoryHeroInfo.title}
+        </h1>
+        <p className="text-xs sm:text-sm text-[#52636B] font-normal leading-relaxed max-w-2xl">
+          {categoryHeroInfo.description}
+        </p>
+        <p className="text-[11px] font-semibold text-[#7A8A91] pt-1">
+          {categoryHeroInfo.meta}
+        </p>
       </header>
 
       {/* 2. COMPACT AI RECOMMENDATION BANNER */}
@@ -188,8 +223,8 @@ export function ShopPage() {
                 setSearchInput(e.target.value)
                 updateParams({ q: e.target.value || null })
               }}
-              placeholder="Search products..."
-              className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF7F2] py-2 pl-9 pr-8 text-xs text-[#111111] placeholder-[#9CA3AF] focus:border-[#111111] focus:bg-white focus:outline-none"
+              placeholder="Search formulations, ingredients or concerns..."
+              className="w-full rounded-xl border border-[#DCE6E9] bg-[#FAF7F2] py-2 pl-9 pr-8 text-xs text-[#172126] placeholder-[#7A8A91] focus:border-[#172126] focus:bg-white focus:outline-none"
             />
             {searchInput && (
               <button
@@ -198,7 +233,7 @@ export function ShopPage() {
                   setSearchInput('')
                   updateParams({ q: null })
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#111111]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A8A91] hover:text-[#172126]"
               >
                 <X className="size-3.5" />
               </button>
@@ -207,8 +242,8 @@ export function ShopPage() {
         </div>
 
         <div className="flex items-center gap-3 justify-between sm:justify-end">
-          <span className="text-xs font-serif font-semibold text-[#111111] sm:hidden">
-            {data ? formatNumber(data.total) : '0'} products
+          <span className="text-xs font-serif font-semibold text-[#172126] sm:hidden">
+            {data ? formatNumber(data.total) : '0'} formulations
           </span>
 
           <button
@@ -287,8 +322,8 @@ export function ShopPage() {
           {activeFilterCount > 0 && (
             <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2]/80 shadow-2xs">
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <span className="font-serif text-sm font-semibold text-[#111111] pr-2">
-                  {data ? `${data.total} products` : '0 products'}
+                <span className="font-serif text-sm font-semibold text-[#172126] pr-2">
+                  {data ? `${data.total} formulations` : '0 formulations'}
                 </span>
 
                 {filters.concern.map((c) => (
@@ -402,9 +437,9 @@ export function ShopPage() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="text-xs font-semibold text-rose-600 hover:underline shrink-0 ml-auto"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#DCE6E9] bg-white px-3.5 py-1 text-xs font-semibold text-[#167C86] hover:bg-[#EDF6F8] hover:text-[#172126] transition-colors cursor-pointer shadow-2xs shrink-0 ml-auto"
               >
-                Clear all
+                Clear all <X className="size-3 text-[#167C86]" />
               </button>
             </div>
           )}
@@ -455,17 +490,19 @@ export function ShopPage() {
             onChange={(p) => setFilters((f) => ({ ...f, ...p }))}
             onReset={resetFilters}
           />
-          <div className="pt-4 border-t border-[#E5E7EB] flex items-center gap-3">
-            <Button
-              variant="outline"
-              onClick={resetFilters}
-              className="flex-1 rounded-xl text-xs font-medium border-[#E5E7EB]"
-            >
-              Clear all
-            </Button>
+          <div className="pt-4 border-t border-[#DCE6E9] flex items-center gap-3">
+            {activeFilterCount > 0 && (
+              <Button
+                variant="outline"
+                onClick={resetFilters}
+                className="flex-1 rounded-xl text-xs font-semibold border-[#DCE6E9] bg-white text-[#167C86] hover:bg-[#EDF6F8] h-11"
+              >
+                Clear all ({activeFilterCount})
+              </Button>
+            )}
             <Button
               onClick={() => setMobileFilters(false)}
-              className="flex-1 rounded-xl bg-[#111111] text-white text-xs font-semibold hover:bg-black"
+              className="flex-1 rounded-xl bg-[#172126] text-white text-xs font-semibold hover:bg-[#253239] h-11"
             >
               Apply Filters {data ? `(${data.total})` : ''}
             </Button>

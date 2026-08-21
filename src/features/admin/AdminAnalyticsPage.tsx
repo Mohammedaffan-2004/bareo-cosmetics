@@ -1,37 +1,157 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
 } from 'recharts'
 import {
   Download,
-  Calendar,
   AlertCircle,
   RefreshCw,
   Tag,
+  TrendingUp,
+  ShoppingBag,
+  Users,
+  BarChart2,
+  ArrowRight,
 } from 'lucide-react'
 import { adminService } from '@/services/adminService'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { formatINR, formatCompact, cn } from '@/utils'
+import { formatINR, formatCompact } from '@/utils'
 import type { RealAnalyticsPayload } from '@/types'
 
-function getStatusBadge(status: string) {
-  switch (status.toLowerCase()) {
-    case 'delivered':
-      return 'bg-emerald-50 text-emerald-900 border-emerald-200/80'
-    case 'shipped':
-      return 'bg-sky-50 text-sky-900 border-sky-200/80'
-    case 'confirmed':
-      return 'bg-amber-50 text-amber-900 border-amber-200/80'
-    case 'cancelled':
-      return 'bg-rose-50 text-rose-900 border-rose-200/80'
-    default:
-      return 'bg-[#FAFAFA] text-[#6B7280] border-[#E5E7EB]'
-  }
+// ─── Status config ─────────────────────────────────────────────────────────
+const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
+  confirmed:  { label: 'Confirmed',  color: '#167C86' },
+  processing: { label: 'Processing', color: '#52636B' },
+  shipped:    { label: 'Shipped',    color: '#172126' },
+  delivered:  { label: 'Delivered',  color: '#2D6A4F' },
+  cancelled:  { label: 'Cancelled',  color: '#7A8A91' },
 }
+const getStatusCfg = (s: string) =>
+  STATUS_CONFIG[s.toLowerCase()] ?? { label: s, color: '#7A8A91' }
+
+// ─── Range options ─────────────────────────────────────────────────────────
+const RANGE_OPTIONS = [
+  { value: '30d',            label: 'Last 30 days' },
+  { value: '7d',             label: 'Last 7 days' },
+  { value: 'today',          label: 'Today' },
+  { value: 'yesterday',      label: 'Yesterday' },
+  { value: 'this_month',     label: 'This month' },
+  { value: 'previous_month', label: 'Previous month' },
+  { value: 'this_year',      label: 'This year' },
+  { value: 'custom',         label: 'Custom range' },
+]
+
+// ─── Date formatter — strips ISO noise, produces "22 Jul 2026" ────────────
+const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
+function fmtDateStr(raw: string): string {
+  if (!raw) return raw
+  // Handle ISO strings like 2026-07-22T00:00:00.000Z  or  2026-07-22
+  const d = new Date(raw)
+  if (isNaN(d.getTime())) return raw
+  return `${d.getDate()} ${MONTH_ABBR[d.getMonth()]} ${d.getFullYear()}`
+}
+
+function fmtDateWindow(start: string, end: string): string {
+  const s = new Date(start)
+  const e = new Date(end)
+  if (isNaN(s.getTime()) || isNaN(e.getTime())) return `${start} — ${end}`
+  // Same year — compress
+  if (s.getFullYear() === e.getFullYear()) {
+    return `${s.getDate()} ${MONTH_ABBR[s.getMonth()]} — ${e.getDate()} ${MONTH_ABBR[e.getMonth()]} ${e.getFullYear()}`
+  }
+  return `${fmtDateStr(start)} — ${fmtDateStr(end)}`
+}
+
+// ─── Custom BAREO Revenue Tooltip ─────────────────────────────────────────
+interface RevTooltipProps {
+  active?: boolean
+  payload?: { value: number; name: string }[]
+  label?: string
+}
+function RevTooltip({ active, payload, label }: RevTooltipProps) {
+  if (!active || !payload?.length) return null
+  const rev = payload.find((p) => p.name === 'revenue')
+  return (
+    <div
+      style={{
+        background: '#fff',
+        border: '1px solid #DCE6E9',
+        borderRadius: 8,
+        padding: '10px 14px',
+        boxShadow: '0 4px 16px rgba(23,33,38,0.07)',
+        minWidth: 140,
+      }}
+    >
+      {label && (
+        <p style={{ fontSize: 10, color: '#7A8A91', fontFamily: 'monospace', marginBottom: 6 }}>
+          {label}
+        </p>
+      )}
+      {rev !== undefined && (
+        <div>
+          <span style={{ fontSize: 9, color: '#7A8A91', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+            Revenue
+          </span>
+          <span style={{ fontSize: 14, color: '#172126', fontFamily: 'Georgia, serif', fontWeight: 600 }}>
+            {formatINR(rev.value || 0)}
+          </span>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ─── Order bar tooltip ─────────────────────────────────────────────────────
+interface OrdTooltipProps {
+  active?: boolean
+  payload?: { value: number; name: string }[]
+  label?: string
+}
+function OrdTooltip({ active, payload, label }: OrdTooltipProps) {
+  if (!active || !payload?.length) return null
+  return (
+    <div
+      style={{
+        background: '#fff',
+        border: '1px solid #DCE6E9',
+        borderRadius: 8,
+        padding: '10px 14px',
+        boxShadow: '0 4px 16px rgba(23,33,38,0.07)',
+        minWidth: 130,
+      }}
+    >
+      {label && (
+        <p style={{ fontSize: 10, color: '#7A8A91', fontFamily: 'monospace', marginBottom: 6 }}>
+          {label}
+        </p>
+      )}
+      {payload.map((p) => (
+        <div key={p.name} style={{ marginTop: 3 }}>
+          <span style={{ fontSize: 9, color: '#7A8A91', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+            {p.name === 'orders' ? 'Valid' : 'Cancelled'}
+          </span>
+          <span style={{ fontSize: 13, color: '#172126', fontFamily: 'monospace', fontWeight: 600 }}>
+            {p.value}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 export function AdminAnalyticsPage() {
   const [range, setRange] = useState<string>('30d')
@@ -45,23 +165,15 @@ export function AdminAnalyticsPage() {
       : {}),
   }
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery<RealAnalyticsPayload>({
+  const { data, isLoading, isError, error, refetch } = useQuery<RealAnalyticsPayload>({
     queryKey: ['admin-analytics-data', queryParams],
     queryFn: () => adminService().getAnalytics(queryParams),
   })
 
-  // Export Real Data CSV Function
+  // ── Export CSV ─────────────────────────────────────────────────────────
   const exportCsv = () => {
     if (!data) return
-    const rows = (data.revenueTrend || []).map(
-      (r) => `${r.date},${r.revenue || 0}`
-    )
+    const rows = (data.revenueTrend || []).map((r) => `${r.date},${r.revenue || 0}`)
     const csv = ['Date,Revenue(INR)', ...rows].join('\n')
     const blob = new Blob([csv], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)
@@ -72,104 +184,195 @@ export function AdminAnalyticsPage() {
     URL.revokeObjectURL(url)
   }
 
-  // 1. LOADING STATE
+  // ── Peak revenue day ───────────────────────────────────────────────────
+  const peakRevDay = useMemo(() => {
+    if (!data?.revenueTrend?.length) return null
+    return data.revenueTrend.reduce((best, pt) =>
+      (pt.revenue ?? 0) > (best.revenue ?? 0) ? pt : best
+    )
+  }, [data?.revenueTrend])
+
+  // ── Peak share of period ───────────────────────────────────────────────
+  const peakSharePct = useMemo(() => {
+    if (!peakRevDay || !data?.summary?.rangeRevenue) return null
+    const total = data.summary.rangeRevenue
+    if (total <= 0) return null
+    return Math.round(((peakRevDay.revenue ?? 0) / total) * 100)
+  }, [peakRevDay, data?.summary?.rangeRevenue])
+
+  // ── Cancelled all-zero check (suppress legend if no cancellations) ────
+  const hasCancelled = useMemo(() => {
+    if (!data?.orderTrend) return false
+    return data.orderTrend.some((p) => (p.cancelled ?? 0) > 0)
+  }, [data?.orderTrend])
+
+  // ── Commerce signals ───────────────────────────────────────────────────
+  const signals = useMemo(() => {
+    if (!data) return []
+    const out: { label: string; value: string }[] = []
+    const { summary, topProducts, orderTrend } = data
+
+    if (topProducts.length > 0) {
+      out.push({ label: 'Top Formulation', value: topProducts[0].name })
+    }
+    if (peakRevDay?.date && (peakRevDay.revenue ?? 0) > 0) {
+      out.push({ label: 'Peak Revenue Day', value: fmtDateStr(peakRevDay.date) })
+    }
+    if ((summary.rangeOrders ?? 0) > 0) {
+      out.push({ label: 'Valid Orders', value: String(summary.rangeOrders ?? 0) })
+    }
+    if ((summary.newCustomers ?? 0) > 0) {
+      out.push({ label: 'New Customers', value: String(summary.newCustomers ?? 0) })
+    }
+    const totalCancelled = orderTrend.reduce((s, p) => s + (p.cancelled ?? 0), 0)
+    if (totalCancelled > 0) {
+      out.push({ label: 'Cancelled Orders', value: String(totalCancelled) })
+    }
+    return out
+  }, [data, peakRevDay])
+
+  // ── Period summary sentence ────────────────────────────────────────────
+  const periodSummary = useMemo(() => {
+    if (!data) return null
+    const { rangeOrders, rangeRevenue } = data.summary
+    if (!rangeOrders || !rangeRevenue) return null
+    return `${rangeOrders} valid order${rangeOrders !== 1 ? 's' : ''} generated ${formatINR(rangeRevenue)} in revenue across the selected period.`
+  }, [data])
+
+  // ── LOADING STATE ──────────────────────────────────────────────────────
   if (isLoading) {
     return (
-      <div className="space-y-8">
+      <div className="space-y-5 pb-12">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <Skeleton className="h-12 w-64 rounded-xl bg-[#FAFAFA]" />
-          <Skeleton className="h-10 w-48 rounded-xl bg-[#FAFAFA]" />
+          <div className="space-y-2">
+            <Skeleton className="h-2.5 w-28 rounded" style={{ background: '#EDF6F8' }} />
+            <Skeleton className="h-8 w-64 rounded-xl" style={{ background: '#EDF6F8' }} />
+            <Skeleton className="h-2.5 w-80 rounded" style={{ background: '#EDF6F8' }} />
+          </div>
+          <div className="flex gap-2">
+            <Skeleton className="h-9 w-36 rounded-xl" style={{ background: '#EDF6F8' }} />
+            <Skeleton className="h-9 w-28 rounded-xl" style={{ background: '#EDF6F8' }} />
+          </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Skeleton className="h-10 w-full rounded-xl" style={{ background: '#EDF6F8' }} />
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-28 rounded-2xl bg-[#FAFAFA]" />
+            <Skeleton key={i} className="h-24 rounded-xl" style={{ background: '#EDF6F8' }} />
           ))}
         </div>
-        <Skeleton className="h-80 rounded-2xl bg-[#FAFAFA]" />
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Skeleton className="h-72 rounded-2xl bg-[#FAFAFA]" />
-          <Skeleton className="h-72 rounded-2xl bg-[#FAFAFA]" />
+        <Skeleton className="h-72 rounded-2xl" style={{ background: '#EDF6F8' }} />
+        <div className="grid gap-5 lg:grid-cols-2">
+          <Skeleton className="h-64 rounded-2xl" style={{ background: '#EDF6F8' }} />
+          <Skeleton className="h-64 rounded-2xl" style={{ background: '#EDF6F8' }} />
+        </div>
+        <Skeleton className="h-48 rounded-2xl" style={{ background: '#EDF6F8' }} />
+        <div className="grid gap-5 lg:grid-cols-2">
+          <Skeleton className="h-52 rounded-2xl" style={{ background: '#EDF6F8' }} />
+          <Skeleton className="h-52 rounded-2xl" style={{ background: '#EDF6F8' }} />
         </div>
       </div>
     )
   }
 
-  // 2. ERROR STATE
+  // ── ERROR STATE ────────────────────────────────────────────────────────
   if (isError || !data) {
     return (
-      <div className="rounded-2xl border border-rose-200 bg-rose-50/60 p-12 text-center space-y-4 max-w-lg mx-auto my-12">
-        <AlertCircle className="size-10 text-rose-600 mx-auto" />
+      <div
+        className="rounded-2xl border p-12 text-center space-y-4 max-w-lg mx-auto my-12"
+        style={{ borderColor: '#DCE6E9', background: '#FAF7F2' }}
+      >
+        <AlertCircle className="size-7 mx-auto" style={{ color: '#167C86' }} />
         <div>
-          <p className="font-serif text-lg font-semibold text-rose-900">Unable to load analytics</p>
-          <p className="text-xs text-rose-700 font-light mt-1">
-            {(error as Error)?.message || 'Failed to connect to analytics server.'}
+          <p className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+            Analytics Unavailable
+          </p>
+          <p className="text-xs font-light mt-1" style={{ color: '#52636B' }}>
+            {(error as Error)?.message || 'Commerce intelligence could not be loaded right now.'}
           </p>
         </div>
         <Button
           type="button"
           onClick={() => refetch()}
-          className="rounded-xl bg-rose-900 text-white text-xs px-5 h-10 hover:bg-rose-950"
+          className="rounded-xl text-xs px-5 h-9"
+          style={{ background: '#172126', color: '#fff' }}
         >
-          <RefreshCw className="size-3.5 mr-1.5" /> Retry Analytics Request
+          <RefreshCw className="size-3.5 mr-1.5" /> Retry
         </Button>
       </div>
     )
   }
 
   const { summary, revenueTrend, orderTrend, orderStatus, topProducts, customerTrend, promotions } = data
-
   const totalStatusCount = orderStatus.reduce((acc, curr) => acc + curr.count, 0)
 
+  // ─────────────────────────────────────────────────────────────────────
+
   return (
-    <div className="space-y-8">
-      {/* 1. HEADER & CONTROLS */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div className="space-y-5 pb-12">
+
+      {/* ── 01  PAGE HEADER + CONTROLS ─────────────────────────────────── */}
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <div>
-          <span className="text-[10px] font-semibold tracking-widest text-[#9CA3AF] uppercase block">
-            ANALYTICS
+          <span
+            className="text-[10px] font-semibold tracking-widest uppercase block mb-0.5"
+            style={{ color: '#167C86' }}
+          >
+            COMMERCE INTELLIGENCE
           </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] tracking-tight mt-0.5">
+          <h1
+            className="font-serif text-2xl sm:text-3xl font-normal tracking-tight"
+            style={{ color: '#172126' }}
+          >
             Commerce Intelligence
           </h1>
-          <p className="text-xs text-[#6B7280] font-light mt-1">
-            Understand sales, customer acquisition and formulation performance over time.
+          <p className="text-xs font-light mt-1 max-w-lg" style={{ color: '#52636B' }}>
+            Understand revenue, demand, customer acquisition and formulation performance over time.
           </p>
         </div>
 
-        {/* TIME PERIOD SELECTOR & ACTIONS */}
-        <div className="flex flex-wrap items-center gap-2.5">
-          <div className="inline-flex items-center gap-2 rounded-xl border border-[#E5E7EB] bg-white px-3 py-1.5 shadow-2xs">
-            <Calendar className="size-3.5 text-[#111111]" />
+        {/* Control cluster */}
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          {/* Analysis window selector */}
+          <div
+            className="inline-flex items-center gap-2 rounded-xl border px-3 h-9"
+            style={{ borderColor: '#DCE6E9', background: '#fff' }}
+          >
+            <span
+              className="text-[9px] font-semibold tracking-widest uppercase shrink-0"
+              style={{ color: '#7A8A91' }}
+            >
+              WINDOW
+            </span>
             <select
               value={range}
               onChange={(e) => setRange(e.target.value)}
-              className="bg-transparent text-xs font-medium text-[#111111] focus:outline-hidden cursor-pointer"
+              className="bg-transparent text-xs font-medium focus:outline-hidden cursor-pointer"
+              style={{ color: '#172126' }}
             >
-              <option value="30d">Last 30 days</option>
-              <option value="7d">Last 7 days</option>
-              <option value="today">Today</option>
-              <option value="yesterday">Yesterday</option>
-              <option value="this_month">This month</option>
-              <option value="previous_month">Previous month</option>
-              <option value="this_year">This year</option>
-              <option value="custom">Custom Range</option>
+              {RANGE_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
 
           {range === 'custom' && (
-            <div className="flex items-center gap-1.5 text-xs">
+            <div className="flex items-center gap-1.5">
               <input
                 type="date"
                 value={startDateInput}
                 onChange={(e) => setStartDateInput(e.target.value)}
-                className="rounded-xl border border-[#E5E7EB] bg-white px-2.5 py-1 text-xs font-mono"
+                className="rounded-xl border px-2.5 py-1.5 text-xs font-mono"
+                style={{ borderColor: '#DCE6E9', background: '#fff', color: '#172126' }}
               />
-              <span className="text-[#9CA3AF]">to</span>
+              <span style={{ color: '#7A8A91', fontSize: 11 }}>→</span>
               <input
                 type="date"
                 value={endDateInput}
                 onChange={(e) => setEndDateInput(e.target.value)}
-                className="rounded-xl border border-[#E5E7EB] bg-white px-2.5 py-1 text-xs font-mono"
+                className="rounded-xl border px-2.5 py-1.5 text-xs font-mono"
+                style={{ borderColor: '#DCE6E9', background: '#fff', color: '#172126' }}
               />
             </div>
           )}
@@ -178,253 +381,473 @@ export function AdminAnalyticsPage() {
             type="button"
             variant="outline"
             onClick={exportCsv}
-            className="rounded-xl border-[#E5E7EB] bg-white text-[#111111] text-xs h-9 px-3.5 font-medium hover:bg-[#FAF7F2]"
+            className="rounded-xl text-xs h-9 px-3.5 font-medium transition-colors"
+            style={{ borderColor: '#DCE6E9', background: '#fff', color: '#172126' }}
           >
-            <Download className="size-3.5 mr-1.5 text-[#111111]" /> Export CSV
+            <Download className="size-3.5 mr-1.5" style={{ color: '#167C86' }} />
+            Export Report
           </Button>
         </div>
       </div>
 
-      {/* 2. 4 EXECUTIVE KPI CARDS */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* REVENUE */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            REVENUE
+      {/* ── 02  PERFORMANCE BRIEF ──────────────────────────────────────── */}
+      <div
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border px-5 py-2.5"
+        style={{ borderColor: '#DCE6E9', background: '#FAF7F2' }}
+      >
+        <div>
+          <span
+            className="text-[9px] font-semibold tracking-widest uppercase block"
+            style={{ color: '#7A8A91' }}
+          >
+            PERFORMANCE BRIEF
           </span>
-          <p className="font-serif text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight">
+          <p className="text-[11px] font-light mt-0.5" style={{ color: '#52636B' }}>
+            Commerce activity across the selected period.
+          </p>
+        </div>
+        <div className="sm:text-right">
+          <span
+            className="text-[9px] font-semibold tracking-widest uppercase block"
+            style={{ color: '#7A8A91' }}
+          >
+            DATA WINDOW
+          </span>
+          <p className="font-mono text-[11px] font-semibold mt-0.5" style={{ color: '#172126' }}>
+            {data.range.start && data.range.end
+              ? fmtDateWindow(data.range.start, data.range.end)
+              : data.range.label}
+          </p>
+        </div>
+      </div>
+
+      {/* ── 03  EXECUTIVE KPIs ─────────────────────────────────────────── */}
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {/* REVENUE — hero emphasis */}
+        <div
+          className="rounded-xl border p-4 space-y-1.5"
+          style={{ borderColor: '#DCE6E9', background: '#FAF7F2' }}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[9px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+              REVENUE
+            </span>
+            <TrendingUp className="size-3.5" style={{ color: '#167C86' }} />
+          </div>
+          <p className="font-serif text-2xl sm:text-3xl font-normal tracking-tight" style={{ color: '#172126' }}>
             {formatINR(summary.rangeRevenue ?? 0)}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light pt-1">
+          <p className="text-[10px] font-light" style={{ color: '#52636B' }}>
             Paid orders in {data.range.label}
           </p>
         </div>
 
         {/* ORDERS */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            ORDERS
-          </span>
-          <p className="font-mono text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight">
+        <div
+          className="rounded-xl border p-4 space-y-1.5"
+          style={{ borderColor: '#DCE6E9', background: '#fff' }}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[9px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+              ORDERS
+            </span>
+            <ShoppingBag className="size-3.5" style={{ color: '#DCE6E9' }} />
+          </div>
+          <p className="font-mono text-2xl sm:text-3xl font-semibold tracking-tight" style={{ color: '#172126' }}>
             {(summary.rangeOrders ?? 0).toLocaleString()}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light pt-1">
+          <p className="text-[10px] font-light" style={{ color: '#52636B' }}>
             Valid orders in {data.range.label}
           </p>
         </div>
 
-        {/* AVERAGE ORDER VALUE */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            AVERAGE ORDER VALUE
-          </span>
-          <p className="font-serif text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight">
+        {/* AOV */}
+        <div
+          className="rounded-xl border p-4 space-y-1.5"
+          style={{ borderColor: '#DCE6E9', background: '#fff' }}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[9px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+              AVG. ORDER VALUE
+            </span>
+            <BarChart2 className="size-3.5" style={{ color: '#DCE6E9' }} />
+          </div>
+          <p className="font-serif text-2xl sm:text-3xl font-normal tracking-tight" style={{ color: '#172126' }}>
             {formatINR(summary.rangeAov ?? 0)}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light pt-1">Per valid order</p>
+          <p className="text-[10px] font-light" style={{ color: '#52636B' }}>Per valid order</p>
         </div>
 
         {/* NEW CUSTOMERS */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            NEW CUSTOMERS
-          </span>
-          <p className="font-mono text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight">
+        <div
+          className="rounded-xl border p-4 space-y-1.5"
+          style={{ borderColor: '#DCE6E9', background: '#fff' }}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[9px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+              NEW CUSTOMERS
+            </span>
+            <Users className="size-3.5" style={{ color: '#DCE6E9' }} />
+          </div>
+          <p className="font-mono text-2xl sm:text-3xl font-semibold tracking-tight" style={{ color: '#172126' }}>
             {(summary.newCustomers ?? 0).toLocaleString()}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light pt-1">
+          <p className="text-[10px] font-light" style={{ color: '#52636B' }}>
             Signed up in {data.range.label}
           </p>
         </div>
       </div>
 
-      {/* 3. REVENUE PERFORMANCE CENTERPIECE CHART */}
-      <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
-        <div>
-          <h3 className="font-serif text-lg font-normal text-[#111111]">Revenue Performance</h3>
-          <p className="text-[11px] text-[#6B7280] font-light">
-            Daily gross revenue from paid non-cancelled orders ({data.range.label})
-          </p>
-        </div>
-
-        {revenueTrend.length === 0 ? (
-          <div className="py-16 text-center text-xs text-[#6B7280] font-light">
-            No commerce revenue recorded in this period.
-          </div>
-        ) : (
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={revenueTrend} margin={{ left: -8, right: 8, top: 8 }}>
-              <defs>
-                <linearGradient id="bareoRevGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#111111" stopOpacity={0.2} />
-                  <stop offset="100%" stopColor="#111111" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" vertical={false} />
-              <XAxis
-                dataKey="date"
-                tick={{ fontSize: 10, fill: '#9CA3AF' }}
-                stroke="#E5E7EB"
-              />
-              <YAxis
-                tick={{ fontSize: 10, fill: '#9CA3AF' }}
-                stroke="#E5E7EB"
-                tickFormatter={(v) => `₹${formatCompact(v || 0)}`}
-              />
-              <Tooltip
-                formatter={(v: number) => [`₹${(v || 0).toLocaleString()}`, 'Revenue']}
-                contentStyle={{
-                  borderRadius: 12,
-                  border: '1px solid #E5E7EB',
-                  backgroundColor: '#ffffff',
-                  fontSize: 12,
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="revenue"
-                stroke="#111111"
-                strokeWidth={2}
-                fill="url(#bareoRevGrad)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        )}
-      </div>
-
-      {/* 4. ORDER PERFORMANCE GRID (VOLUME & STATUS) */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* DAILY ORDER VOLUME BAR CHART */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
+      {/* ── 04  REVENUE PERFORMANCE HERO ───────────────────────────────── */}
+      <div className="rounded-xl border overflow-hidden" style={{ borderColor: '#DCE6E9' }}>
+        {/* Header */}
+        <div
+          className="px-5 py-3.5 border-b flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+          style={{ borderColor: '#DCE6E9', background: '#fff' }}
+        >
           <div>
-            <h3 className="font-serif text-lg font-normal text-[#111111]">Order Volume</h3>
-            <p className="text-[11px] text-[#6B7280] font-light">
-              Valid orders vs cancellations ({data.range.label})
+            <h2 className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+              Revenue Performance
+            </h2>
+            <p className="text-[10px] font-light mt-0.5" style={{ color: '#7A8A91' }}>
+              Daily paid revenue from valid non-cancelled orders
             </p>
           </div>
+          {(summary.rangeRevenue ?? 0) > 0 && (
+            <div className="sm:text-right shrink-0">
+              <span className="text-[9px] font-semibold tracking-widest uppercase block" style={{ color: '#7A8A91' }}>
+                PERIOD TOTAL
+              </span>
+              <p className="font-serif text-lg font-semibold" style={{ color: '#172126' }}>
+                {formatINR(summary.rangeRevenue ?? 0)}
+              </p>
+            </div>
+          )}
+        </div>
 
-          {orderTrend.length === 0 ? (
-            <div className="py-16 text-center text-xs text-[#6B7280] font-light">
-              No orders recorded in this period.
+        {/* Chart */}
+        <div className="px-1 pt-4 pb-2 bg-white">
+          {revenueTrend.length === 0 ? (
+            <div className="py-10 text-center space-y-1.5">
+              <TrendingUp className="size-6 mx-auto" style={{ color: '#DCE6E9' }} />
+              <p className="text-[10px] font-semibold tracking-widest uppercase" style={{ color: '#7A8A91' }}>
+                NO REVENUE ACTIVITY
+              </p>
+              <p className="text-[11px] font-light" style={{ color: '#7A8A91' }}>
+                No valid paid orders were recorded during this period.
+              </p>
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height={260}>
-              <BarChart data={orderTrend} margin={{ left: -8, right: 8, top: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" vertical={false} />
-                <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#9CA3AF' }} stroke="#E5E7EB" />
-                <YAxis tick={{ fontSize: 10, fill: '#9CA3AF' }} stroke="#E5E7EB" />
-                <Tooltip
-                  contentStyle={{ borderRadius: 12, border: '1px solid #E5E7EB', fontSize: 12 }}
+            <ResponsiveContainer width="100%" height={240}>
+              <AreaChart data={revenueTrend} margin={{ left: -8, right: 6, top: 6, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#167C86" stopOpacity={0.14} />
+                    <stop offset="100%" stopColor="#167C86" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="2 6" stroke="#EDF6F8" vertical={false} />
+                <XAxis
+                  dataKey="date"
+                  tick={{ fontSize: 9, fill: '#7A8A91', fontFamily: 'monospace' }}
+                  axisLine={false}
+                  tickLine={false}
                 />
-                <Bar dataKey="orders" name="Valid Orders" fill="#111111" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="cancelled" name="Cancelled" fill="#E11D48" radius={[4, 4, 0, 0]} />
-              </BarChart>
+                <YAxis
+                  tick={{ fontSize: 9, fill: '#7A8A91', fontFamily: 'monospace' }}
+                  axisLine={false}
+                  tickLine={false}
+                  tickFormatter={(v) => `₹${formatCompact(v || 0)}`}
+                />
+                <Tooltip content={<RevTooltip />} />
+                <Area
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#167C86"
+                  strokeWidth={1.5}
+                  fill="url(#revGrad)"
+                  dot={false}
+                  activeDot={{ r: 3.5, fill: '#167C86', strokeWidth: 0 }}
+                />
+              </AreaChart>
             </ResponsiveContainer>
           )}
         </div>
 
-        {/* ORDER STATUS DISTRIBUTION */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs flex flex-col justify-between">
-          <div>
-            <h3 className="font-serif text-lg font-normal text-[#111111]">Order Status Distribution</h3>
-            <p className="text-[11px] text-[#6B7280] font-light">
-              Fulfillment breakdown for orders placed in period
+        {/* Peak footer */}
+        {peakRevDay && (peakRevDay.revenue ?? 0) > 0 && (
+          <div
+            className="px-5 py-2.5 border-t flex items-center gap-5 flex-wrap"
+            style={{ borderColor: '#DCE6E9', background: '#FAF7F2' }}
+          >
+            <div>
+              <span className="text-[9px] font-semibold tracking-widest uppercase block" style={{ color: '#7A8A91' }}>
+                PEAK REVENUE DAY
+              </span>
+              <span className="font-mono text-[11px] font-semibold" style={{ color: '#172126' }}>
+                {fmtDateStr(peakRevDay.date)}
+              </span>
+            </div>
+            <div className="w-px h-6 self-center" style={{ background: '#DCE6E9' }} />
+            <div>
+              <span className="text-[9px] font-semibold tracking-widest uppercase block" style={{ color: '#7A8A91' }}>
+                PEAK DAY REVENUE
+              </span>
+              <span className="font-serif text-[11px] font-semibold" style={{ color: '#172126' }}>
+                {formatINR(peakRevDay.revenue ?? 0)}
+              </span>
+            </div>
+            {peakSharePct !== null && (
+              <>
+                <div className="w-px h-6 self-center" style={{ background: '#DCE6E9' }} />
+                <div>
+                  <span className="text-[9px] font-semibold tracking-widest uppercase block" style={{ color: '#7A8A91' }}>
+                    SHARE OF PERIOD
+                  </span>
+                  <span className="font-mono text-[11px] font-semibold" style={{ color: '#172126' }}>
+                    {peakSharePct}%
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ── 05  ORDER VOLUME + FULFILLMENT MIX ─────────────────────────── */}
+      <div className="grid gap-5 lg:grid-cols-2">
+
+        {/* ORDER VOLUME */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: '#DCE6E9' }}>
+          <div
+            className="px-5 py-3.5 border-b"
+            style={{ borderColor: '#DCE6E9', background: '#fff' }}
+          >
+            <h2 className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+              Order Volume
+            </h2>
+            <p className="text-[10px] font-light mt-0.5" style={{ color: '#7A8A91' }}>
+              Valid orders vs cancellations in selected period
             </p>
           </div>
-
-          {orderStatus.length === 0 ? (
-            <div className="py-12 text-center text-xs text-[#6B7280] font-light">
-              No status distribution available.
-            </div>
-          ) : (
-            <div className="space-y-3.5 my-auto">
-              {orderStatus.map((st) => {
-                const pct = totalStatusCount > 0 ? Math.round((st.count / totalStatusCount) * 100) : 0
-                return (
-                  <div key={st.status} className="space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-medium text-[#111111] capitalize flex items-center gap-1.5">
-                        <span
-                          className={cn(
-                            'size-2 rounded-full border',
-                            getStatusBadge(st.status)
-                          )}
-                        />
-                        {st.status}
-                      </span>
-                      <span className="font-mono text-[#6B7280]">
-                        {st.count} orders ({pct}%)
-                      </span>
-                    </div>
-                    <div className="h-2 w-full rounded-full bg-[#FAFAFA] border border-[#E5E7EB] overflow-hidden">
-                      <div
-                        className="h-full bg-[#111111] rounded-full transition-all duration-500"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
+          <div className="px-2 pt-3 pb-2 bg-white">
+            {orderTrend.length === 0 ? (
+              <div className="py-8 text-center space-y-1.5">
+                <ShoppingBag className="size-5 mx-auto" style={{ color: '#DCE6E9' }} />
+                <p className="text-[11px] font-light" style={{ color: '#7A8A91' }}>
+                  No orders recorded in this period.
+                </p>
+              </div>
+            ) : (
+              <>
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart data={orderTrend} margin={{ left: -8, right: 6, top: 4, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="2 6" stroke="#EDF6F8" vertical={false} />
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fontSize: 9, fill: '#7A8A91', fontFamily: 'monospace' }}
+                      axisLine={false}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      tick={{ fontSize: 9, fill: '#7A8A91' }}
+                      axisLine={false}
+                      tickLine={false}
+                      allowDecimals={false}
+                    />
+                    <Tooltip content={<OrdTooltip />} />
+                    <Bar dataKey="orders" name="orders" fill="#172126" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                    {hasCancelled && (
+                      <Bar dataKey="cancelled" name="cancelled" fill="#DCE6E9" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                    )}
+                  </BarChart>
+                </ResponsiveContainer>
+                <div className="flex items-center gap-4 mt-1.5 px-2 pb-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="size-1.5 rounded-sm shrink-0" style={{ background: '#172126' }} />
+                    <span className="text-[9px] uppercase tracking-wide" style={{ color: '#52636B' }}>Valid</span>
                   </div>
-                )
-              })}
-            </div>
-          )}
+                  {hasCancelled && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="size-1.5 rounded-sm shrink-0" style={{ background: '#DCE6E9' }} />
+                      <span className="text-[9px] uppercase tracking-wide" style={{ color: '#52636B' }}>Cancelled</span>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
 
-          <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-between text-[11px] text-[#6B7280]">
-            <span>Total Orders Analyzed</span>
-            <span className="font-mono font-bold text-[#111111]">{totalStatusCount}</span>
+        {/* FULFILLMENT MIX — content-driven height, no stretch */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: '#DCE6E9' }}>
+          <div
+            className="px-5 py-3.5 border-b"
+            style={{ borderColor: '#DCE6E9', background: '#fff' }}
+          >
+            <h2 className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+              Fulfillment Mix
+            </h2>
+            <p className="text-[10px] font-light mt-0.5" style={{ color: '#7A8A91' }}>
+              Order status distribution for selected period
+            </p>
+          </div>
+          <div className="px-5 pt-4 pb-4 bg-white space-y-0">
+            {orderStatus.length === 0 ? (
+              <p className="py-6 text-center text-[11px] font-light" style={{ color: '#7A8A91' }}>
+                No status distribution available.
+              </p>
+            ) : (
+              <>
+                <div className="space-y-2.5">
+                  {orderStatus.map((st) => {
+                    const pct =
+                      totalStatusCount > 0
+                        ? Math.round((st.count / totalStatusCount) * 100)
+                        : 0
+                    const cfg = getStatusCfg(st.status)
+                    return (
+                      <div key={st.status}>
+                        <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              className="size-1.5 rounded-full shrink-0"
+                              style={{ background: cfg.color }}
+                            />
+                            <span
+                              className="text-[10px] font-semibold uppercase tracking-wide"
+                              style={{ color: '#172126' }}
+                            >
+                              {cfg.label}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2.5">
+                            <span className="font-mono text-[11px] font-semibold" style={{ color: '#172126' }}>
+                              {st.count}
+                            </span>
+                            <span
+                              className="font-mono text-[10px] tabular-nums w-8 text-right"
+                              style={{ color: '#7A8A91' }}
+                            >
+                              {pct}%
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className="h-0.5 w-full rounded-full overflow-hidden"
+                          style={{ background: '#EDF6F8' }}
+                        >
+                          <div
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{ width: `${pct}%`, background: cfg.color }}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div
+                  className="mt-3 pt-2.5 border-t flex items-center justify-between"
+                  style={{ borderColor: '#DCE6E9' }}
+                >
+                  <span className="text-[10px] font-light" style={{ color: '#7A8A91' }}>
+                    Total analyzed
+                  </span>
+                  <span className="font-mono text-[11px] font-semibold" style={{ color: '#172126' }}>
+                    {totalStatusCount}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {/* 5. TOP FORMULATIONS PERFORMANCE TABLE */}
-      <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
-        <div className="flex items-center justify-between">
+      {/* ── 06  TOP FORMULATIONS ────────────────────────────────────────── */}
+      <div className="rounded-xl border overflow-hidden" style={{ borderColor: '#DCE6E9' }}>
+        <div
+          className="px-5 py-3.5 border-b flex items-center justify-between"
+          style={{ borderColor: '#DCE6E9', background: '#fff' }}
+        >
           <div>
-            <h3 className="font-serif text-lg font-normal text-[#111111]">Top Formulations</h3>
-            <p className="text-[11px] text-[#6B7280] font-light">
-              Formulation sales ranked by total revenue ({data.range.label})
+            <h2 className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+              Top Formulations
+            </h2>
+            <p className="text-[10px] font-light mt-0.5" style={{ color: '#7A8A91' }}>
+              Best-performing formulations by revenue — {data.range.label}
             </p>
           </div>
-          <Link to="/admin/products" className="text-xs font-semibold text-[#111111] hover:underline">
-            View all products →
+          <Link
+            to="/admin/products"
+            className="inline-flex items-center gap-1 text-[11px] font-semibold transition-opacity hover:opacity-70"
+            style={{ color: '#167C86' }}
+          >
+            View all <ArrowRight className="size-3" />
           </Link>
         </div>
 
         {topProducts.length === 0 ? (
-          <div className="py-8 text-center text-xs text-[#6B7280] font-light">
-            No product sales recorded in this period.
+          <div className="py-10 text-center bg-white">
+            <p className="text-[11px] font-light" style={{ color: '#7A8A91' }}>
+              No product sales recorded in this period.
+            </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto bg-white">
             <table className="w-full text-xs text-left">
               <thead>
-                <tr className="border-b border-[#E5E7EB] text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF]">
-                  <th className="py-2.5 pr-2">Rank & Formulation</th>
-                  <th className="py-2.5 px-2 text-right">Units Sold</th>
-                  <th className="py-2.5 px-2 text-right">Total Revenue</th>
-                  <th className="py-2.5 pl-2 text-right">Action</th>
+                <tr className="border-b" style={{ borderColor: '#DCE6E9', background: '#FAF7F2' }}>
+                  <th className="py-2.5 px-5 text-[9px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+                    Rank & Formulation
+                  </th>
+                  <th className="py-2.5 px-4 text-right text-[9px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+                    Units
+                  </th>
+                  <th className="py-2.5 px-4 text-right text-[9px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+                    Revenue
+                  </th>
+                  <th className="py-2.5 px-5 text-right text-[9px]">&nbsp;</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E7EB]">
+              <tbody>
                 {topProducts.map((p, idx) => (
-                  <tr key={p.productId || idx} className="transition-colors hover:bg-[#FAF7F2]/40">
-                    <td className="py-3 pr-2 font-medium text-[#111111] flex items-center gap-3">
-                      <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#FAF7F2] border border-[#E5E7EB] text-[10px] font-bold text-[#111111]">
-                        {idx + 1}
-                      </span>
-                      <span>{p.name}</span>
+                  <tr
+                    key={p.productId || idx}
+                    className="border-b transition-colors hover:bg-[#FAF7F2]/60"
+                    style={{ borderColor: '#DCE6E9' }}
+                  >
+                    <td className="py-3 px-5">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="flex size-5 shrink-0 items-center justify-center rounded-full font-mono text-[9px] font-bold"
+                          style={
+                            idx === 0
+                              ? { background: '#172126', color: '#FAF7F2' }
+                              : idx === 1
+                              ? { background: '#EDF6F8', color: '#167C86' }
+                              : { background: '#FAF7F2', color: '#7A8A91', border: '1px solid #DCE6E9' }
+                          }
+                        >
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                        <span className="font-medium text-[12px] leading-snug" style={{ color: '#172126' }}>
+                          {p.name}
+                        </span>
+                      </div>
                     </td>
-                    <td className="py-3 px-2 font-mono font-bold text-right text-[#111111]">
+                    <td className="py-3 px-4 text-right font-mono font-semibold" style={{ color: '#172126' }}>
                       {p.unitsSold.toLocaleString()}
                     </td>
-                    <td className="py-3 px-2 font-serif font-bold text-right text-[#111111]">
+                    <td className="py-3 px-4 text-right font-serif font-semibold" style={{ color: '#172126' }}>
                       {formatINR(p.revenue)}
                     </td>
-                    <td className="py-3 pl-2 text-right">
+                    <td className="py-3 px-5 text-right">
                       <Link
-                        to={`/admin/products`}
-                        className="font-semibold text-[#111111] hover:underline"
+                        to="/admin/products"
+                        className="inline-flex items-center gap-1 text-[10px] font-semibold transition-opacity hover:opacity-70"
+                        style={{ color: '#167C86' }}
                       >
-                        View →
+                        View <ArrowRight className="size-2.5" />
                       </Link>
                     </td>
                   </tr>
@@ -435,105 +858,264 @@ export function AdminAnalyticsPage() {
         )}
       </div>
 
-      {/* 6. PROMOTIONS & CUSTOMER ACQUISITION */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* CUSTOMER ACQUISITION TREND */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs">
-          <div>
-            <h3 className="font-serif text-lg font-normal text-[#111111]">Customer Acquisition</h3>
-            <p className="text-[11px] text-[#6B7280] font-light">
-              Daily registered account signups ({data.range.label})
+      {/* ── 07  CUSTOMER ACQUISITION + PROMOTION PERFORMANCE ───────────── */}
+      <div className="grid gap-5 lg:grid-cols-2">
+
+        {/* CUSTOMER ACQUISITION */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: '#DCE6E9' }}>
+          <div
+            className="px-5 py-3.5 border-b"
+            style={{ borderColor: '#DCE6E9', background: '#fff' }}
+          >
+            <h2 className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+              Customer Acquisition
+            </h2>
+            <p className="text-[10px] font-light mt-0.5" style={{ color: '#7A8A91' }}>
+              New registered customers during selected period
             </p>
           </div>
-
-          {customerTrend.length === 0 ? (
-            <div className="py-12 text-center text-xs text-[#6B7280] font-light">
-              No customer signups in this period.
-            </div>
-          ) : (
-            <ResponsiveContainer width="100%" height={200}>
-              <AreaChart data={customerTrend} margin={{ left: -8, right: 8, top: 4 }}>
-                <defs>
-                  <linearGradient id="custGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#111111" stopOpacity={0.15} />
-                    <stop offset="100%" stopColor="#111111" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" vertical={false} />
-                <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#9CA3AF' }} stroke="#E5E7EB" />
-                <YAxis tick={{ fontSize: 10, fill: '#9CA3AF' }} stroke="#E5E7EB" />
-                <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #E5E7EB', fontSize: 12 }} />
-                <Area type="monotone" dataKey="customers" stroke="#111111" strokeWidth={2} fill="url(#custGrad)" />
-              </AreaChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-
-        {/* PROMOTION USAGE PERFORMANCE */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 space-y-4 shadow-2xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between">
-              <h3 className="font-serif text-lg font-normal text-[#111111]">Promotion Redemptions</h3>
-              <Link to="/admin/offers" className="text-xs font-semibold text-[#111111] hover:underline">
-                Manage offers →
-              </Link>
-            </div>
-            <p className="text-[11px] text-[#6B7280] font-light">
-              Coupon discount redemptions in period
-            </p>
-          </div>
-
-          {!promotions || promotions.couponOrders === 0 ? (
-            <div className="py-8 text-center text-xs text-[#6B7280] font-light my-auto">
-              No coupon redemptions recorded in this period.
-            </div>
-          ) : (
-            <div className="space-y-4 my-auto">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E5E7EB]">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-                    DISCOUNTED ORDERS
-                  </span>
-                  <span className="font-mono text-xl font-bold text-[#111111]">
-                    {promotions.couponOrders}
-                  </span>
+          <div className="bg-white">
+            {customerTrend.length === 0 ? (
+              <div className="py-8 text-center space-y-1.5">
+                <Users className="size-5 mx-auto" style={{ color: '#DCE6E9' }} />
+                <p className="text-[11px] font-light" style={{ color: '#7A8A91' }}>
+                  No customer signups in this period.
+                </p>
+              </div>
+            ) : customerTrend.length === 1 ? (
+              // Single data point — compact signal card
+              <div className="px-5 py-5 flex items-start gap-5">
+                <div
+                  className="rounded-xl border p-4 text-center shrink-0"
+                  style={{ background: '#FAF7F2', borderColor: '#DCE6E9', minWidth: 100 }}
+                >
+                  <p className="font-mono text-2xl font-semibold" style={{ color: '#172126' }}>
+                    {customerTrend[0].customers ?? 0}
+                  </p>
+                  <p className="text-[9px] uppercase tracking-widest mt-0.5" style={{ color: '#167C86' }}>
+                    NEW CUSTOMER{(customerTrend[0].customers ?? 0) !== 1 ? 'S' : ''}
+                  </p>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E5E7EB]">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-                    TOTAL SAVINGS GIVEN
+                <div className="pt-1 space-y-1">
+                  <span className="text-[9px] font-semibold tracking-widest uppercase block" style={{ color: '#7A8A91' }}>
+                    RECORDED ON
                   </span>
-                  <span className="font-serif text-xl font-bold text-[#111111]">
-                    {formatINR(promotions.totalDiscount)}
-                  </span>
+                  <p className="font-mono text-[11px] font-semibold" style={{ color: '#172126' }}>
+                    {fmtDateStr(customerTrend[0].date)}
+                  </p>
+                  <p className="text-[10px] font-light mt-1" style={{ color: '#7A8A91' }}>
+                    Single activity point in this period.
+                  </p>
                 </div>
               </div>
+            ) : (
+              <div className="px-1 pt-3 pb-2">
+                <ResponsiveContainer width="100%" height={180}>
+                  <AreaChart data={customerTrend} margin={{ left: -8, right: 6, top: 4, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="custGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#172126" stopOpacity={0.1} />
+                        <stop offset="100%" stopColor="#172126" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="2 6" stroke="#EDF6F8" vertical={false} />
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fontSize: 9, fill: '#7A8A91', fontFamily: 'monospace' }}
+                      axisLine={false}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      tick={{ fontSize: 9, fill: '#7A8A91' }}
+                      axisLine={false}
+                      tickLine={false}
+                      allowDecimals={false}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        borderRadius: 8,
+                        border: '1px solid #DCE6E9',
+                        background: '#fff',
+                        fontSize: 11,
+                        boxShadow: '0 4px 12px rgba(23,33,38,0.07)',
+                      }}
+                      labelStyle={{ color: '#172126', fontSize: 10, fontFamily: 'monospace' }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="customers"
+                      name="New Customers"
+                      stroke="#172126"
+                      strokeWidth={1.5}
+                      fill="url(#custGrad)"
+                      dot={false}
+                      activeDot={{ r: 3.5, fill: '#172126', strokeWidth: 0 }}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+          </div>
+        </div>
 
-              {promotions.topCoupons.length > 0 && (
-                <div className="space-y-1.5">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-                    TOP PERFORMING CODES
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {promotions.topCoupons.map((tc) => (
-                      <span
-                        key={tc.code}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-2.5 py-1 font-mono text-xs font-bold text-[#111111]"
-                      >
-                        <Tag className="size-3 text-[#111111]" /> {tc.code} ({tc.count})
-                      </span>
-                    ))}
+        {/* PROMOTION PERFORMANCE */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: '#DCE6E9' }}>
+          <div
+            className="px-5 py-3.5 border-b flex items-center justify-between"
+            style={{ borderColor: '#DCE6E9', background: '#fff' }}
+          >
+            <div>
+              <h2 className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+                Promotion Performance
+              </h2>
+              <p className="text-[10px] font-light mt-0.5" style={{ color: '#7A8A91' }}>
+                Coupon redemptions during selected period
+              </p>
+            </div>
+            <Link
+              to="/admin/offers"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold transition-opacity hover:opacity-70"
+              style={{ color: '#167C86' }}
+            >
+              Manage offers <ArrowRight className="size-3" />
+            </Link>
+          </div>
+
+          <div className="bg-white">
+            {!promotions || promotions.couponOrders === 0 ? (
+              <div className="px-5 py-7 flex flex-col items-center gap-3 text-center">
+                <Tag className="size-5" style={{ color: '#DCE6E9' }} />
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#7A8A91' }}>
+                    NO PROMOTION ACTIVITY
+                  </p>
+                  <p className="text-[11px] font-light mt-1" style={{ color: '#7A8A91' }}>
+                    No coupon redemptions were recorded during this period.
+                  </p>
+                </div>
+                <Link
+                  to="/admin/offers"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold"
+                  style={{ color: '#167C86' }}
+                >
+                  Manage offers <ArrowRight className="size-3" />
+                </Link>
+              </div>
+            ) : (
+              <div className="px-5 py-4 space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <div
+                    className="p-3.5 rounded-xl border"
+                    style={{ background: '#FAF7F2', borderColor: '#DCE6E9' }}
+                  >
+                    <span className="text-[9px] font-semibold uppercase tracking-widest block" style={{ color: '#7A8A91' }}>
+                      REDEMPTIONS
+                    </span>
+                    <span className="font-mono text-xl font-semibold mt-1 block" style={{ color: '#172126' }}>
+                      {promotions.couponOrders}
+                    </span>
+                  </div>
+                  <div
+                    className="p-3.5 rounded-xl border"
+                    style={{ background: '#FAF7F2', borderColor: '#DCE6E9' }}
+                  >
+                    <span className="text-[9px] font-semibold uppercase tracking-widest block" style={{ color: '#7A8A91' }}>
+                      SAVINGS GIVEN
+                    </span>
+                    <span className="font-serif text-xl font-semibold mt-1 block" style={{ color: '#172126' }}>
+                      {formatINR(promotions.totalDiscount)}
+                    </span>
                   </div>
                 </div>
-              )}
-            </div>
-          )}
 
-          <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-between text-[11px] text-[#6B7280]">
-            <span>Promotional Campaign Impact</span>
-            <span className="font-medium text-[#111111]">100% Real Order Tracking</span>
+                {promotions.topCoupons.length > 0 && (
+                  <div>
+                    <span className="text-[9px] font-semibold uppercase tracking-widest block mb-1.5" style={{ color: '#7A8A91' }}>
+                      TOP CODES
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {promotions.topCoupons.map((tc) => (
+                        <span
+                          key={tc.code}
+                          className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[10px] font-bold"
+                          style={{ borderColor: '#DCE6E9', background: '#EDF6F8', color: '#172126' }}
+                        >
+                          <Tag className="size-2.5" style={{ color: '#167C86' }} />
+                          {tc.code}
+                          <span className="font-mono text-[9px]" style={{ color: '#7A8A91' }}>({tc.count})</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* ── 08  COMMERCE SIGNALS ────────────────────────────────────────── */}
+      {signals.length >= 2 && (
+        <div
+          className="rounded-xl border overflow-hidden"
+          style={{ borderColor: '#DCE6E9' }}
+        >
+          {/* Teal left accent + header */}
+          <div
+            className="flex items-center gap-0 border-b"
+            style={{ borderColor: '#DCE6E9' }}
+          >
+            <div className="w-1 self-stretch" style={{ background: '#167C86' }} />
+            <div className="flex-1 px-5 py-3.5" style={{ background: '#FAF7F2' }}>
+              <h2 className="font-serif text-base font-normal" style={{ color: '#172126' }}>
+                Commerce Signals
+              </h2>
+              <p className="text-[10px] font-light mt-0.5" style={{ color: '#7A8A91' }}>
+                Data-derived observations from the selected period
+              </p>
+            </div>
+          </div>
+
+          {/* Signal cells with vertical dividers */}
+          <div
+            className="flex flex-wrap divide-x bg-white"
+            style={{ borderColor: '#DCE6E9' }}
+          >
+            {signals.map((sig) => (
+              <div
+                key={sig.label}
+                className="px-5 py-4 flex-1 min-w-[140px]"
+                style={{ borderColor: '#DCE6E9' }}
+              >
+                <span
+                  className="text-[9px] font-semibold uppercase tracking-widest block"
+                  style={{ color: '#7A8A91' }}
+                >
+                  {sig.label}
+                </span>
+                <p
+                  className="font-mono text-sm font-semibold mt-1 truncate"
+                  style={{ color: '#172126' }}
+                >
+                  {sig.value}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Period summary sentence */}
+          {periodSummary && (
+            <div
+              className="px-5 py-2.5 border-t"
+              style={{ borderColor: '#DCE6E9', background: '#FAF7F2' }}
+            >
+              <p className="text-[10px] font-light italic" style={{ color: '#52636B' }}>
+                {periodSummary}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

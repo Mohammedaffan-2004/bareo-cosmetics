@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { Search, ArrowRight, PackageSearch, AlertCircle, RefreshCw } from 'lucide-react'
+import { Search, ArrowRight, PackageSearch, AlertCircle, RefreshCw, ShoppingBag, DollarSign, Clock, TrendingUp } from 'lucide-react'
 import { adminService } from '@/services/adminService'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -19,6 +19,13 @@ const FILTER_TABS: { key: string; label: string }[] = [
   { key: 'cancelled', label: 'Cancelled' },
 ]
 
+function getInitials(name?: string) {
+  if (!name || !name.trim()) return 'BC'
+  const parts = name.trim().split(' ')
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase()
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+}
+
 function getStatusBadge(status: string) {
   switch (status) {
     case 'delivered':
@@ -31,33 +38,33 @@ function getStatusBadge(status: string) {
     case 'out-for-delivery':
       return {
         label: status === 'out-for-delivery' ? 'Out for Delivery' : 'Shipped',
-        className: 'bg-sky-50 text-sky-900 border-sky-200/80',
-        dot: 'bg-sky-500',
+        className: 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30',
+        dot: 'bg-[#167C86]',
       }
     case 'packed':
       return {
         label: 'Processing',
         className: 'bg-amber-50 text-amber-900 border-amber-200/80',
-        dot: 'bg-amber-500',
+        dot: 'bg-amber-600',
       }
     case 'confirmed':
       return {
         label: 'Confirmed',
-        className: 'bg-[#FAF7F2] text-[#111111] border-[#E5E7EB]',
-        dot: 'bg-[#111111]',
+        className: 'bg-[#FAF7F2] text-[#172126] border-[#DCE6E9]',
+        dot: 'bg-[#172126]',
       }
     case 'cancelled':
     case 'refunded':
       return {
         label: status === 'cancelled' ? 'Cancelled' : 'Refunded',
         className: 'bg-rose-50 text-rose-900 border-rose-200/80',
-        dot: 'bg-rose-500',
+        dot: 'bg-rose-600',
       }
     default:
       return {
         label: status,
-        className: 'bg-[#FAFAFA] text-[#6B7280] border-[#E5E7EB]',
-        dot: 'bg-[#9CA3AF]',
+        className: 'bg-[#FAF7F2] text-[#52636B] border-[#DCE6E9]',
+        dot: 'bg-[#7A8A91]',
       }
   }
 }
@@ -79,7 +86,7 @@ export function AdminOrdersPage() {
     queryFn: () => adminService().getAdminOrders(),
   })
 
-  // KPI & Live Tab Counts Computations
+  // KPI & Live Tab Counts Computations (FIX: Net Revenue excludes cancelled orders to align with Overview dashboard)
   const { kpis, counts } = useMemo(() => {
     if (!orders) {
       return {
@@ -89,9 +96,11 @@ export function AdminOrdersPage() {
     }
 
     const totalOrders = orders.length
-    const totalRevenue = orders.reduce((acc, o) => acc + (o.total || 0), 0)
+    // Exclude cancelled & refunded orders for Net Revenue
+    const validOrders = orders.filter((o) => o.status !== 'cancelled' && o.status !== 'refunded')
+    const totalRevenue = validOrders.reduce((acc, o) => acc + (o.total || 0), 0)
     const pending = orders.filter((o) => ['pending', 'confirmed', 'packed'].includes(o.status)).length
-    const aov = totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0
+    const aov = validOrders.length > 0 ? Math.round(totalRevenue / validOrders.length) : 0
 
     const counts = {
       all: totalOrders,
@@ -134,64 +143,86 @@ export function AdminOrdersPage() {
   const paged = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* 1. PAGE HEADER */}
-      <div>
-        <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#111111] tracking-tight">
-          Orders & Fulfillment
+      <div className="space-y-0.5">
+        <span className="text-[10px] font-bold tracking-widest text-[#167C86] uppercase block">
+          FULFILLMENT OPERATIONS
+        </span>
+        <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126] tracking-tight">
+          Orders &amp; Fulfillment
         </h1>
-        <p className="text-xs text-[#6B7280] font-light mt-1">
+        <p className="text-xs text-[#52636B] font-light">
           Manage customer orders, payments and delivery status.
         </p>
       </div>
 
       {/* 2. OPERATIONAL KPI METRIC CARDS */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            TOTAL ORDERS
-          </span>
-          <p className="font-mono text-2xl font-bold text-[#111111]">
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between text-[#7A8A91]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">TOTAL ORDERS</span>
+            <ShoppingBag className="size-4 text-[#167C86]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {formatNumber(kpis.totalOrders)}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Lifetime completed orders</p>
+          <p className="text-[11px] text-[#52636B] font-light">Completed / active order context</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF7F2]/60 p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            TOTAL REVENUE
-          </span>
-          <p className="font-serif text-2xl font-normal text-[#111111]">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between text-[#7A8A91]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">NET REVENUE</span>
+            <DollarSign className="size-4 text-[#167C86]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {formatINR(kpis.totalRevenue)}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Processed transaction volume</p>
+          <p className="text-[11px] text-[#52636B] font-light">Valid paid-order volume</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            AWAITING FULFILLMENT
-          </span>
-          <p className="font-mono text-2xl font-bold text-[#111111]">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between text-[#7A8A91]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">AWAITING FULFILLMENT</span>
+            <Clock className="size-4 text-[#167C86]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {formatNumber(kpis.pending)}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Confirmed or processing</p>
+          <p className="text-[11px] text-[#52636B] font-light">Confirmed or processing</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 space-y-1.5 shadow-2xs">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9CA3AF] block">
-            AVERAGE ORDER VALUE
-          </span>
-          <p className="font-serif text-2xl font-normal text-[#111111]">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-5 space-y-1.5 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+          <div className="flex items-center justify-between text-[#7A8A91]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">AVERAGE ORDER VALUE</span>
+            <TrendingUp className="size-4 text-[#167C86]" />
+          </div>
+          <p className="font-serif text-3xl font-bold text-[#172126]">
             {formatINR(kpis.aov)}
           </p>
-          <p className="text-[11px] text-[#6B7280] font-light">Net checkout average</p>
+          <p className="text-[11px] text-[#52636B] font-light">Net checkout average</p>
         </div>
       </div>
 
       {/* 3. STATUS FILTER TABS & SEARCH TOOLBAR */}
-      <div className="space-y-4">
-        {/* Horizontal Segmented Tabs with Live Counts */}
-        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar border-b border-[#E5E7EB]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-[#DCE6E9] bg-white p-3 shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
+        {/* Search Field */}
+        <div className="relative flex-1 max-w-lg">
+          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#7A8A91]" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value)
+              setPage(1)
+            }}
+            placeholder="Search order ID, customer name, email or phone..."
+            className="h-10 w-full rounded-xl border border-[#DCE6E9] bg-[#FAF7F2]/40 pl-10 pr-4 text-xs text-[#172126] placeholder-[#7A8A91] outline-none focus:bg-white focus:border-[#167C86] transition-all"
+          />
+        </div>
+
+        {/* Horizontal Segmented Operational Filter Tabs */}
+        <div className="flex flex-wrap items-center gap-1.5">
           {FILTER_TABS.map((tab) => {
             const count = (counts as any)[tab.key] ?? 0
             const isActive = statusFilter === tab.key
@@ -204,17 +235,17 @@ export function AdminOrdersPage() {
                   setPage(1)
                 }}
                 className={cn(
-                  'shrink-0 flex items-center gap-2 rounded-t-xl border-b-2 px-4 py-2.5 text-xs transition-all duration-200 min-h-[40px]',
+                  'rounded-xl px-3 py-1.5 text-xs font-semibold transition-all border flex items-center gap-1.5',
                   isActive
-                    ? 'border-[#111111] bg-white font-semibold text-[#111111]'
-                    : 'border-transparent text-[#6B7280] hover:text-[#111111]'
+                    ? 'bg-[#172126] text-white border-[#172126] shadow-2xs'
+                    : 'bg-white text-[#52636B] border-[#DCE6E9] hover:bg-[#FAF7F2] hover:text-[#172126]'
                 )}
               >
                 <span>{tab.label}</span>
                 <span
                   className={cn(
-                    'rounded-full px-2 py-0.5 text-[10px] font-mono font-medium',
-                    isActive ? 'bg-[#111111] text-white' : 'bg-[#FAFAFA] text-[#6B7280] border border-[#E5E7EB]'
+                    'rounded-md px-1.5 py-0.2 text-[10px] font-mono font-medium',
+                    isActive ? 'bg-[#167C86] text-white' : 'bg-[#FAF7F2] text-[#7A8A91] border border-[#DCE6E9]'
                   )}
                 >
                   {count}
@@ -223,33 +254,30 @@ export function AdminOrdersPage() {
             )
           })}
         </div>
-
-        {/* Search Field */}
-        <div className="relative max-w-md">
-          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#9CA3AF]" />
-          <input
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value)
-              setPage(1)
-            }}
-            placeholder="Search order ID, customer name, email or phone..."
-            className="h-10 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-4 text-xs text-[#111111] placeholder-[#9CA3AF] outline-none focus:border-[#111111] transition-all shadow-2xs"
-          />
-        </div>
       </div>
 
-      {/* 4. ORDERS DATA TABLE / STATES */}
+      {/* 4. ORDERS DATA TABLE / REGISTER */}
       {isLoading ? (
-        <div className="space-y-3">
-          {[...Array(5)].map((_, i) => (
-            <Skeleton key={i} className="h-16 rounded-2xl bg-[#FAFAFA]" />
+        <div className="overflow-hidden rounded-2xl border border-[#DCE6E9] bg-white p-4 space-y-3 shadow-2xs">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="flex items-center justify-between gap-4 py-2 border-b border-[#DCE6E9] last:border-0">
+              <div className="flex items-center gap-3 flex-1">
+                <Skeleton className="size-8 rounded-full shrink-0 bg-[#FAF7F2]" />
+                <div className="space-y-1 flex-1">
+                  <Skeleton className="h-4 w-48 rounded-md bg-[#FAF7F2]" />
+                  <Skeleton className="h-3 w-24 rounded-md bg-[#FAF7F2]" />
+                </div>
+              </div>
+              <Skeleton className="h-4 w-20 rounded-md bg-[#FAF7F2]" />
+              <Skeleton className="h-4 w-16 rounded-md bg-[#FAF7F2]" />
+              <Skeleton className="h-5 w-16 rounded-full bg-[#FAF7F2]" />
+            </div>
           ))}
         </div>
       ) : isError ? (
         <div className="rounded-2xl border border-rose-200 bg-rose-50/60 p-6 text-center space-y-3">
           <AlertCircle className="size-8 text-rose-600 mx-auto" />
-          <p className="text-sm font-semibold text-rose-900">Failed to load orders</p>
+          <p className="text-sm font-semibold text-rose-900">Failed to load order register</p>
           <p className="text-xs text-rose-700">{(error as Error)?.message || 'Server error occurred'}</p>
           <Button
             type="button"
@@ -262,10 +290,10 @@ export function AdminOrdersPage() {
           </Button>
         </div>
       ) : paged.length === 0 ? (
-        <div className="rounded-2xl border border-[#E5E7EB] bg-white p-12 text-center space-y-3">
-          <PackageSearch className="size-8 text-[#9CA3AF] mx-auto" />
-          <p className="font-serif text-base font-semibold text-[#111111]">No matching orders found</p>
-          <p className="text-xs text-[#6B7280]">
+        <div className="rounded-2xl border border-[#DCE6E9] bg-white p-12 text-center space-y-3 shadow-2xs">
+          <PackageSearch className="size-8 text-[#167C86] mx-auto" />
+          <p className="font-serif text-base font-normal text-[#172126]">No matching orders found</p>
+          <p className="text-xs text-[#52636B] font-light">
             No customer orders match your selected status filter or search parameters.
           </p>
           {(search || statusFilter !== 'all') && (
@@ -277,18 +305,18 @@ export function AdminOrdersPage() {
                 setSearch('')
                 setStatusFilter('all')
               }}
-              className="rounded-xl border-[#E5E7EB] text-xs text-[#111111]"
+              className="rounded-xl border-[#DCE6E9] text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2]"
             >
               Reset Filters
             </Button>
           )}
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-2xs">
+        <div className="overflow-hidden rounded-2xl border border-[#DCE6E9] bg-white shadow-[0_4px_12px_rgba(23,33,38,0.02)]">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-xs text-left">
               <thead>
-                <tr className="border-b border-[#E5E7EB] bg-[#FAF7F2] text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
+                <tr className="border-b border-[#DCE6E9] bg-[#FAF7F2] text-[10px] font-bold uppercase tracking-wider text-[#7A8A91]">
                   <th className="px-5 py-3.5">Order</th>
                   <th className="px-4 py-3.5">Customer</th>
                   <th className="px-4 py-3.5">Items</th>
@@ -299,40 +327,48 @@ export function AdminOrdersPage() {
                   <th className="px-5 py-3.5 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E7EB]">
+              <tbody className="divide-y divide-[#DCE6E9]">
                 {paged.map((o) => {
                   const badge = getStatusBadge(o.status)
+                  const custName = o.address?.fullName || 'Customer'
 
                   return (
-                    <tr key={o.id} className="transition-colors hover:bg-[#FAF7F2]/40">
+                    <tr key={o.id} className="transition-colors hover:bg-[#FAF7F2]/60">
                       {/* ORDER ID */}
                       <td className="px-5 py-4">
                         <button
                           type="button"
                           onClick={() => navigate(`/admin/orders/${o.orderId}`)}
-                          className="font-mono font-bold text-[#111111] hover:underline block text-left"
+                          className="font-mono font-bold text-[#172126] hover:text-[#167C86] hover:underline block text-left"
                         >
                           {o.orderId}
                         </button>
                       </td>
 
-                      {/* CUSTOMER */}
+                      {/* CUSTOMER CELL WITH INITIALS AVATAR */}
                       <td className="px-4 py-4">
-                        <p className="font-semibold text-[#111111]">
-                          {o.address?.fullName || 'Customer'}
-                        </p>
-                        <p className="text-[11px] text-[#6B7280] font-light truncate max-w-[180px]">
-                          {o.address?.email || o.address?.city || 'N/A'}
-                        </p>
+                        <div className="flex items-center gap-3">
+                          <div className="size-8 rounded-full bg-[#FAF7F2] border border-[#DCE6E9] flex items-center justify-center font-bold text-[10px] text-[#172126] shrink-0">
+                            {getInitials(custName)}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-semibold text-[#172126] line-clamp-1">
+                              {custName}
+                            </p>
+                            <p className="text-[11px] text-[#7A8A91] font-light truncate max-w-[180px]">
+                              {o.address?.email || o.address?.city || 'N/A'}
+                            </p>
+                          </div>
+                        </div>
                       </td>
 
                       {/* ITEMS */}
-                      <td className="px-4 py-4 text-[#374151] font-medium">
+                      <td className="px-4 py-4 text-[#52636B] font-medium text-[12px]">
                         {o.items?.length || 0} item{(o.items?.length || 0) !== 1 ? 's' : ''}
                       </td>
 
                       {/* TOTAL */}
-                      <td className="px-4 py-4 font-mono font-semibold text-[#111111]">
+                      <td className="px-4 py-4 font-serif font-bold text-[#172126]">
                         {formatINR(o.total)}
                       </td>
 
@@ -340,10 +376,10 @@ export function AdminOrdersPage() {
                       <td className="px-4 py-4">
                         <span
                           className={cn(
-                            'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
+                            'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider',
                             o.paymentStatus === 'paid'
-                              ? 'bg-emerald-50 text-emerald-800 border-emerald-200/80'
-                              : 'bg-[#FAF7F2] text-[#111111] border-[#E5E7EB]'
+                              ? 'bg-[#EDF6F8] text-[#167C86] border-[#167C86]/30'
+                              : 'bg-[#FAF7F2] text-[#52636B] border-[#DCE6E9]'
                           )}
                         >
                           {o.paymentStatus || 'pending'}
@@ -354,7 +390,7 @@ export function AdminOrdersPage() {
                       <td className="px-4 py-4">
                         <span
                           className={cn(
-                            'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide',
+                            'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider',
                             badge.className
                           )}
                         >
@@ -364,18 +400,18 @@ export function AdminOrdersPage() {
                       </td>
 
                       {/* DATE */}
-                      <td className="px-4 py-4 text-[11px] text-[#6B7280] whitespace-nowrap">
+                      <td className="px-4 py-4 text-[11px] text-[#7A8A91] whitespace-nowrap font-light">
                         {timeAgo(o.placedAt)}
                       </td>
 
-                      {/* ACTION: SINGLE CLEAN ACTION LINK */}
+                      {/* ACTION LINK */}
                       <td className="px-5 py-4 text-right">
                         <Button
                           type="button"
                           variant="ghost"
                           size="sm"
                           onClick={() => navigate(`/admin/orders/${o.orderId}`)}
-                          className="rounded-xl text-xs font-medium text-[#111111] hover:bg-[#FAF7F2] hover:text-[#000000]"
+                          className="rounded-xl text-xs font-semibold text-[#172126] hover:bg-[#FAF7F2] hover:text-[#167C86]"
                         >
                           View details <ArrowRight className="size-3.5 ml-1" />
                         </Button>
@@ -388,7 +424,7 @@ export function AdminOrdersPage() {
           </div>
 
           {totalPages > 1 && (
-            <div className="p-4 border-t border-[#E5E7EB] bg-[#FAFAFA]">
+            <div className="p-4 border-t border-[#DCE6E9] bg-[#FAF7F2]/40">
               <Pagination page={safePage} totalPages={totalPages} onPageChange={setPage} />
             </div>
           )}

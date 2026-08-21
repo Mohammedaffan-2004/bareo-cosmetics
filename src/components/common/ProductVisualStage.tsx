@@ -72,7 +72,7 @@ export function ProductVisualStage({
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       className={cn(
-        'relative aspect-square overflow-hidden bg-[#FAF7F2] border-[#E5E7EB] flex items-center justify-center',
+        'relative aspect-square overflow-hidden bg-[#EDF6F8] border-[#DCE6E9] flex items-center justify-center',
         isCard && 'rounded-t-2xl border-b p-4',
         isDetail && 'rounded-3xl border p-6 sm:p-8',
         !isCard && !isDetail && 'rounded-2xl border p-4',
@@ -80,8 +80,8 @@ export function ProductVisualStage({
         className
       )}
     >
-      {/* 1. Neutral Surface Environment Layer (Prepared for future Visual System overrides) */}
-      <div className="absolute inset-0 z-0 bg-[#FAF7F2] pointer-events-none" />
+      {/* 1. Neutral Surface Environment Layer */}
+      <div className="absolute inset-0 z-0 bg-[#EDF6F8] pointer-events-none" />
 
       {/* 2. Product Packshot Image Layer via SmartImage */}
       <SmartImage

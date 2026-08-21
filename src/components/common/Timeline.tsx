@@ -33,7 +33,7 @@ export function Timeline({ items = [], currentStatus, cancelled, className }: Ti
               <span
                 className={cn(
                   'absolute left-[13px] top-7 h-[calc(100%-1.75rem)] w-0.5 rounded-full transition-colors',
-                  i < doneThrough ? 'bg-[#111111]' : 'bg-[#E5E7EB]'
+                  i < doneThrough ? 'bg-[#167C86]' : 'bg-[#DCE6E9]'
                 )}
               />
             )}
@@ -43,10 +43,10 @@ export function Timeline({ items = [], currentStatus, cancelled, className }: Ti
                 cancelled
                   ? 'border-rose-200 bg-rose-50 text-rose-700'
                   : isCurrent
-                  ? 'border-[#111111] bg-[#111111] text-white ring-4 ring-[#FAF7F2] shadow-2xs font-bold'
+                  ? 'border-[#172126] bg-[#172126] text-white ring-4 ring-[#FAF7F2] shadow-2xs font-bold'
                   : done
-                  ? 'border-[#111111] bg-[#111111] text-white'
-                  : 'border-[#E5E7EB] bg-white text-[#9CA3AF]'
+                  ? 'border-[#167C86]/40 bg-[#EDF6F8] text-[#167C86]'
+                  : 'border-[#DCE6E9] bg-white text-[#7A8A91]'
               )}
             >
               {cancelled ? (
@@ -54,7 +54,7 @@ export function Timeline({ items = [], currentStatus, cancelled, className }: Ti
               ) : done || isCurrent ? (
                 <Check className="size-3.5 stroke-[2.5]" />
               ) : (
-                <span className="size-1.5 rounded-full bg-[#D1D5DB]" />
+                <span className="size-1.5 rounded-full bg-[#DCE6E9]" />
               )}
             </span>
             <div className="pt-0.5 min-w-0 flex-1">
@@ -62,19 +62,19 @@ export function Timeline({ items = [], currentStatus, cancelled, className }: Ti
                 className={cn(
                   'text-xs leading-tight',
                   isCurrent
-                    ? 'font-bold text-[#111111]'
+                    ? 'font-bold text-[#172126]'
                     : done
-                    ? 'font-semibold text-[#111111]'
-                    : 'font-medium text-[#9CA3AF]'
+                    ? 'font-semibold text-[#172126]'
+                    : 'font-medium text-[#7A8A91]'
                 )}
               >
                 {cancelled && i === 0 ? 'Order Cancelled' : item.label}
               </p>
-              <p className="mt-1 text-[11px] text-[#6B7280] font-light">
+              <p className="mt-1 text-[11px] text-[#7A8A91] font-light">
                 {formatDate(item.at)} · {formatTime(item.at)}
               </p>
               {item.note && (
-                <p className="mt-1 rounded-lg bg-[#FAFAFA] border border-[#E5E7EB] px-2.5 py-1 text-[11px] text-[#374151]">
+                <p className="mt-1 rounded-lg bg-[#FAF7F2] border border-[#DCE6E9] px-2.5 py-1 text-[11px] text-[#52636B]">
                   {item.note}
                 </p>
               )}

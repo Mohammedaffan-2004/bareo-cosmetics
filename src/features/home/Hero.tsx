@@ -30,7 +30,7 @@ export function Hero({ banner: _banner }: HeroProps) {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#F0F6F9] border-b border-slate-200/70 min-h-[500px] sm:min-h-[530px] lg:min-h-[560px] flex items-center py-6 sm:py-8 lg:py-0"
+      className="relative overflow-hidden bg-[#EDF6F8] border-b border-[#DCE6E9] min-h-[500px] sm:min-h-[530px] lg:min-h-[560px] flex items-center py-6 sm:py-8 lg:py-0"
       aria-label="Hero Stage"
     >
       {/* Right Product Scene — Positioned absolutely on desktop to eliminate grid splits */}
@@ -52,7 +52,7 @@ export function Hero({ banner: _banner }: HeroProps) {
           />
         </picture>
         {/* Soft edge blend overlay so lighting flows naturally into left canvas */}
-        <div className="absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-[#F0F6F9] via-[#F0F6F9]/70 to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-[#EDF6F8] via-[#EDF6F8]/70 to-transparent pointer-events-none" />
       </div>
 
       <div className="container-page relative z-10 grid items-center lg:grid-cols-12 w-full py-4 lg:py-0">
@@ -63,29 +63,29 @@ export function Hero({ banner: _banner }: HeroProps) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-5 lg:col-span-6 xl:col-span-5 max-w-[500px] z-10"
         >
-          {/* Subtle Eyebrow Pill */}
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/90 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#111111] shadow-2xs backdrop-blur-xs">
-            <span className="text-[#7C3AED]">✦</span> DERMATOLOGIST FORMULATED
+          {/* Subtle Clinical Eyebrow Pill */}
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-[#DCE6E9] bg-white/90 px-3.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#172126] shadow-2xs backdrop-blur-xs">
+            <Sparkles className="size-3 text-[#167C86]" /> 01 / 04 FORMULATION INDEX · DERMATOLOGIST FORMULATED
           </div>
 
           {/* Large Editorial Heading */}
-          <h1 className="font-serif text-4xl font-normal leading-[1.00] tracking-tight text-[#111111] sm:text-5xl lg:text-[62px]">
+          <h1 className="font-serif text-4xl font-normal leading-[1.05] tracking-tight text-[#172126] sm:text-5xl lg:text-[62px]">
             Science for <br />
             <span className="italic font-serif">Everyday Skin.</span>
           </h1>
 
           {/* Supporting Copy */}
-          <p className="text-base text-[#334155] leading-relaxed font-normal sm:text-[17px] max-w-[450px]">
-            Clean, high-performance actives designed by dermatologists for real, everyday results.
+          <p className="text-base text-[#52636B] leading-relaxed font-normal sm:text-[17px] max-w-[450px]">
+            Clean, high-performance actives designed by dermatologists for real, everyday skin health.
           </p>
 
-          {/* Action Pill Buttons (46px height) */}
+          {/* Action Pill Buttons (46px height, Strict CTA Hierarchy) */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
             <Link to="/shop" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="primary"
-                className="h-11.5 w-full sm:w-auto rounded-full px-7 text-sm font-semibold shadow-2xs min-h-[46px] bg-[#111111] text-white hover:bg-black transition-all hover:scale-[1.02] active:scale-[0.99]"
+                className="h-11.5 w-full sm:w-auto rounded-full px-7 text-xs font-semibold shadow-2xs min-h-[46px] bg-[#172126] text-white hover:bg-[#253239] transition-all hover:scale-[1.02] active:scale-[0.99]"
               >
                 Shop Bareo Actives <ArrowRight className="size-4 ml-2" />
               </Button>
@@ -93,35 +93,35 @@ export function Hero({ banner: _banner }: HeroProps) {
             <Link to="/skin-analysis" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                variant="ai"
-                className="h-11.5 w-full sm:w-auto rounded-full px-7 text-sm font-semibold shadow-2xs min-h-[46px] bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition-all hover:scale-[1.02] active:scale-[0.99]"
+                variant="outline"
+                className="h-11.5 w-full sm:w-auto rounded-full px-7 text-xs font-semibold shadow-2xs min-h-[46px] bg-white border border-[#DCE6E9] text-[#172126] hover:bg-[#EDF6F8] hover:border-[#172126]/30 transition-all hover:scale-[1.02] active:scale-[0.99]"
               >
-                Start AI Assessment <Sparkles className="size-4 ml-1.5 text-white/90" />
+                Start AI Assessment <Sparkles className="size-4 ml-1.5 text-[#167C86]" />
               </Button>
             </Link>
           </div>
 
           {/* Integrated Benefits Strip with Divider */}
-          <div className="pt-4 border-t border-slate-300/50">
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs font-semibold text-[#111111]">
+          <div className="pt-4 border-t border-[#DCE6E9]">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs font-semibold text-[#172126]">
               <div className="flex items-center gap-1.5">
-                <Check className="size-3.5 text-[#059669]" />
+                <Check className="size-3.5 text-[#167C86]" />
                 <span>Derm Approved</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="size-3.5 text-[#059669]" />
+                <Check className="size-3.5 text-[#167C86]" />
                 <span>100% Clean Actives</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="size-3.5 text-[#059669]" />
+                <Check className="size-3.5 text-[#167C86]" />
                 <span>Fragrance Free</span>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Mobile Product Visual Scene (Rendered under content on mobile screens < 640px) */}
-        <div className="sm:hidden relative w-full h-[320px] mt-6 overflow-hidden rounded-2xl">
+        {/* Mobile Product Visual Scene */}
+        <div className="sm:hidden relative w-full h-[320px] mt-6 overflow-hidden rounded-2xl border border-[#DCE6E9]">
           <img
             src="/editorial/home/bareo-home-hero-v2.png"
             alt="Bareo Skincare Actives Collection"

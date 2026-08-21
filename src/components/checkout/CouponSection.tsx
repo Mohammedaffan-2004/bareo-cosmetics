@@ -98,24 +98,24 @@ export function CouponSection() {
   // 1. APPLIED COUPON COMPACT STATE
   if (appliedCoupon) {
     return (
-      <div className="rounded-2xl border border-[#059669]/30 bg-[#ECFDF5] p-4 space-y-2 shadow-2xs">
+      <div className="rounded-2xl border border-[#167C86]/30 bg-[#EDF6F8] p-4 space-y-2 shadow-2xs">
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-2 min-w-0">
-            <Tag className="size-4 text-[#059669] shrink-0" />
-            <span className="font-mono font-bold text-[#047857] truncate">{appliedCoupon.code}</span>
-            <span className="text-[10px] font-semibold text-[#047857] bg-white px-2 py-0.5 rounded-md border border-[#059669]/20 shrink-0">
+            <Tag className="size-4 text-[#167C86] shrink-0" />
+            <span className="font-mono font-bold text-[#167C86] truncate">{appliedCoupon.code}</span>
+            <span className="text-[10px] font-semibold text-[#167C86] bg-white px-2 py-0.5 rounded-md border border-[#167C86]/20 shrink-0">
               ✓ Applied
             </span>
           </div>
           <button
             type="button"
             onClick={handleRemoveCoupon}
-            className="text-xs font-medium text-[#EF4444] hover:underline flex items-center gap-1 shrink-0 ml-2 min-h-[32px]"
+            className="text-xs font-medium text-rose-600 hover:underline flex items-center gap-1 shrink-0 ml-2 min-h-[32px]"
           >
             <X className="size-3.5" /> Remove
           </button>
         </div>
-        <div className="flex items-center justify-between text-xs font-medium text-[#047857] pt-1 border-t border-[#059669]/20">
+        <div className="flex items-center justify-between text-xs font-medium text-[#167C86] pt-1 border-t border-[#167C86]/20">
           <span>You saved with {appliedCoupon.code}</span>
           <span className="font-bold">− {formatINR(totals.couponDiscount)}</span>
         </div>
@@ -125,27 +125,27 @@ export function CouponSection() {
 
   // 2. UNAPPLIED COLLAPSED / EXPANDABLE STATE
   return (
-    <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4 space-y-3 shadow-2xs">
+    <div className="rounded-2xl border border-[#DCE6E9] bg-white p-4 space-y-3 shadow-2xs">
       {!expanded ? (
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="flex items-center justify-between w-full text-xs font-medium text-[#111111] hover:text-[#000000] min-h-[32px]"
+          className="flex items-center justify-between w-full text-xs font-medium text-[#172126] hover:text-[#167C86] transition-colors min-h-[32px]"
         >
           <span className="flex items-center gap-2">
-            <Tag className="size-4 text-[#111111]" />
+            <Tag className="size-4 text-[#167C86]" />
             <span>Have a promo code?</span>
           </span>
-          <span className="font-semibold text-sm text-[#6B7280]">+</span>
+          <span className="font-semibold text-sm text-[#7A8A91]">+</span>
         </button>
       ) : (
         <div className="space-y-3">
-          <div className="flex items-center justify-between text-xs font-medium text-[#111111] border-b border-[#E5E7EB] pb-2">
+          <div className="flex items-center justify-between text-xs font-medium text-[#172126] border-b border-[#DCE6E9] pb-2">
             <span>Promo Code</span>
             <button
               type="button"
               onClick={() => setExpanded(false)}
-              className="text-[#6B7280] hover:text-[#111111]"
+              className="text-[#7A8A91] hover:text-[#172126]"
             >
               <X className="size-4" />
             </button>
@@ -157,12 +157,12 @@ export function CouponSection() {
               placeholder="Enter code"
               value={inputCode}
               onChange={(e) => setInputCode(e.target.value.toUpperCase())}
-              className="flex-1 h-10 rounded-xl border border-[#E5E7EB] bg-[#FAFAFA] px-3.5 text-xs text-[#111111] placeholder-[#9CA3AF] font-mono uppercase focus:bg-white focus:border-[#111111] focus:outline-none transition-colors"
+              className="flex-1 h-10 rounded-xl border border-[#DCE6E9] bg-[#FAF7F2] px-3.5 text-xs text-[#172126] placeholder-[#7A8A91] font-mono uppercase focus:bg-white focus:border-[#172126] focus:outline-none transition-colors"
             />
             <button
               type="submit"
               disabled={!inputCode.trim()}
-              className="h-10 rounded-xl bg-[#111111] text-white text-xs font-semibold px-4 hover:bg-black disabled:bg-[#E5E7EB] disabled:text-[#9CA3AF] transition-colors shrink-0"
+              className="h-10 rounded-xl bg-[#172126] text-white text-xs font-semibold px-4 hover:bg-[#253239] disabled:bg-[#DCE6E9] disabled:text-[#7A8A91] transition-colors shrink-0"
             >
               Apply
             </button>
@@ -173,14 +173,14 @@ export function CouponSection() {
               <button
                 type="button"
                 onClick={() => setShowOffers((s) => !s)}
-                className="flex items-center justify-between w-full text-xs font-medium text-[#6B7280] hover:text-[#111111] pt-1 min-h-[32px]"
+                className="flex items-center justify-between w-full text-xs font-medium text-[#7A8A91] hover:text-[#172126] pt-1 min-h-[32px]"
               >
                 <span>View available offers ({activeCoupons.length})</span>
                 {showOffers ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
               </button>
 
               {showOffers && (
-                <div className="mt-3 space-y-2 border-t border-[#E5E7EB] pt-3 max-h-56 overflow-y-auto">
+                <div className="mt-3 space-y-2 border-t border-[#DCE6E9] pt-3 max-h-56 overflow-y-auto">
                   {activeCoupons.map((c) => {
                     const isEligible = subtotal >= (c.minOrder || 0)
                     const needed = (c.minOrder || 0) - subtotal
@@ -195,18 +195,18 @@ export function CouponSection() {
                         className={cn(
                           'flex items-center justify-between rounded-xl border p-3 text-xs transition-colors',
                           isEligible
-                            ? 'border-[#E5E7EB] bg-white hover:border-[#111111]'
-                            : 'border-[#E5E7EB] bg-[#FAFAFA] opacity-75'
+                            ? 'border-[#DCE6E9] bg-white hover:border-[#172126]'
+                            : 'border-[#DCE6E9] bg-[#FAF7F2]/50 opacity-75'
                         )}
                       >
                         <div className="space-y-0.5 min-w-0 pr-2">
                           <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold text-xs text-[#111111] bg-[#FAF7F2] border border-[#E5E7EB] px-2 py-0.5 rounded-md">
+                            <span className="font-mono font-bold text-xs text-[#172126] bg-[#FAF7F2] border border-[#DCE6E9] px-2 py-0.5 rounded-md">
                               {c.code}
                             </span>
-                            <span className="font-semibold text-[#047857]">{discountText}</span>
+                            <span className="font-semibold text-[#167C86]">{discountText}</span>
                           </div>
-                          <p className="text-[11px] text-[#6B7280] truncate">{c.description}</p>
+                          <p className="text-[11px] text-[#52636B] truncate">{c.description}</p>
                           {!isEligible && (
                             <p className="text-[10px] text-amber-700 font-medium">
                               Add {formatINR(needed)} more to qualify
@@ -222,8 +222,8 @@ export function CouponSection() {
                           className={cn(
                             'h-8 rounded-lg text-xs font-semibold px-3 shrink-0',
                             isEligible
-                              ? 'bg-[#111111] text-white hover:bg-black'
-                              : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
+                              ? 'bg-[#172126] text-white hover:bg-[#253239]'
+                              : 'bg-[#DCE6E9] text-[#7A8A91] cursor-not-allowed'
                           )}
                         >
                           Apply
@@ -240,5 +240,3 @@ export function CouponSection() {
     </div>
   )
 }
-
-
