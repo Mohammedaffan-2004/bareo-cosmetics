@@ -35,6 +35,16 @@ export interface ProductPage {
   }
 }
 
+export function normalizeCategorySlug(slug?: string): string {
+  if (!slug) return ''
+  const val = slug.toLowerCase().trim()
+  if (val === 'haircare' || val === 'hair-care') return 'hair-care'
+  if (val === 'bodycare' || val === 'body-care') return 'body-care'
+  if (val === 'babycare' || val === 'baby-care') return 'baby-care'
+  if (val === 'skincare' || val === 'skin-care' || val === 'skin') return 'skincare'
+  return val
+}
+
 function applyQuery(query: ProductQuery): Product[] {
   let list = [...getCatalog()]
 
@@ -43,8 +53,19 @@ function applyQuery(query: ProductQuery): Product[] {
     list = list.filter((p) => (p.name || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q) || (p.tags || []).join(' ').toLowerCase().includes(q))
   }
   if (query.category && query.category !== 'all' && query.category !== 'all-products') {
-    const cat = query.category
-    list = list.filter((p) => p.categorySlug === cat || (p.categoryName || '').toLowerCase() === cat.toLowerCase())
+    const rawCat = query.category.toLowerCase().trim()
+    const normCat = normalizeCategorySlug(rawCat)
+    list = list.filter((p) => {
+      const pCat = (p.categorySlug || '').toLowerCase()
+      const pName = (p.categoryName || '').toLowerCase()
+      return (
+        pCat === rawCat ||
+        pCat === normCat ||
+        pName === rawCat ||
+        pName === normCat ||
+        pName.replace(/\s+/g, '-') === normCat
+      )
+    })
   }
   if (query.concern) {
     const concerns = query.concern

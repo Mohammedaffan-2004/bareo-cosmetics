@@ -34,9 +34,9 @@ import { cn } from '@/utils'
 const NAV_LINKS = [
   { id: 'home', label: 'Home', to: '/' },
   { id: 'skincare', label: 'Skincare', to: '/shop?category=skincare' },
-  { id: 'haircare', label: 'Hair Care', to: '/shop?category=haircare' },
-  { id: 'bodycare', label: 'Body Care', to: '/shop?category=bodycare' },
-  { id: 'babycare', label: 'Baby Care', to: '/shop?category=babycare' },
+  { id: 'haircare', label: 'Hair Care', to: '/shop?category=hair-care' },
+  { id: 'bodycare', label: 'Body Care', to: '/shop?category=body-care' },
+  { id: 'babycare', label: 'Baby Care', to: '/shop?category=baby-care' },
   { id: 'ai', label: 'AI Skin Assessment ✦', to: '/skin-analysis', isAi: true },
   { id: 'journal', label: 'Journal', to: '/blog' },
 ]

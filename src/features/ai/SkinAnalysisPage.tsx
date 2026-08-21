@@ -374,21 +374,23 @@ export function SkinAnalysisPage() {
 
   return (
     <div className="container-page py-8 sm:py-12 space-y-8">
-      {/* Header Badge & Brand Title */}
-      <div className="mx-auto max-w-3xl text-center space-y-3">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#DCE6E9] bg-[#EDF6F8] px-4 py-1.5 text-xs font-semibold text-[#172126]">
-          <Sparkles className="size-3.5 text-[#167C86]" /> BAREO / DERMAL INTELLIGENCE
+      {/* Header Badge & Brand Title (for Step > 0) */}
+      {step > 0 && (
+        <div className="mx-auto max-w-3xl text-center space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#DCE6E9] bg-[#EDF6F8] px-4 py-1.5 text-xs font-semibold text-[#172126]">
+            <Sparkles className="size-3.5 text-[#167C86]" /> BAREO / DERMAL INTELLIGENCE
+          </div>
+          <h1 className="font-serif text-3xl sm:text-5xl font-normal text-[#172126] tracking-tight">
+            Personal Skin Assessment
+          </h1>
+          <p className="text-xs sm:text-sm text-[#52636B] font-light max-w-lg mx-auto leading-relaxed">
+            Guided AI-assisted assessment analyzing hydration, lipid barrier integrity, and active formulation compatibility.
+          </p>
         </div>
-        <h1 className="font-serif text-3xl sm:text-5xl font-normal text-[#172126] tracking-tight">
-          Personal Skin Assessment
-        </h1>
-        <p className="text-xs sm:text-sm text-[#52636B] font-light max-w-lg mx-auto leading-relaxed">
-          Guided AI-assisted assessment analyzing hydration, lipid barrier integrity, and active formulation compatibility.
-        </p>
-      </div>
+      )}
 
       {/* Main Step Panels Container */}
-      <div className="mx-auto max-w-3xl">
+      <div className={cn('mx-auto transition-all duration-300', step === 0 ? 'max-w-6xl' : 'max-w-3xl')}>
         <input
           type="file"
           ref={fileInputRef}
@@ -406,48 +408,132 @@ export function SkinAnalysisPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
-              className="rounded-3xl border border-[#DCE6E9] bg-white p-8 sm:p-12 shadow-2xs space-y-8 text-center"
+              className="rounded-3xl border border-[#DCE6E9] bg-white p-6 sm:p-10 lg:p-12 shadow-2xs"
             >
-              <div className="space-y-4 max-w-xl mx-auto">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
-                  BAREO DERMAL INTELLIGENCE
-                </span>
-                <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#172126] leading-tight">
-                  "Understand your skin. <br className="hidden sm:inline" /> Then build around it."
-                </h2>
-                <p className="text-xs sm:text-sm text-[#52636B] font-light leading-relaxed">
-                  A guided AI-assisted assessment using your responses and, when available, visual skin signals.
-                </p>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* LEFT COLUMN: EDITORIAL STATEMENT & PRIMARY CTA */}
+                <div className="lg:col-span-7 space-y-6 text-left">
+                  <div className="space-y-3">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[#DCE6E9] bg-[#EDF6F8] px-3.5 py-1 text-xs font-semibold text-[#172126]">
+                      <Sparkles className="size-3.5 text-[#167C86]" /> BAREO / DERMAL INTELLIGENCE
+                    </div>
+                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#172126] tracking-tight leading-[1.15]">
+                      Personal Skin Assessment
+                    </h1>
+                    <h2 className="font-serif text-xl sm:text-2xl text-[#167C86] font-normal leading-snug">
+                      "Understand your skin. <br className="hidden sm:inline" /> Then build around it."
+                    </h2>
+                    <p className="text-xs sm:text-sm text-[#52636B] font-light leading-relaxed max-w-xl">
+                      A guided assessment that considers your skin profile, routine priorities, and — when available — visual skin signals.
+                    </p>
+                  </div>
 
-                {/* Editorial Metadata Chips */}
-                <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                  <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-4 py-1.5 text-xs font-medium text-[#172126]">
-                    ~2 MINUTES
-                  </span>
-                  <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-4 py-1.5 text-xs font-medium text-[#172126]">
-                    PRIVATE PROCESSING
-                  </span>
-                  <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-4 py-1.5 text-xs font-medium text-[#172126]">
-                    PERSONALIZED ROUTINE
-                  </span>
+                  {/* TRUST METADATA CHIPS */}
+                  <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                    <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-3.5 py-1.5 text-[11px] font-bold tracking-wider text-[#172126] uppercase">
+                      ~2 MINUTES
+                    </span>
+                    <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-3.5 py-1.5 text-[11px] font-bold tracking-wider text-[#172126] uppercase">
+                      PRIVATE
+                    </span>
+                    <span className="rounded-full bg-[#FAF7F2] border border-[#DCE6E9] px-3.5 py-1.5 text-[11px] font-bold tracking-wider text-[#172126] uppercase">
+                      PERSONALIZED
+                    </span>
+                  </div>
+
+                  {/* PRIMARY CTA & DISCLAIMER */}
+                  <div className="space-y-3 pt-2">
+                    <Button
+                      size="lg"
+                      className="h-12 w-full sm:w-auto px-8 rounded-2xl bg-[#172126] text-white font-semibold text-xs transition-all hover:bg-[#253239] border border-[#172126] min-h-[48px] cursor-pointer shadow-2xs"
+                      onClick={() => {
+                        setStep(1)
+                        setQuestionSubStep(0)
+                      }}
+                    >
+                      BEGIN YOUR ASSESSMENT <ArrowRight className="size-4 ml-2 text-[#167C86]" />
+                    </Button>
+                    <p className="text-[11px] text-[#7A8A91] font-light">
+                      Cosmetic skin assessment. Not a medical diagnosis.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Primary CTA Button */}
-              <div className="space-y-3 pt-2">
-                <Button
-                  size="lg"
-                  className="h-12 w-full sm:w-auto px-10 rounded-2xl bg-[#172126] text-white font-semibold text-xs transition-all hover:bg-[#253239] border border-[#172126] min-h-[48px]"
-                  onClick={() => {
-                    setStep(1)
-                    setQuestionSubStep(0)
-                  }}
-                >
-                  BEGIN YOUR ASSESSMENT <ArrowRight className="size-4 ml-2 text-[#167C86]" />
-                </Button>
-                <p className="text-[11px] text-[#7A8A91] font-light max-w-sm mx-auto">
-                  AI-assisted cosmetic skin assessment. Not a medical diagnosis.
-                </p>
+                {/* RIGHT COLUMN: RESTRAINED DERMAL INTELLIGENCE PREVIEW (SAMPLE PREVIEW) */}
+                <div className="lg:col-span-5 relative rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2]/80 p-5 sm:p-6 space-y-5">
+                  <div className="flex items-center justify-between border-b border-[#DCE6E9] pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="size-2 rounded-full bg-[#167C86]" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#172126]">
+                        DERMAL PROFILE
+                      </span>
+                    </div>
+                    <span className="rounded-md bg-white border border-[#DCE6E9] px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#167C86]">
+                      SAMPLE PREVIEW
+                    </span>
+                  </div>
+
+                  {/* SAMPLE INDICATORS */}
+                  <div className="space-y-3 text-left">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-serif font-medium text-[#172126]">Combination · Sensitive</span>
+                      <span className="text-[10px] font-bold text-[#167C86]">INDEX 78/100</span>
+                    </div>
+
+                    <div className="space-y-2 pt-1 text-xs">
+                      <div>
+                        <div className="flex justify-between text-[11px] text-[#52636B] mb-1">
+                          <span>HYDRATION</span>
+                          <span className="font-medium text-[#172126]">84%</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-[#DCE6E9] overflow-hidden">
+                          <div className="h-full bg-[#167C86] rounded-full w-[84%]" />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between text-[11px] text-[#52636B] mb-1">
+                          <span>BARRIER INTEGRITY</span>
+                          <span className="font-medium text-[#172126]">78%</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-[#DCE6E9] overflow-hidden">
+                          <div className="h-full bg-[#167C86] rounded-full w-[78%]" />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between text-[11px] text-[#52636B] mb-1">
+                          <span>OIL BALANCE</span>
+                          <span className="font-medium text-[#172126]">65%</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-[#DCE6E9] overflow-hidden">
+                          <div className="h-full bg-[#167C86] rounded-full w-[65%]" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* SAMPLE ROUTINE MATCH */}
+                  <div className="border-t border-[#DCE6E9] pt-3 space-y-2 text-left">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A8A91] block">
+                      PERSONALIZED ROUTINE MATCH
+                    </span>
+                    <div className="space-y-1.5 text-xs text-[#172126]">
+                      <div className="flex items-center gap-2 rounded-lg bg-white p-2 border border-[#DCE6E9]/60">
+                        <span className="text-[#167C86] font-bold text-[10px]">01</span>
+                        <span className="font-medium truncate text-[11.5px]">Dewy Barrier Hyaluronic Cleanser</span>
+                      </div>
+                      <div className="flex items-center gap-2 rounded-lg bg-white p-2 border border-[#DCE6E9]/60">
+                        <span className="text-[#167C86] font-bold text-[10px]">02</span>
+                        <span className="font-medium truncate text-[11.5px]">Cica Niacinamide Calming Serum</span>
+                      </div>
+                      <div className="flex items-center gap-2 rounded-lg bg-white p-2 border border-[#DCE6E9]/60">
+                        <span className="text-[#167C86] font-bold text-[10px]">03</span>
+                        <span className="font-medium truncate text-[11.5px]">Centella Cica Soothing Gel</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}

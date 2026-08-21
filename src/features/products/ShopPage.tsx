@@ -141,63 +141,67 @@ export function ShopPage() {
   // Dynamic Category Copy & Eyebrow Metadata Mapping
   const categoryHeroInfo = useMemo(() => {
     const totalCount = data ? data.total : 0
+    const countLabel = `${totalCount} ${totalCount === 1 ? 'product' : 'products'}`
+
     switch (category) {
       case 'skincare':
         return {
-          eyebrow: 'SKINCARE / COLLECTION INDEX',
+          eyebrow: 'SKINCARE',
           title: 'Skincare',
           description: 'Dermatologist-formulated essentials for hydration, barrier care and everyday protection.',
-          meta: `${totalCount} products · Targeted care · Dermatologist-led`,
+          count: countLabel,
         }
       case 'haircare':
       case 'hair-care':
         return {
-          eyebrow: 'HAIR CARE / COLLECTION INDEX',
+          eyebrow: 'HAIR CARE',
           title: 'Hair Care',
           description: 'Dermatologist-formulated hair and scalp essentials for stronger, healthier-looking hair.',
-          meta: `${totalCount} products · Scalp balance · Dermatologist-led`,
+          count: countLabel,
         }
       case 'bodycare':
       case 'body-care':
         return {
-          eyebrow: 'BODY CARE / COLLECTION INDEX',
+          eyebrow: 'BODY CARE',
           title: 'Body Care',
           description: 'Targeted body care formulated for hydration, texture, comfort and barrier support.',
-          meta: `${totalCount} products · Lipid support · Dermatologist-led`,
+          count: countLabel,
         }
       case 'babycare':
       case 'baby-care':
         return {
-          eyebrow: 'BABY CARE / COLLECTION INDEX',
+          eyebrow: 'BABY CARE',
           title: 'Baby Care',
           description: 'Gentle care for delicate skin, every day.',
-          meta: `${totalCount} products · Ultra-gentle · Barrier focused`,
+          count: countLabel,
         }
       default:
         return {
-          eyebrow: 'BAREO COLLECTION INDEX',
+          eyebrow: 'ALL PRODUCTS',
           title: 'All Products',
           description: 'Explore dermatologist-formulated care for skin, hair, body and baby.',
-          meta: `${totalCount} products · Targeted care · Dermatologist-led`,
+          count: countLabel,
         }
     }
   }, [category, data])
 
   return (
     <div className="container-page py-6 sm:py-8 space-y-6 sm:space-y-8">
-      {/* 1. COMPACT EDITORIAL CATEGORY HERO (No Duplicate Nav) */}
-      <header className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] p-5 sm:p-7 space-y-2 shadow-2xs">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-[#167C86] block">
+      {/* 1. REFINED COMPACT CATEGORY HEADER */}
+      <header className="rounded-2xl border border-[#DCE6E9] bg-[#FAF7F2] px-5 py-4 sm:px-6 sm:py-5 space-y-1.5 shadow-2xs">
+        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#167C86] block">
           {categoryHeroInfo.eyebrow}
         </span>
-        <h1 className="font-serif text-2xl font-normal text-[#172126] sm:text-3xl lg:text-4xl tracking-tight">
-          {categoryHeroInfo.title}
-        </h1>
-        <p className="text-xs sm:text-sm text-[#52636B] font-normal leading-relaxed max-w-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+          <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#172126] tracking-tight">
+            {categoryHeroInfo.title}
+          </h1>
+          <span className="text-xs font-semibold text-[#167C86] shrink-0">
+            {categoryHeroInfo.count}
+          </span>
+        </div>
+        <p className="text-xs sm:text-sm text-[#52636B] font-light leading-relaxed max-w-2xl">
           {categoryHeroInfo.description}
-        </p>
-        <p className="text-[11px] font-semibold text-[#7A8A91] pt-1">
-          {categoryHeroInfo.meta}
         </p>
       </header>
 

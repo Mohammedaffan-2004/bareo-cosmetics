@@ -2,6 +2,16 @@ import { Product } from '../../models/Product.model.js'
 import { Category } from '../../models/Category.model.js'
 import { isValidObjectId } from '../../utils/validation.js'
 
+export function normalizeCategorySlug(slug?: string): string {
+  if (!slug) return ''
+  const val = slug.toLowerCase().trim()
+  if (val === 'haircare' || val === 'hair-care') return 'hair-care'
+  if (val === 'bodycare' || val === 'body-care') return 'body-care'
+  if (val === 'babycare' || val === 'baby-care') return 'baby-care'
+  if (val === 'skincare' || val === 'skin-care' || val === 'skin') return 'skincare'
+  return val
+}
+
 function escapeRegex(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
@@ -73,8 +83,14 @@ export class ProductService {
     const conditions: any[] = [{ status: { $in: ['active', 'out-of-stock'] } }]
 
     if (category && category !== 'all' && category !== 'all-products') {
+      const rawCat = (category as string).toLowerCase().trim()
+      const normCat = normalizeCategorySlug(rawCat)
+      const catMatches = Array.from(new Set([rawCat, normCat]))
       conditions.push({
-        $or: [{ categorySlug: category as string }, { categoryId: category as string }],
+        $or: [
+          { categorySlug: { $in: catMatches } },
+          { categoryId: { $in: catMatches } },
+        ],
       })
     }
 
